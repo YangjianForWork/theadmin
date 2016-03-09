@@ -9,18 +9,19 @@ import com.yang.thelab.common.BaseSO;
  */
 public class Customer extends BaseSO {
     /**用户名*/
-    private String username;
+    private String nickname;
     /**学号（工号）*/
     private String extNO;
     /**密码*/
     private String password;
     /**手机号码*/
     private String mobile;
-    public String getUsername() {
-        return username;
+
+    public String getNickname() {
+        return nickname;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
     public String getExtNO() {
         return extNO;

@@ -43,7 +43,7 @@
 
 	<filter>
 		<filter-name>accessControlFilter</filter-name>
-		<filter-class>com.yixiu.themall.web.shared.AccessControlFilter</filter-class>
+		<filter-class>com.yang.thelab.common.AccessControlFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>accessControlFilter</filter-name>
