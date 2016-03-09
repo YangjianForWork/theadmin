@@ -16,7 +16,11 @@ import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.vojo.Customer;
 
-
+/**
+ * 
+ * @author YJ.yang
+ * @version $Id: LoginInterceptor.java, v 0.1 2016年3月9日 下午12:49:33 dev Exp $
+ */
 public class LoginInterceptor implements HandlerInterceptor {
     private final static Logger LOG = LoggerFactory.getLogger(LoginInterceptor.class);
 
@@ -39,7 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         Customer customer = (Customer) request.getSession().getAttribute("user");
-        if (requestURI.endsWith("/api/dologin") || requestURI.endsWith("index.htm")) {
+        if (requestURI.endsWith("/api/dologin") || requestURI.endsWith("error.htm")) {
             return true;
         }
         if (customer == null) {

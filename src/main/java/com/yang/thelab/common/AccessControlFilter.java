@@ -23,15 +23,17 @@ public class AccessControlFilter extends OncePerRequestFilter {
             return;
         }
         String uri = request.getRequestURI();
-        
+        System.out.println(uri);
+        if (uri.equals("/")||uri.endsWith("login")||uri.endsWith("login.htm")) {
+            request.getRequestDispatcher("/login.htm").forward(request, response);
+            return ; 
+        }
         if(!(uri.startsWith("/api") 
-                || uri.endsWith("login.htm")
-                || uri.endsWith("dologin.htm")
                 || uri.startsWith("/img")
                 || uri.endsWith(".css")
                 || uri.endsWith(".js")
                 || uri.endsWith(".ico"))){
-            request.getRequestDispatcher("/index.htm").forward(request, response);
+            request.getRequestDispatcher("/error.htm").forward(request, response);
             return ;
         }
         filterChain.doFilter(request, response);
