@@ -13,7 +13,7 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
 	default-autowire="byName">
     <bean id="gPropertyConfigurer"
-		class="com.yixiu.themall.common.PropertiesConfig">
+		class="com.yang.thelab.common.PropertiesConfig">
 		<property name="locations">
 			<list>
 				<value>file:${user.home}/theadmin/server-common.conf</value>
@@ -23,7 +23,7 @@
 	</bean>	
 
 	<!-- 自动扫描的包名 -->
-	<context:component-scan base-package="com.yang.thelab"
+	<context:component-scan base-package="com.yang.thelab.controller"
 		use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
@@ -47,8 +47,8 @@
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
-				<bean class="com.yixiu.themall.web.shared.LoginInterceptor">
-					<property name="skipLogin" value="${themall.skipLogin}"/>
+				<bean class="com.yang.thelab.common.LoginInterceptor">
+					<property name="skipLogin" value="${thelab.skipLogin}"/>
 				</bean>
 			</list>
 		</property>
