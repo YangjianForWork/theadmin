@@ -3,10 +3,12 @@ package com.yang.thelab.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yang.thelab.common.BaseController;
+
 /**
  * 
  * @author YJ.yang
@@ -14,21 +16,25 @@ import com.yang.thelab.common.BaseController;
  */
 @Controller
 public class LoginController extends BaseController {
-    
+
     @RequestMapping("/error.htm")
-    public String notFound(){
+    public String notFound() {
         return "404";
     }
-    
+
     @RequestMapping("/login.htm")
-    public String login(HttpServletResponse response){
+    public String login(HttpServletResponse response) {
         return "login";
     }
-    
+
     @RequestMapping("/api/dologin")
-    public String doLogin(HttpServletResponse response,HttpServletRequest request){
-        
-        return "";
+    public String doLogin(String userName, String pwd, HttpServletResponse response,
+                          HttpServletRequest request) {
+        if (StringUtils.isNotBlank(userName)&&StringUtils.isNotBlank(pwd)) {
+            System.out.println(userName + " "+ pwd);
+        }
+        System.out.println("-----------");
+        return "default";
     }
-      
+
 }
