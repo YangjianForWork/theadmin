@@ -33,15 +33,20 @@ public class CustomerServiceImpl implements CustomerService {
                 customerDAO.update(DO);
             }
         } catch (DuplicateKeyException e) {
+        	String message = e.getMessage();
+        	System.out.println(message.substring(message.length()-17));
             //TODO 需要改动
-            if (e.getMessage().contains(UniqueEnum.UQ_CR_NICKNMAE.code())) {
-                throw new BizException(UniqueEnum.UQ_CR_NICKNMAE.bizCode(),e);
+        	boolean equals = e.getMessage().contentEquals(new StringBuffer(UniqueEnum.UQ_CR_NICKNMAE.code()));
+        	System.out.println(equals);
+        	
+            if (equals) {
+                throw new BizException(UniqueEnum.UQ_CR_NICKNMAE.bizCode());
             }
             if (e.getMessage().contains(UniqueEnum.UQ_CR_MOBILE.code())) {
-                throw new BizException(UniqueEnum.UQ_CR_MOBILE.bizCode(),e);
+                throw new BizException(UniqueEnum.UQ_CR_MOBILE.bizCode());
             }
             if (e.getMessage().contains(UniqueEnum.UQ_CR_EXTNO.code())) {
-                throw new BizException(UniqueEnum.UQ_CR_EXTNO.bizCode(),e);
+                throw new BizException(UniqueEnum.UQ_CR_EXTNO.bizCode());
             }
         }
     }
