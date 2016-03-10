@@ -31,9 +31,8 @@ public class LoginController extends BaseController {
     public String doLogin(String userName, String pwd, HttpServletResponse response,
                           HttpServletRequest request) {
         if (StringUtils.isNotBlank(userName)&&StringUtils.isNotBlank(pwd)) {
-            System.out.println(userName + " "+ pwd);
+            
         }
-        System.out.println("-----------");
         return "default";
     }
 

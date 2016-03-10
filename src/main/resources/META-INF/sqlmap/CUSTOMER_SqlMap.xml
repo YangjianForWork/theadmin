@@ -6,9 +6,73 @@
 		<result column="NICKNAME" property="prop.nickname" jdbcType="VARCHAR" />
 		<result column="PASSWORD" property="prop.password" jdbcType="VARCHAR" />
 		<result column="MOBILE" property="prop.mobile" jdbcType="VARCHAR" />
+		<result column="EXT_NO" property="prop.extNO" jdbcType="VARCHAR" />
 		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
 		<result column="GMT_MODIFIED" property="prop.gmtModified"
 			jdbcType="TIMESTAMP" />
 	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,NICKNAME,PASSWORD,MOBILE,EXT_NO,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.CustomerDO">
+		INSERT INTO
+		CUSTOMER(
+		<include refid="CUSTOMER.Base_Column_List" />
+		)
+		VALUES (
+		#bizNO#,
+		#prop.nickname#,
+		#prop.password#,
+		#prop.mobile#,
+		#prop.extNO#,
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT
+		<include refid="CUSTOMER.Base_Column_List" />
+		FROM CUSTOMER
+		WHERE BIZ_NO = #value#
+	</select>
+
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.CustomerDO">
+		UPDATE CUSTOMER SET
+		<isNull property="bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.mobile">
+			MOBILE = #prop.mobile#,
+		</isNotNull>
+		<isNotNull property="prop.nickname">
+			NICKNAME = #prop.nickname#,
+		</isNotNull>
+		<isNotNull property="prop.password">
+			PASSWORD = #prop.password#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+
+	<select id="getByCondition" resultMap="BaseResultMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		<include refid="CUSTOMER.Base_Column_List" />
+		FROM CUSTOMER
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="mobile" prepend="AND">
+				MOBILE = #mobile#
+			</isNotEmpty>
+			<isNotEmpty property="nickName" prepend="AND">
+				NICKNAME = #nickName#
+			</isNotEmpty>
+			<isNotEmpty property="extNO" prepend="AND">
+				EXT_NO = #extNO#
+			</isNotEmpty>
+		</dynamic>
+	</select>
 
 </sqlMap>

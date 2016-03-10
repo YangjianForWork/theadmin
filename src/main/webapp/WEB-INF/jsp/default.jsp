@@ -17,6 +17,18 @@
 <title>实验室预约系统</title>
 </head>
 <body>
-	
+	<hr>
+	<form action="/api/customer?service=getByKey" method="post"  >
+		业务号<input name="bizNO" />
+		<input type="submit" value="submit" /> 
+	</form>
+	<hr>
+	<form action="/api/customer?service=save" method="post">
+		手机号：<input name="prop.mobile"/>
+		昵称：<input name="prop.nickname"/>
+		密码：<input type="password" name="prop.password">
+		学号：<input name="prop.extNO">
+		<input type="submit" value="submit" /> 
+	</form>
 </body>
 </html>

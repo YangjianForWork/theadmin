@@ -27,7 +27,6 @@ public class AccessControlFilter extends OncePerRequestFilter {
             request.getRequestDispatcher("/login.htm").forward(request, response);
             return ; 
         }
-        System.out.println(uri);
         if(!(uri.startsWith("/api") 
                 || uri.startsWith("/img")
                 || uri.endsWith(".txt")

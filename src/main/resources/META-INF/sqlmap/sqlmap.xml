@@ -6,4 +6,6 @@
 		maxTransactions="3000" useStatementNamespaces="true" />
 		
 	<sqlMap resource="META-INF/sqlmap/CUSTOMER_SqlMap.xml" />
+	<sqlMap resource="META-INF/sqlmap/SEQ_SqlMap.xml" />
+	
 </sqlMapConfig>

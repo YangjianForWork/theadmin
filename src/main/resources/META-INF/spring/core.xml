@@ -13,4 +13,7 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd "
 	default-autowire="byName">
 	
+	
+	<bean id="customerService" class="com.yang.thelab.core.service.impl.CustomerServiceImpl" />
+	
 </beans>

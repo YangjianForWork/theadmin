@@ -15,4 +15,16 @@
 	
 	<bean id="customerDAO" class="com.yang.thelab.common.dal.ibatis.IbatisCustomerDAO" />
 	
+	<bean id="sequenceGenerate" class="com.yang.thelab.common.SequenceGenerate">
+		<property name="executor">
+			<bean
+				class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+				<property name="corePoolSize" value="10" />
+				<property name="keepAliveSeconds" value="5" />
+				<property name="maxPoolSize" value="10" />
+				<property name="queueCapacity" value="10" />
+				<property name="threadNamePrefix" value="sequenceGenerate" />
+			</bean>
+		</property>
+	</bean>
 </beans>
