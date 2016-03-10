@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="SEQ">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.SeqDO">
+		<result column="KEY_TYPE" property="key" jdbcType="VARCHAR" />
+		<result column="VALUE" property="value" jdbcType="BIGINT" />
+		<result column="VERSION" property="version" jdbcType="TIMESTAMP" />
+		<result column="NOW" property="now" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		KEY_TYPE,VALUE,VERSION,CURDATE() AS NOW
+	</sql>
+
+	<update id="reset" parameterClass="java.lang.String">
+		UPDATE SEQ SET
+		VALUE = 0,
+		VERSION = CURDATE()
+		WHERE
+		KEY_TYPE = #str#
+	</update>
+	
+	<update id="inc" parameterClass="java.util.HashMap">
+		UPDATE SEQ SET
+		VALUE = VALUE + #step#
+		WHERE
+		KEY_TYPE = #key#
+	</update>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT 
+		<include refid="SEQ.Base_Column_List" />
+		FROM SEQ
+		WHERE KEY_TYPE = #value#
+	</select>
+	
+	<select id="getByKey4Lock" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT  
+		<include refid="SEQ.Base_Column_List" />
+		FROM SEQ
+		WHERE KEY_TYPE = #value# FOR UPDATE
+	</select>
+	
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.SeqDO">
+		INSERT INTO
+		SEQ(
+		KEY_TYPE,VALUE,VERSION
+		)
+		values (
+		#key#,
+		0,
+		CURDATE()
+		)
+	</insert>
+</sqlMap>
