@@ -9,8 +9,6 @@ import org.springframework.dao.DuplicateKeyException;
 
 import com.yang.thelab.common.dal.CustomerDAO;
 import com.yang.thelab.common.dataobj.CustomerDO;
-import com.yang.thelab.common.enums.UniqueEnum;
-import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.common.utils.SecurityUtil;
@@ -38,11 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customerDAO.update(DO);
             }
         } catch (DuplicateKeyException e) {
-            UniqueEnum uniqueEnum = CommUtil.getDuplicateKeyException(e.getMessage());
-            if (uniqueEnum == null) {
-                throw new BizException(BizCode.SYS_EXCE, e.getMessage());
-            }
-            throw new BizException(uniqueEnum.bizCode());
+            throw new BizException(CommUtil.getDuplicateKeyItem(e.getMessage()).bizCode());
         }
     }
 

@@ -18,6 +18,22 @@ public enum SeqServiceKey implements EnumInterface {
     CUSTOMER("CUSTOMER", "用户", "CR"),
     /**人*/
     PERSON("PERSON","人","PR"),
+    /**枚举项*/
+    ENUM_ITEM("ENUM_ITEM","枚举项","EI"),
+    /**班级*/
+    CLASSES("CLASSES","班级","CL"),
+    /**学校*/
+    SCHOOL("SCHOOL","","SH"),
+    /**实验室*/
+    LABORATORY("LABORATORY","","LB"),
+    /**预约单*/
+    RESERVE("RESERVE","","RS"),
+    /**年级*/
+    SHL_GRADE("SHL_GRADE","","SG"),
+    /**学院*/
+    SHL_INSTITUTE("SHL_INSTITUTE","","SI"),
+    /**专业*/
+    SHL_MAJOR("SHL_MAJOR","","SJ"),
     ;
     private String code;
     private String desc;

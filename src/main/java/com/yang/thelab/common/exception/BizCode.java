@@ -13,6 +13,8 @@ public enum BizCode implements EnumInterface {
 	SYS_EXCE("SYS_EXCE", "系统异常", "系统异常"),
 	/** 参数校验异常 */
 	PARAM_CHECK("PARAM_CHECK", "参数校验异常", "参数校验异常"),
+	/** 唯一性主键冲突*/
+	DUPLICATE_KEY("DUPLICATE_KEY","唯一性主键冲突","唯一性主键冲突"),
 	
 	//===用户======
 	/**该用户昵称已经存在*/
@@ -25,9 +27,11 @@ public enum BizCode implements EnumInterface {
     CUST_NOT_FOUND("CUST_NOT_FOUND", "找不到用户", "找不到用户"),
     /** 匹配不到人的信息*/
     PERSON_NOT_FOUND("PERSON_NOT_FOUND","匹配不到人的信息","匹配不到人的信息"),
+    /** 身份证号码已被使用*/
+    PERSON_ID_CARD_NO_EXSIT("PERSON_ID_CARD_NO_EXSIT","请确认是否为你本人身份证号","请确认是否为你本人身份证号"),
 	
 	
-	
+	//---------
 	
 	// =======注册登录=======
 	/** 未登录 */

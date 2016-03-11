@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ENUM_ITEM">
+	<resultMap id="BaseResultMap"
+		class="com.yang.thelab.common.dataobj.EnumItemDO">
+		<result column="BIZ_NO" property="prop.bizNO" jdbcType="VARCHAR" />
+		<result column="CONTENT" property="prop.content" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="prop.gmtModified" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,CONTENT,TYPE,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<update id="update" parameterClass="com.yixiu.themall.common.dal.dataobj.EnumItemDO">
+		UPDATE ENUM_ITEM SET  
+		<isNull property="prop.content">
+			@query
+		</isNull>
+		<isNull property="prop.bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.content">
+		    CONTENT = #prop.content#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+	
+	<select id="getByKey" resultMap="BaseResultMap"
+		parameterClass="java.lang.String">
+		SELECT  
+		<include refid="ENUM_ITEM.Base_Column_List" />
+		FROM ENUM_ITEM
+		WHERE BIZ_NO = #value#
+	</select>
+	
+
+	<insert id="insert"
+		parameterClass="com.yixiu.themall.common.dal.dataobj.EnumItemDO">
+		INSERT INTO
+		ENUM_ITEM(<include refid="ENUM_ITEM.Base_Column_List" />)
+		VALUES (
+		#prop.bizNO#,
+		#prop.content#,
+		#type#,
+		now(),
+		now()
+		)
+	</insert>
+</sqlMap>

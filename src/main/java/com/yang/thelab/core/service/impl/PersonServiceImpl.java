@@ -5,9 +5,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 
 import com.yang.thelab.common.dal.PersonDAO;
 import com.yang.thelab.common.dataobj.PersonDO;
+import com.yang.thelab.common.exception.BizException;
+import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.core.model.PersonModel;
 import com.yang.thelab.core.service.PersonService;
 
@@ -20,14 +23,18 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonDAO personDAO;
-    
+
     public void save(PersonModel model) {
         PersonDO DO = new PersonDO(model.get());
-        if (StringUtils.isBlank(DO.getBizNO())) {
-            personDAO.insert(DO);
-            model.setBizNO(DO.getBizNO());
-        }else {
-            personDAO.update(DO);
+        try {
+            if (StringUtils.isBlank(DO.getBizNO())) {
+                personDAO.insert(DO);
+                model.setBizNO(DO.getBizNO());
+            } else {
+                personDAO.update(DO);
+            }
+        } catch (DuplicateKeyException e) {
+            throw new BizException(CommUtil.getDuplicateKeyItem(e.getMessage()).bizCode());
         }
     }
 

@@ -17,6 +17,8 @@
 	
 	<bean id="personDAO" class="com.yang.thelab.common.dal.ibatis.IbatisPersonDAO" />
 	
+	<bean id="enumItemDAO" class="com.yang.thelab.common.dal.ibatis.IbatisEnumItemDAO" />
+	
 	<bean id="sequenceGenerate" class="com.yang.thelab.common.SequenceGenerate">
 		<property name="executor">
 			<bean

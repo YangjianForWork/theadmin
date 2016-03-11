@@ -68,16 +68,20 @@ public final class CommUtil {
      * @param e
      * @return
      */
-    public static final UniqueEnum getDuplicateKeyException(String eMessage){
+    public static final UniqueEnum getDuplicateKeyItem(String eMessage){
         int eLen = eMessage.length();
+        UniqueEnum tempEnum = null;
         for (UniqueEnum item : UniqueEnum.ENUM_LIST) {
             int len = item.code().length();
             String code = eMessage.substring(eLen-len-1, eLen-1);
             if (item.code().equals(code)) {
-                return item;
+               tempEnum = item;
             }
         }
-        return null;
+        if (tempEnum == null) {
+            tempEnum = UniqueEnum.UQ_DEFAULT;
+        }
+        return tempEnum;
     }
     
 }
