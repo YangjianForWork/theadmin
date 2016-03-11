@@ -1,5 +1,7 @@
 package com.yang.thelab.common.dal;
 
+import java.util.List;
+
 import com.yang.thelab.common.dataobj.CustomerDO;
 
 /**
@@ -14,5 +16,7 @@ public interface CustomerDAO {
     int update(CustomerDO obj);
     
     CustomerDO getByKey(String key);
-
+    
+    List<CustomerDO> getByKeyList(List<String> bizNOList);
+    
 }

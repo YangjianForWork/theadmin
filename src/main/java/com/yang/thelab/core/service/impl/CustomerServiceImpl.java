@@ -1,5 +1,8 @@
 package com.yang.thelab.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -7,10 +10,12 @@ import org.springframework.dao.DuplicateKeyException;
 import com.yang.thelab.common.dal.CustomerDAO;
 import com.yang.thelab.common.dataobj.CustomerDO;
 import com.yang.thelab.common.enums.UniqueEnum;
+import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
+import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.common.utils.SecurityUtil;
+import com.yang.thelab.core.model.CustomerModel;
 import com.yang.thelab.core.service.CustomerService;
-import com.yang.thelab.core.service.model.CustomerModel;
 
 /**
  * 
@@ -33,21 +38,11 @@ public class CustomerServiceImpl implements CustomerService {
                 customerDAO.update(DO);
             }
         } catch (DuplicateKeyException e) {
-        	String message = e.getMessage();
-        	System.out.println(message.substring(message.length()-17));
-            //TODO 需要改动
-        	boolean equals = e.getMessage().contentEquals(new StringBuffer(UniqueEnum.UQ_CR_NICKNMAE.code()));
-        	System.out.println(equals);
-        	
-            if (equals) {
-                throw new BizException(UniqueEnum.UQ_CR_NICKNMAE.bizCode());
+            UniqueEnum uniqueEnum = CommUtil.getDuplicateKeyException(e.getMessage());
+            if (uniqueEnum == null) {
+                throw new BizException(BizCode.SYS_EXCE, e.getMessage());
             }
-            if (e.getMessage().contains(UniqueEnum.UQ_CR_MOBILE.code())) {
-                throw new BizException(UniqueEnum.UQ_CR_MOBILE.bizCode());
-            }
-            if (e.getMessage().contains(UniqueEnum.UQ_CR_EXTNO.code())) {
-                throw new BizException(UniqueEnum.UQ_CR_EXTNO.bizCode());
-            }
+            throw new BizException(uniqueEnum.bizCode());
         }
     }
 
@@ -59,4 +54,12 @@ public class CustomerServiceImpl implements CustomerService {
         return model;
     }
 
+    public List<CustomerModel> getByKeyList(List<String> custNOList) {
+        List<CustomerModel> listModel = new ArrayList<CustomerModel>();
+        List<CustomerDO> listDO = customerDAO.getByKeyList(custNOList);
+        for (CustomerDO customerDO : listDO) {
+            listModel.add(new CustomerModel(customerDO.get()));
+        }
+        return listModel;
+    }
 }

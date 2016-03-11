@@ -23,7 +23,7 @@
 	</bean>	
 
 	<!-- 自动扫描的包名 -->
-	<context:component-scan base-package="com.yang.thelab.controller"
+	<context:component-scan base-package="com.yang.thelab.web.controller"
 		use-default-filters="false">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />

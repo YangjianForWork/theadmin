@@ -1,6 +1,8 @@
 package com.yang.thelab.core.service;
 
-import com.yang.thelab.core.service.model.CustomerModel;
+import java.util.List;
+
+import com.yang.thelab.core.model.CustomerModel;
 
 /**
  * 用户服务层
@@ -22,4 +24,12 @@ public interface CustomerService {
      * @return
      */
     CustomerModel get(String bizNO);
+    /**
+     * 根据编号列表获取用户
+     * 
+     * @param custNOList
+     * @return
+     */
+    List<CustomerModel> getByKeyList(List<String> custNOList);
 }
+

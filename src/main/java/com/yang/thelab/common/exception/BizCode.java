@@ -21,7 +21,10 @@ public enum BizCode implements EnumInterface {
     CUST_MOBILE_EXSIT("CUST_MOBILE_EXSIT","该手机号码已经被使用","该手机号码已经被使用"),
     /**该工号（学号）已经存在*/
     CUST_EXTNO_EXSIT("CUST_NICKNAME_EXSIT","该工号（学号）已经存在","该工号（学号）已经存在"),
-    
+    /** 找不到用户 */
+    CUST_NOT_FOUND("CUST_NOT_FOUND", "找不到用户", "找不到用户"),
+    /** 匹配不到人的信息*/
+    PERSON_NOT_FOUND("PERSON_NOT_FOUND","匹配不到人的信息","匹配不到人的信息"),
 	
 	
 	
@@ -29,8 +32,6 @@ public enum BizCode implements EnumInterface {
 	// =======注册登录=======
 	/** 未登录 */
 	NOT_LOGIN("NOT_LOGIN", "未登录", "未登录"),
-	/** 找不到用户 */
-	CUST_NOT_FOUND("CUST_NOT_FOUND", "找不到用户", "找不到用户"),
 	/** 请登陆 */
 	LOGIN_TOKEN_IS_EMPTY("LOGIN_TOKEN_IS_EMPTY", "请登陆", "请登陆"),
 	/** 请登陆 */

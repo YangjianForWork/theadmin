@@ -15,7 +15,10 @@ public enum SeqServiceKey implements EnumInterface {
    
 
     /**用户*/
-    CUSTOMER("CUSTOMER", "用户", "CR"),;
+    CUSTOMER("CUSTOMER", "用户", "CR"),
+    /**人*/
+    PERSON("PERSON","人","PR"),
+    ;
     private String code;
     private String desc;
     private String shortName;

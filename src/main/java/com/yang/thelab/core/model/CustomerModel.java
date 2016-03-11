@@ -1,4 +1,4 @@
-package com.yang.thelab.core.service.model;
+package com.yang.thelab.core.model;
 
 import com.yang.thelab.common.BaseModel;
 import com.yang.thelab.common.vojo.Customer;

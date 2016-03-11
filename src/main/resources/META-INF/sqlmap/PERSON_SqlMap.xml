@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="PERSON">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.PersonDO">
+		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
+		<result column="NAME" property="prop.name" jdbcType="VARCHAR" />
+		<result column="ID_CARD_NO" property="prop.idCardNO" jdbcType="VARCHAR" />
+		<result column="ROLE" property="role" jdbcType="VARCHAR" />
+		<result column="CLASS_NO" property="prop.classNO" jdbcType="VARCHAR" />
+		<result column="CUST_NO" property="prop.custNO" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="VARCHAR" />
+		<result column="BIRTH_DATE" property="prop.birthDate" jdbcType="TIMESTAMP" />
+		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="prop.gmtModified"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,NAME,ID_CARD_NO,ROLE,CLASS_NO,CUST_NO,SEX,BIRTH_DATE,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.PersonDO">
+		INSERT INTO
+		PERSON(
+		<include refid="PERSON.Base_Column_List" />
+		)
+		VALUES (
+		#bizNO#,
+		#prop.name#,
+		#prop.idCardNO#,
+		#role#,
+		#prop.classNO#,
+		#prop.custNO#,
+		#sex#,
+		#prop.birthDate#,
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT
+		<include refid="PERSON.Base_Column_List" />
+		FROM PERSON
+		WHERE BIZ_NO = #value#
+	</select>
+
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.PersonDO">
+		UPDATE PERSON SET
+		<isNull property="bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.name">
+			NAME = #prop.name#,
+		</isNotNull>
+		<isNotNull property="prop.idCardNO">
+			ID_CARD_NO = #prop.idCardNO#,
+		</isNotNull>
+		<isNotNull property="prop.sex">
+			SEX = #sex#,
+		</isNotNull>
+		<isNotNull property="prop.classNO">
+			CLASS_NO = #prop.classNO#,
+		</isNotNull>
+		<isNotNull property="prop.birthDate">
+			BIRTH_DATE = #prop.birthDate#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+
+	<select id="getByCondition" resultMap="BaseResultMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		<include refid="PERSON.Base_Column_List" />
+		FROM PERSON
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="idCardNO" prepend="AND">
+				ID_CARD_NO
+				=#idCardNO#
+			</isNotEmpty>
+			<isNotEmpty property="custNO" prepend="AND">
+				CUST_NO = #custNO#
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<select id="queryByCustNoList" resultMap="BaseResultMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		<include refid="PERSON.Base_Column_List" />
+		FROM PERSON
+		WHERE CUST_NO IN
+		<iterate open="(" close=")" conjunction="," property="custNOList">
+			#custNOList[]#
+		</iterate>
+	</select>
+
+	<sql id="compQueryCond">
+		FROM PERSON P
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="prop.role" prepend="AND">
+				P.ROLE = #role#
+			</isNotEmpty>
+			<isNotEmpty property="prop.sex" prepend="AND">
+				P.SEX = #sex#
+			</isNotEmpty>
+			<isNotEmpty property="prop.classNO" prepend="AND">
+				P.CLASS_NO = #prop.classNO#
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<select id="compQueryCount" resultClass="java.lang.Long"
+		parameterClass="com.yang.thelab.common.requ.PersonQueryRequ">
+		SELECT
+		COUNT(BIZ_NO)
+		<include refid="PERSON.compQueryCond" />
+	</select>
+
+
+	<select id="compQuery" resultMap="BaseResultMap"
+		parameterClass="com.yang.thelab.common.requ.PersonQueryRequ">
+		SELECT
+		<include refid="PERSON.Base_Column_List" />
+		<include refid="PERSON.compQueryCond" />
+		ORDER BY GMT_CREATE DESC
+		LIMIT #beginIndex#,#itemsPerPage#
+	</select>
+</sqlMap>

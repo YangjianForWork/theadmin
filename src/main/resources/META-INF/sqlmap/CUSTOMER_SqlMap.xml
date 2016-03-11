@@ -75,4 +75,15 @@
 		</dynamic>
 	</select>
 
+	<select id="getByKeyList" resultMap="BaseResultMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		<include refid="CUSTOMER.Base_Column_List" />
+		FROM CUSTOMER
+		WHERE BIZ_NO IN
+		<iterate open="(" close=")" conjunction="," property="bizNOList">
+			#bizNOList[]#
+		</iterate>
+	</select>
+	
 </sqlMap>

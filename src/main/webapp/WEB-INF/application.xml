@@ -30,4 +30,5 @@
 	<import resource="classpath:/META-INF/spring/common-dal.xml"/>
 	<import resource="classpath:/META-INF/spring/common-dal-dao.xml"/>
 	<import resource="classpath:/META-INF/spring/core.xml"/>
+	<import resource="classpath:/META-INF/spring/manager.xml"/>
 </beans>

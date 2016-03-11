@@ -1,4 +1,4 @@
-package com.yang.thelab.controller;
+package com.yang.thelab.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

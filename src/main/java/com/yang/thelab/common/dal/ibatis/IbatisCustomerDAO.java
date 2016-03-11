@@ -15,5 +15,4 @@ public class IbatisCustomerDAO extends BaseDAO<CustomerDO> implements CustomerDA
     protected SeqServiceKey getSeqServiceKey() {
         return SeqServiceKey.CUSTOMER;
     }
-    
 }

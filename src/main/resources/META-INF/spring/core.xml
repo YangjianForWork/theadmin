@@ -16,4 +16,7 @@
 	
 	<bean id="customerService" class="com.yang.thelab.core.service.impl.CustomerServiceImpl" />
 	
+	<bean id="personService" class="com.yang.thelab.core.service.impl.PersonServiceImpl" />
+	
+	
 </beans>
