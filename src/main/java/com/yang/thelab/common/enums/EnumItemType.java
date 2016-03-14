@@ -14,6 +14,8 @@ public enum EnumItemType implements EnumInterface {
     SCHOOL_TYPE("SCHOOL_TYPE","学校性质"),
     /**实验室类别*/
     LAB_CATEGORY("LAB_CATEGORY","实验室类别"),
+    /**年级枚举*/
+    SCHOOL_GRADE("SCHOOL_GRADE","年级枚举"),
     ;
 
     private String code;

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="SCHOOL">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.SchoolDO">
+		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
+		<result column="NAME" property="prop.name" jdbcType="VARCHAR" />
+		<result column="CODE" property="prop.code" jdbcType="INTEGER" />
+		<result column="TYPE_NO" property="prop.typeNO" jdbcType="VARCHAR" />
+		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="prop.gmtModified"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,NAME,CODE,TYPE_NO,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.SchoolDO">
+		INSERT INTO
+		SCHOOL(
+		<include refid="SCHOOL.Base_Column_List" />
+		)
+		VALUES (
+		#bizNO#,
+		#prop.name#,
+		#prop.code#,
+		#prop.typeNO#,
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT
+		<include refid="SCHOOL.Base_Column_List" />
+		FROM SCHOOL
+		WHERE BIZ_NO = #value#
+	</select>
+
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.SchoolDO">
+		UPDATE SCHOOL SET
+		<isNull property="bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.name">
+			NAME = #prop.name#,
+		</isNotNull>
+		<isNotNull property="prop.typeNO">
+			TYPE_NO = #prop.typeNO#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+
+	<select id="getByCondition" resultMap="BaseResultMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		<include refid="SCHOOL.Base_Column_List" />
+		FROM SCHOOL
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="name" prepend="AND">
+				NAME LIKE CONCAT('%',#name#,'%') 
+			</isNotEmpty>
+			<isNotEmpty property="code" prepend="AND">
+				CODE = #code# 
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+<!-- 	<sql id="compQueryCond">
+		FROM SCHOOL P
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="prop.typeNO" prepend="AND">
+				TYPE_NO = #prop.typeNO# 
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<select id="compQueryCount" resultClass="java.lang.Long"
+		parameterClass="com.yang.thelab.common.requ.SchoolQueryRequ">
+		SELECT
+		COUNT(BIZ_NO)
+		<include refid="SCHOOL.compQueryCond" />
+	</select>
+
+
+	<select id="compQuery" resultMap="BaseResultMap"
+		parameterClass="com.yang.thelab.common.requ.SchoolQueryRequ">
+		SELECT
+		<include refid="SCHOOL.Base_Column_List" />
+		<include refid="SCHOOL.compQueryCond" />
+		ORDER BY GMT_CREATE DESC
+		LIMIT #beginIndex#,#itemsPerPage#
+	</select> -->
+</sqlMap>

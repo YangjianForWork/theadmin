@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="CLASSES">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.ClassesDO">
+		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
+		<result column="NAME" property="prop.name" jdbcType="VARCHAR" />
+		<result column="CODE" property="prop.code" jdbcType="INTEGER" />
+		<result column="GRADE_NO" property="prop.gradeNO" jdbcType="VARCHAR" />
+		<result column="MAJOR_NO" property="prop.majorNO" jdbcType="VARCHAR" />
+		<result column="SCHOOL_NO" property="prop.schoolNO" jdbcType="VARCHAR" />
+		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="prop.gmtModified"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,NAME,CODE,GRADE_NO,MAJOR_NO,SCHOOL_NO,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.ClassesDO">
+		INSERT INTO
+		CLASSES(
+		<include refid="CLASSES.Base_Column_List" />
+		)
+		VALUES (
+		#bizNO#,
+		#prop.name#,
+		#prop.code#,
+		#prop.gradeNO#,
+		#prop.majorNO#,
+		#prop.schoolNO#,
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT
+		<include refid="CLASSES.Base_Column_List" />
+		FROM CLASSES
+		WHERE BIZ_NO = #value#
+	</select>
+
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.ClassesDO">
+		UPDATE CLASSES SET
+		<isNull property="bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.name">
+			NAME = #prop.name#,
+		</isNotNull>
+		<isNotNull property="prop.code">
+			CODE = #prop.code#,
+		</isNotNull>
+		<isNotNull property="prop.gradeNO">
+			GRADE_NO = #prop.gradeNO#,
+		</isNotNull>
+		<isNotNull property="prop.majorNO">
+			MAJOR_NO = #prop.majorNO#,
+		</isNotNull>
+		<isNotNull property="prop.schoolNO">
+			SCHOOL_NO = #prop.schoolNO#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+	
+</sqlMap>
