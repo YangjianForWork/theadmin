@@ -1,5 +1,7 @@
 package com.yang.thelab.common.dal.ibatis;
 
+import java.util.List;
+
 import com.yang.thelab.common.BaseDAO;
 import com.yang.thelab.common.dal.EnumItemDAO;
 import com.yang.thelab.common.dataobj.EnumItemDO;
@@ -15,6 +17,11 @@ public class IbatisEnumItemDAO extends BaseDAO<EnumItemDO> implements EnumItemDA
     @Override
     protected SeqServiceKey getSeqServiceKey() {
         return SeqServiceKey.ENUM_ITEM;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<EnumItemDO> getListByType(String type) {
+        return getSqlMapClientTemplate().queryForList("ENUM_ITEM.getListByType",type);
     }
 
 }

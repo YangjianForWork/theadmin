@@ -50,4 +50,11 @@
 		now()
 		)
 	</insert>
+	
+	<select id="getListByType" parameterClass="java.lang.String" resultMap="BaseResultMap" >
+		SELECT
+		<include refid="ENUM_ITEM.Base_Column_List" />
+		FROM ENUM_ITEM
+		WHERE TYPE = #value#
+	</select>
 </sqlMap>
