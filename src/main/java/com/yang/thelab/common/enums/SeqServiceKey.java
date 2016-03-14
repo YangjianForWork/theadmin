@@ -28,12 +28,10 @@ public enum SeqServiceKey implements EnumInterface {
     LABORATORY("LABORATORY","","LB"),
     /**预约单*/
     RESERVE("RESERVE","","RS"),
-    /**年级*/
-    SHL_GRADE("SHL_GRADE","","SG"),
     /**学院*/
-    SHL_INSTITUTE("SHL_INSTITUTE","","SI"),
+    SH_INSTITUTE("SH_INSTITUTE","","SI"),
     /**专业*/
-    SHL_MAJOR("SHL_MAJOR","","SJ"),
+    SH_MAJOR("SH_MAJOR","","SJ"),
     ;
     private String code;
     private String desc;
