@@ -23,6 +23,10 @@ public class AccessControlFilter extends OncePerRequestFilter {
             return;
         }
         String uri = request.getRequestURI();
+        if (uri.equals("/testPage")) {
+            request.getRequestDispatcher("/testPage").forward(request, response);
+            return ; 
+        }
         if (uri.equals("/")||uri.endsWith("/login")||uri.endsWith("login.htm")) {
             request.getRequestDispatcher("/login.htm").forward(request, response);
             return ; 

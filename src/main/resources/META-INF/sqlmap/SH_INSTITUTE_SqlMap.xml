@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="SH_INSTITUTE">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.ShInstituteDO">
+		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
+		<result column="NAME" property="prop.name" jdbcType="VARCHAR" />
+		<result column="CODE" property="prop.code" jdbcType="INTEGER" />
+		<result column="SCHOOL_NO" property="prop.schoolNO" jdbcType="VARCHAR" />
+		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="prop.gmtModified"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,NAME,CODE,SCHOOL_NO,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.ShInstituteDO">
+		INSERT INTO
+		SH_INSTITUTE(
+		<include refid="SH_INSTITUTE.Base_Column_List" />
+		)
+		VALUES (
+		#bizNO#,
+		#prop.name#,
+		#prop.code#,
+		#prop.schoolNO#,
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT
+		<include refid="SH_INSTITUTE.Base_Column_List" />
+		FROM SH_INSTITUTE
+		WHERE BIZ_NO = #value#
+	</select>
+
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.ShInstituteDO">
+		UPDATE SH_INSTITUTE SET
+		<isNull property="bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.name">
+			NAME = #prop.name#,
+		</isNotNull>
+		<isNotNull property="prop.schoolNO">
+			SCHOOL_NO = #prop.schoolNO#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+
+</sqlMap>

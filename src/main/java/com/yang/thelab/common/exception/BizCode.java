@@ -18,19 +18,26 @@ public enum BizCode implements EnumInterface {
 	
 	//===用户======
 	/**该用户昵称已经存在*/
-	CUST_NICKNAME_EXSIT("CUST_NICKNAME_EXSIT","该用户昵称已经存在","该用户昵称已经存在"),
+	CUST_NICKNAME_EXSIT("CUST_NICKNAME_EXSIT","该用户昵称已经存在"),
 	/**该手机号码已经被使用*/
-    CUST_MOBILE_EXSIT("CUST_MOBILE_EXSIT","该手机号码已经被使用","该手机号码已经被使用"),
+    CUST_MOBILE_EXSIT("CUST_MOBILE_EXSIT","该手机号码已经被使用"),
     /**该工号（学号）已经存在*/
-    CUST_EXTNO_EXSIT("CUST_NICKNAME_EXSIT","该工号（学号）已经存在","该工号（学号）已经存在"),
+    CUST_EXTNO_EXSIT("CUST_NICKNAME_EXSIT","该工号（学号）已经存在"),
     /** 找不到用户 */
-    CUST_NOT_FOUND("CUST_NOT_FOUND", "找不到用户", "找不到用户"),
+    CUST_NOT_FOUND("CUST_NOT_FOUND", "哎呀！你还不是用户！"),
     /** 匹配不到人的信息*/
-    PERSON_NOT_FOUND("PERSON_NOT_FOUND","匹配不到人的信息","匹配不到人的信息"),
+    PERSON_NOT_FOUND("PERSON_NOT_FOUND","查无此人！"),
     /** 身份证号码已被使用*/
-    PERSON_ID_CARD_NO_EXSIT("PERSON_ID_CARD_NO_EXSIT","请确认是否为你本人身份证号","请确认是否为你本人身份证号"),
+    PERSON_ID_CARD_NO_EXSIT("PERSON_ID_CARD_NO_EXSIT","这个真的是你自己的身份证么！"),
 	
-	
+    //====枚举项===
+	/**该项内容已经存在*/
+    ENUM_ITEM_CONTENT_EXSIT("ENUM_ITEM_CONTENT_EXSIT","不好意思哦！此内容已经存在咯！"),
+    
+    //====学校====
+    /**此学校已经存在*/
+    SCHOOL_NAME_EXSIT("SCHOOL_NAME_EXSIT","学校已经存在了!"),
+    
 	//---------
 	
 	// =======注册登录=======

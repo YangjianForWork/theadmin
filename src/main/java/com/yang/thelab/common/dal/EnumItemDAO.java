@@ -1,5 +1,7 @@
 package com.yang.thelab.common.dal;
 
+import java.util.List;
+
 import com.yang.thelab.common.dataobj.EnumItemDO;
 
 /**
@@ -15,4 +17,5 @@ public interface EnumItemDAO {
     
     EnumItemDO getByKey(String key);
     
+    List<EnumItemDO> getListByType(String type);
 }
