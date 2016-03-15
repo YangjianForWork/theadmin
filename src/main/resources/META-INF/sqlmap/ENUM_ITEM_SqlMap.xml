@@ -14,7 +14,7 @@
 		BIZ_NO,CONTENT,TYPE,GMT_CREATE,GMT_MODIFIED
 	</sql>
 
-	<update id="update" parameterClass="com.yixiu.themall.common.dal.dataobj.EnumItemDO">
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.EnumItemDO">
 		UPDATE ENUM_ITEM SET  
 		<isNull property="prop.content">
 			@query
@@ -39,7 +39,7 @@
 	
 
 	<insert id="insert"
-		parameterClass="com.yixiu.themall.common.dal.dataobj.EnumItemDO">
+		parameterClass="com.yang.thelab.common.dataobj.EnumItemDO">
 		INSERT INTO
 		ENUM_ITEM(<include refid="ENUM_ITEM.Base_Column_List" />)
 		VALUES (

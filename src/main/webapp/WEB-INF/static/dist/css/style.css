@@ -23,3 +23,6 @@ body{
 .span_light_cyan{
 	background-color: #d9edf7;
 }
+.table-tr-op{
+	text-align: right;	
+}

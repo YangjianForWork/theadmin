@@ -15,6 +15,8 @@ public class Laboratory extends BaseSO {
     private LabStatusEnum status;
     /**类别*/
     private String        categoryNO;
+    /**特性*/
+    private String        attributeNO;
     /**负责人*/
     private String        masterNO;
     /**地址*/
@@ -34,6 +36,14 @@ public class Laboratory extends BaseSO {
 
     public void setStatus(LabStatusEnum status) {
         this.status = status;
+    }
+    
+    public String getAttributeNO() {
+        return attributeNO;
+    }
+
+    public void setAttributeNO(String attributeNO) {
+        this.attributeNO = attributeNO;
     }
 
     public String getCategoryNO() {

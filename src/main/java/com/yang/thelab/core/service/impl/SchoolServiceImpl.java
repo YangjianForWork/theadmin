@@ -1,6 +1,7 @@
 package com.yang.thelab.core.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 
 import com.yang.thelab.common.dal.SchoolDAO;
 import com.yang.thelab.common.dal.ShInstituteDAO;
@@ -8,6 +9,7 @@ import com.yang.thelab.common.dal.ShMajorDAO;
 import com.yang.thelab.common.dataobj.SchoolDO;
 import com.yang.thelab.common.dataobj.ShInstituteDO;
 import com.yang.thelab.common.dataobj.ShMajorDO;
+import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.core.model.SchoolModel;
 import com.yang.thelab.core.model.ShInstituteModel;
@@ -20,21 +22,25 @@ import com.yang.thelab.core.service.SchoolService;
  * @version $Id: SchoolServiceImpl.java, v 0.1 2016年3月14日 下午6:39:44 dev Exp $
  */
 public class SchoolServiceImpl implements SchoolService {
-    
+
     @Autowired
-    private SchoolDAO schoolDAO;
+    private SchoolDAO      schoolDAO;
     @Autowired
     private ShInstituteDAO shInstituteDAO;
     @Autowired
-    private ShMajorDAO shMajorDAO;
-    
+    private ShMajorDAO     shMajorDAO;
+
     public void save(SchoolModel model) {
         SchoolDO DO = new SchoolDO(model.get());
-        if (CommUtil.isInsert(model)) {
-            schoolDAO.insert(DO);
-            model.setBizNO(DO.getBizNO());
-        }else {
-            schoolDAO.update(DO);
+        try {
+            if (CommUtil.isInsert(model)) {
+                schoolDAO.insert(DO);
+                model.setBizNO(DO.getBizNO());
+            } else {
+                schoolDAO.update(DO);
+            }
+        } catch (DuplicateKeyException e) {
+            throw new BizException(CommUtil.getDuplicateKeyItem(e.getMessage()).bizCode());
         }
     }
 
@@ -47,7 +53,7 @@ public class SchoolServiceImpl implements SchoolService {
         if (CommUtil.isInsert(instituteModel)) {
             shInstituteDAO.insert(instituteDO);
             instituteModel.setBizNO(instituteDO.getBizNO());
-        }else{
+        } else {
             shInstituteDAO.update(instituteDO);
         }
     }
@@ -61,7 +67,7 @@ public class SchoolServiceImpl implements SchoolService {
         if (CommUtil.isInsert(majorModel)) {
             shMajorDAO.insert(majorDO);
             majorModel.setBizNO(majorDO.getBizNO());
-        }else {
+        } else {
             shMajorDAO.update(majorDO);
         }
     }

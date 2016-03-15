@@ -24,6 +24,10 @@ public enum UniqueEnum implements EnumInterface {
     UQ_CR_EXTNO("uq_cr_extNO", "用户的学好（工号）唯一约束", BizCode.CUST_EXTNO_EXSIT),
     /** 身份证号码已被使用*/
     UQ_PR_IDCARDNO("uq_pr_idcardno","身份证号码已被使用",BizCode.PERSON_ID_CARD_NO_EXSIT),
+    /** 枚举内容同一类型唯一冲突*/
+    UQ_EI_CONT_TYPE("uq_ei_cont_type","枚举内容同一类型唯一冲突",BizCode.ENUM_ITEM_CONTENT_EXSIT),
+    /** 学校名称唯一性约束*/
+    UQ_SH_NAME("uq_sh_name","学校名称唯一性约束",BizCode.SCHOOL_NAME_EXSIT),
     ;
 
     private String                 code;
