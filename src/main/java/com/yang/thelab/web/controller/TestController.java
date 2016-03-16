@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yang.thelab.common.BaseController;
+import com.yang.thelab.common.enums.EnumItemType;
+import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.core.model.EnumItemModel;
 import com.yang.thelab.core.model.SchoolModel;
 import com.yang.thelab.core.service.EnumItemService;
@@ -19,31 +21,32 @@ import com.yang.thelab.core.service.SchoolService;
  */
 @Controller
 public class TestController extends BaseController {
-    
+
     @Autowired
     private EnumItemService enumItemService;
     @Autowired
-    private SchoolService schoolService;
-    
-    @RequestMapping(value="/testPage")
-    public String testPage(HttpServletResponse response){
+    private SchoolService   schoolService;
+
+    @RequestMapping(value = "/testPage")
+    public String testPage(HttpServletResponse response) {
         return "temp";
     }
-    
-    @RequestMapping(value="/api/test",params={"service=saveEnumItem"})
-    public void saveEnumItem(EnumItemModel form,HttpServletResponse response){
+
+    @RequestMapping(value = "/api/test", params = { "service=saveEnumItem" })
+    public void saveEnumItem(EnumItemModel form, HttpServletResponse response) {
         enumItemService.save(form);
-        toResponse(response,form.get());
+        toResponse(response, form.get());
     }
-    
-    @RequestMapping(value="/api/test",params={"service=getEnumByType"})
-    public void getEnumByType(String type,HttpServletResponse response){
-        toResponse(response,enumItemService.getListByType(type));
+
+    @RequestMapping(value = "/api/test", params = { "service=getEnumByType" })
+    public void getEnumByType(String type, HttpServletResponse response) {
+        EnumItemType enumType = (EnumItemType) CommUtil.getEnumByCode(EnumItemType.class, type);
+        toResponse(response, enumItemService.getListByType(enumType));
     }
-    
-    @RequestMapping(value="/api/test",params={"service=saveSchool"})
-    public void saveSchool(SchoolModel form,HttpServletResponse response){
+
+    @RequestMapping(value = "/api/test", params = { "service=saveSchool" })
+    public void saveSchool(SchoolModel form, HttpServletResponse response) {
         schoolService.save(form);
-        toResponse(response,form.get());
+        toResponse(response, form.get());
     }
 }

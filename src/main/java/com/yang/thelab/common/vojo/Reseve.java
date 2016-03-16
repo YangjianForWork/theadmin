@@ -29,54 +29,79 @@ public class Reseve extends BaseSO {
     private Date            dealDate;
     /** 处理人*/
     private String          dealPersNO;
-    
+    /** 处理原因*/
+    private String          dealReson;
+
     public String getLabNO() {
         return labNO;
     }
+
     public void setLabNO(String labNO) {
         this.labNO = labNO;
     }
+
     public Date getBookDate() {
         return bookDate;
     }
+
     public void setBookDate(Date bookDate) {
         this.bookDate = bookDate;
     }
+
     public Date getBeginDate() {
         return beginDate;
     }
+
     public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
     }
+
     public Date getFinishDate() {
         return finishDate;
     }
+
     public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;
     }
+
     public LabReseveStatus getStatus() {
         return status;
     }
+
     public void setStatus(LabReseveStatus status) {
         this.status = status;
     }
+
     public String getApplyPersNO() {
         return applyPersNO;
     }
+
     public void setApplyPersNO(String applyPersNO) {
         this.applyPersNO = applyPersNO;
     }
+
     public Date getDealDate() {
         return dealDate;
     }
+
     public void setDealDate(Date dealDate) {
         this.dealDate = dealDate;
     }
+
     public String getDealPersNO() {
         return dealPersNO;
     }
+
     public void setDealPersNO(String dealPersNO) {
         this.dealPersNO = dealPersNO;
+    }
+
+    public String getDealReson() {
+        return dealReson;
+    }
+
+    public void setDealReson(String dealReson) {
+        this.dealReson = dealReson;
     }
 
     

@@ -8,6 +8,7 @@ import org.springframework.dao.DuplicateKeyException;
 
 import com.yang.thelab.common.dal.EnumItemDAO;
 import com.yang.thelab.common.dataobj.EnumItemDO;
+import com.yang.thelab.common.enums.EnumItemType;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.core.model.EnumItemModel;
@@ -37,9 +38,9 @@ public class EnumItemServiceImpl implements EnumItemService {
         }
     }
 
-    public List<EnumItemModel> getListByType(String type) {
+    public List<EnumItemModel> getListByType(EnumItemType type) {
         List<EnumItemModel> models = new ArrayList<EnumItemModel>();
-        List<EnumItemDO> enumItemDOs = enumItemDAO.getListByType(type);
+        List<EnumItemDO> enumItemDOs = enumItemDAO.getListByType(type.code());
         for (EnumItemDO enumItemDO : enumItemDOs) {
             EnumItemModel model = new EnumItemModel(enumItemDO.get());
             models.add(model);

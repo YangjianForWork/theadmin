@@ -15,5 +15,11 @@
 
 	<bean id="personManager"
 		class="com.yang.thelab.biz.manager.impl.PersonManagerImpl" />
+	
+	<bean id="schoolManager"
+		class="com.yang.thelab.biz.manager.impl.SchoolManagerImpl" />
 
+	<bean id="laboratoryManager"
+		class="com.yang.thelab.biz.manager.impl.LaboratoryManagerImpl" />
+		
 </beans>

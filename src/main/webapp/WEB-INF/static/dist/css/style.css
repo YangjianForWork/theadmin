@@ -1,28 +1,55 @@
 @CHARSET "UTF-8";
-*{
-	margin:0px;
-	padding:0px;
+
+* {
+	margin: 0px;
+	padding: 0px;
 }
-body{
+
+body {
 	background-color: #efefef;
+	font-family: '微软雅黑';
 }
-#loginPanel{
-	margin:15% auto;
+
+#loginPanel {
+	margin: 15% auto;
 	box-shadow: 0 0 20px #186082;
-	width:360px;
-	height:220px;
+	width: 360px;
+	height: 220px;
 	background-color: #186082;
 }
-#loginPanel .pBody{
+
+#loginPanel .pBody {
 	padding: 35px 30px 10px;
 }
-.loginBtn{
+
+.loginBtn {
 	padding: 6px 75px;
 	box-shadow: 0 0 20px #3a87ad;
 }
-.span_light_cyan{
+
+.span_light_cyan {
 	background-color: #d9edf7;
 }
-.table-tr-op{
-	text-align: right;	
+
+.table-tr-op {
+	text-align: right;
+}
+
+.caption-default {
+	background-color: #EEFCFF;
+	color: #1A3C3C;
+}
+
+#myAlert {
+	font-size: 12px;
+	text-align: center;
+	position: absolute;
+	background-color: white;
+	top : 5%;
+	left: 40%;
+	width: 15%;
+	height: 12%;
+	padding: 20px;
+	z-index: 1002;
+	top: 5%;
 }

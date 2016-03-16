@@ -2,6 +2,7 @@ package com.yang.thelab.core.service;
 
 import java.util.List;
 
+import com.yang.thelab.common.enums.EnumItemType;
 import com.yang.thelab.core.model.EnumItemModel;
 
 /**
@@ -13,5 +14,5 @@ public interface EnumItemService {
     
     void save(EnumItemModel model);
     
-    List<EnumItemModel> getListByType(String type);
+    List<EnumItemModel> getListByType(EnumItemType type);
 }
