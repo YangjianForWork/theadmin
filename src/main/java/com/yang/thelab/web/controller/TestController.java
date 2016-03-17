@@ -29,7 +29,7 @@ public class TestController extends BaseController {
 
     @RequestMapping(value = "/testPage")
     public String testPage(HttpServletResponse response) {
-        return "temp";
+        return "testPage";
     }
 
     @RequestMapping(value = "/api/test", params = { "service=saveEnumItem" })

@@ -17,17 +17,27 @@ import com.yang.thelab.core.service.EnumItemService;
  */
 @Controller
 public class SchoolController extends BaseController {
-    
+
     @Autowired
     private EnumItemService enumItemService;
-    
-    @RequestMapping(value="/api/school" , params={"service=getSchoolType"})
+
+    @RequestMapping(value = "/api/school", params = { "service=getSchoolType" })
     public void getSchoolTypeList(HttpServletResponse response) {
-        toResponse(response,enumItemService.getListByType(EnumItemType.SCHOOL_TYPE));
+        toResponse(response, enumItemService.getListByType(EnumItemType.SCHOOL_TYPE));
     }
-    
-    @RequestMapping(value="/api/school" , params={"service=getSchoolGrade"})
+
+    @RequestMapping(value = "/api/school", params = { "service=getSchoolGrade" })
     public void getSchoolGradeList(HttpServletResponse response) {
-        toResponse(response,enumItemService.getListByType(EnumItemType.SCHOOL_GRADE));
+        toResponse(response, enumItemService.getListByType(EnumItemType.SCHOOL_GRADE));
+    }
+
+    @RequestMapping(value = "/api/school", params = { "service=saveSchoolType" })
+    public void saveSchoolType(String content, HttpServletResponse response) {
+        toResponse(response, enumItemService.saveItem(content, EnumItemType.SCHOOL_TYPE));
+    }
+
+    @RequestMapping(value = "/api/school", params = { "service=saveSchoolGrade" })
+    public void saveSchoolGrade(String content, HttpServletResponse response) {
+        toResponse(response, enumItemService.saveItem(content, EnumItemType.SCHOOL_GRADE));
     }
 }

@@ -33,6 +33,8 @@ public enum BizCode implements EnumInterface {
     //====枚举项===
 	/**该项内容已经存在*/
     ENUM_ITEM_CONTENT_EXSIT("ENUM_ITEM_CONTENT_EXSIT","不好意思哦！此内容已经存在咯！"),
+    /**枚举项内容不能为空*/
+    ENUM_ITEM_CONTENT_BLANK("ENUM_ITEM_CONTENT_BLANK","你忘记输入内容了！"),
     
     //====学校====
     /**此学校已经存在*/

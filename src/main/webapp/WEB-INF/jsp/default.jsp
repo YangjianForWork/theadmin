@@ -22,32 +22,14 @@
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span12">
-				<ul class="breadcrumb">
-					<li><a href="#">主页</a> <span class="divider">/</span></li>
-					<li><a href="#">类目</a> <span class="divider">/</span></li>
-					<li class="active">主题</li>
-				</ul>
-			</div>
+			<div class="span12"></div>
 		</div>
 		<div class="row-fluid">
 			<div class="col-xs-6 span9">
-				<form action="/api/person?service=getByKey" method="post">
-					业务号<input name="bizNO" /> <input type="submit" value="submit" />
-				</form>
-				<hr>
-				<form action="/api/person?service=save" method="post">
-					手机号：<input name="customer.mobile" /> 昵称：<input
-						name="customer.nickname" /> 密码：<input type="password"
-						name="customer.password"> 学号：<input name="customer.extNO">
-					男：<input type="radio" name="sex" value="1"> 女：<input
-						type="radio" name="sex" value="0"> <input type="submit"
-						value="submit" />
-				</form>
+				<iframe src="/testPage"></iframe>
 			</div>
 			<div class="col-xs-6 span3"></div>
 		</div>
 	</div>
-
 </body>
 </html>

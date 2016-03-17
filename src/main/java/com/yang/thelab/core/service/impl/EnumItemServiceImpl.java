@@ -3,12 +3,14 @@ package com.yang.thelab.core.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 
 import com.yang.thelab.common.dal.EnumItemDAO;
 import com.yang.thelab.common.dataobj.EnumItemDO;
 import com.yang.thelab.common.enums.EnumItemType;
+import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.core.model.EnumItemModel;
@@ -46,6 +48,19 @@ public class EnumItemServiceImpl implements EnumItemService {
             models.add(model);
         }
         return models;
+    }
+
+    public List<EnumItemModel> saveItem(String content, EnumItemType type) {
+        if (StringUtils.isBlank(content)) {
+            throw new BizException(BizCode.ENUM_ITEM_CONTENT_BLANK);
+        }
+        EnumItemModel model = new EnumItemModel();
+        model.get().setContent(content);
+        model.get().setType(type);
+        save(model);
+        List<EnumItemModel> list = new ArrayList<EnumItemModel>();
+        list.add(model);
+        return list;
     }
 
 }

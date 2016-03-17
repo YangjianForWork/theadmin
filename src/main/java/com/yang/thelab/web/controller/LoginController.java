@@ -23,16 +23,16 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("/login.htm")
-    public String login(HttpServletResponse response) {
+    public String loginhtm() {
         return "login";
     }
-
-    @RequestMapping("/api/dologin")
+    @RequestMapping("/home")
     public String doLogin(String userName, String pwd, HttpServletResponse response,
                           HttpServletRequest request) {
-        if (StringUtils.isNotBlank(userName)&&StringUtils.isNotBlank(pwd)) {
-            
+        if (StringUtils.isBlank(userName)&&StringUtils.isBlank(pwd)) {
+            return "redirect:/login.htm";
         }
+            
         return "default";
     }
 

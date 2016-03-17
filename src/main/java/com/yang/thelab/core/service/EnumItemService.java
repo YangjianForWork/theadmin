@@ -15,4 +15,13 @@ public interface EnumItemService {
     void save(EnumItemModel model);
     
     List<EnumItemModel> getListByType(EnumItemType type);
+    
+    /**
+     * 保存枚举项  结果放入List返回
+     * 
+     * @param content
+     * @param type
+     * @return
+     */
+    List<EnumItemModel> saveItem(String content,EnumItemType type);
 }

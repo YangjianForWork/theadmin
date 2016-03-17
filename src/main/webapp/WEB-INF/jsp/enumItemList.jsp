@@ -23,7 +23,7 @@
 		<div class="jumbotron">
 			<div id="alertCont">
 				<div id="myAlert" class="alert alert-warning">
-					<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>警告！</strong>您的网络连接有问题。
+					<a href="#" class="close" data-dismiss="alert">&times;</a> 系统异常
 				</div>
 			</div>
 			<p>
@@ -37,15 +37,15 @@
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="panel-805001">
-						<table class="table table-hover" id="table-805001-1">
+						<table class="table table-hover" id="table-8050011">
 						</table>
-						<table class="table table-hover" id="table-805001-2">
+						<table class="table table-hover" id="table-8050012">
 						</table>
 					</div>
 					<div class="tab-pane" id="panel-805002">
-						<table class="table table-hover" id="table-805002-1">
+						<table class="table table-hover" id="table-8050021">
 						</table>
-						<table class="table table-hover" id="table-805002-2">
+						<table class="table table-hover" id="table-8050022">
 						</table>
 					</div>
 				</div>

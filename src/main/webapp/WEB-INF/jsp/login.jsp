@@ -22,7 +22,7 @@
 <body>
 	<div id="loginPanel" class="panel panel-primary">
 		<div class="panel-body pBody">
-			<form action="/api/dologin" class="bs-example bs-example-form"
+			<form action="/home" class="bs-example bs-example-form"
 				role="form" method="post">
 				<div class="input-group">
 					<span class="input-group-addon span_light_cyan"></span><input

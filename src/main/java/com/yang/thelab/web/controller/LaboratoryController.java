@@ -18,17 +18,28 @@ import com.yang.thelab.core.service.EnumItemService;
  */
 @Controller
 public class LaboratoryController extends BaseController {
-    
+
     @Autowired
     private EnumItemService enumItemService;
 
-    @RequestMapping(value="/api/lab",params={"service=getLabCategory"})
-    public void getLabCategoryList(HttpServletResponse response){
+    @RequestMapping(value = "/api/lab", params = { "service=getLabCategory" })
+    public void getLabCategoryList(HttpServletResponse response) {
         toResponse(response, enumItemService.getListByType(EnumItemType.LAB_CATEGORY));
     }
-    
-    @RequestMapping(value="/api/lab",params={"service=getLabAttribute"})
-    public void getLabAttributeList(HttpServletResponse response){
+
+    @RequestMapping(value = "/api/lab", params = { "service=getLabAttribute" })
+    public void getLabAttributeList(HttpServletResponse response) {
         toResponse(response, enumItemService.getListByType(EnumItemType.LAB_ATTRIBUTE));
     }
+
+    @RequestMapping(value = "/api/lab", params = { "service=saveLabCategory" })
+    public void saveCategory(String content, HttpServletResponse response) {
+        toResponse(response, enumItemService.saveItem(content, EnumItemType.LAB_CATEGORY));
+    }
+
+    @RequestMapping(value = "/api/lab", params = { "service=saveLabAttribute" })
+    public void saveAttribute(String content, HttpServletResponse response) {
+        toResponse(response, enumItemService.saveItem(content, EnumItemType.LAB_ATTRIBUTE));
+    }
+
 }
