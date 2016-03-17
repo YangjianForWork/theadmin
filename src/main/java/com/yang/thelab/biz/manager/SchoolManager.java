@@ -3,6 +3,8 @@ package com.yang.thelab.biz.manager;
 import java.util.List;
 
 import com.yang.thelab.biz.dto.SchoolDTO;
+import com.yang.thelab.common.Paginator;
+import com.yang.thelab.common.requ.SchoolQueryRequ;
 import com.yang.thelab.core.model.EnumItemModel;
 
 /**
@@ -26,4 +28,10 @@ public interface SchoolManager {
      * @return
      */
     List<EnumItemModel> getSchoolGradeList();
+    /**
+     * 分页查询
+     * @param requ
+     * @return
+     */
+    Paginator<SchoolDTO> query(SchoolQueryRequ requ);
 }

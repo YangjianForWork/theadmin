@@ -9,6 +9,9 @@ import com.yang.thelab.common.EnumInterface;
  * @version $Id: LoginControlEnum.java, v 0.1 2016年3月17日 下午3:23:31 dev Exp $
  */
 public enum LoginControlEnum implements EnumInterface {
+	/**主页面*/
+    INDEX_PAGE("/indexpage", "主页面", "index"),
+	
     /**测试页面*/
     TEST_PAGE("/testPage", "测试页面", "testPage"),
     //----登录-----
@@ -18,10 +21,8 @@ public enum LoginControlEnum implements EnumInterface {
     LOGIN_2("/login", "登录页面", "login"),
     /**登录页*/
     LOGIN_3("/login.htm", "登录页面", "login"),
-
-    /**属性管理*/
-    ENUM_ITEM_LIST("/enumitem", "属性管理", "enumItemList"),
-
+    /**temp*/
+    TEMP_PAGE("/temp","temp","temp"),
     ;
 
     private String code;

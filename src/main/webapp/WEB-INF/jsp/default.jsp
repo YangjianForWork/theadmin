@@ -15,18 +15,33 @@
 	href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- 自定义 -->
+<script src="/dist/js/dist.js"></script>
 <script src="/dist/js/main.js"></script>
 <link href="/dist/css/style.css" rel="stylesheet">
 <title>实验室预约系统</title>
 </head>
 <body>
 	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span12"></div>
+		<div class="row-fluid myrowfluid">
+			<div class="span12 myspan12">
+				<ul class="nav nav-pills">
+					<li class="active"><a href="#">首页</a></li>
+					<li class="disabled"><a href="#">信息</a></li>
+					<li class="dropdown pull-right"><a href="#"
+						data-toggle="dropdown" class="dropdown-toggle">我的<strong
+							class="caret"></strong></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">操作</a></li>
+							<li><a href="#">设置栏目</a></li>
+							<li><a href="#">更多设置</a></li>
+							<li class="divider"></li>
+							<li><a href="#">分割线</a></li>
+						</ul></li>
+				</ul>
+			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="col-xs-6 span9">
-				<iframe src="/enumitem"></iframe>
+			<div class="col-xs-6 span9" id="main_frame">
 			</div>
 			<div class="col-xs-6 span3"></div>
 		</div>

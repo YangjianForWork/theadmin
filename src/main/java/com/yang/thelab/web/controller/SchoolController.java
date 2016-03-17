@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.yang.thelab.biz.manager.SchoolManager;
 import com.yang.thelab.common.BaseController;
 import com.yang.thelab.common.enums.EnumItemType;
+import com.yang.thelab.common.requ.SchoolQueryRequ;
 import com.yang.thelab.core.service.EnumItemService;
 
 /**
@@ -18,6 +20,8 @@ import com.yang.thelab.core.service.EnumItemService;
 @Controller
 public class SchoolController extends BaseController {
 
+	@Autowired
+	private SchoolManager schoolManager;
     @Autowired
     private EnumItemService enumItemService;
 
@@ -39,5 +43,10 @@ public class SchoolController extends BaseController {
     @RequestMapping(value = "/api/school", params = { "service=saveSchoolGrade" })
     public void saveSchoolGrade(String content, HttpServletResponse response) {
         toResponse(response, enumItemService.saveItem(content, EnumItemType.SCHOOL_GRADE));
+    }
+    
+    @RequestMapping(value = "/api/school", params = { "service=query" })
+    public void query(SchoolQueryRequ requ,HttpServletResponse response){
+    	toResponse(response,schoolManager.query(requ));
     }
 }

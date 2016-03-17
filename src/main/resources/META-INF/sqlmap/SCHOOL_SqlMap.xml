@@ -67,7 +67,7 @@
 		</dynamic>
 	</select>
 
-<!-- 	<sql id="compQueryCond">
+	<sql id="compQueryCond">
 		FROM SCHOOL P
 		<dynamic prepend="WHERE">
 			<isNotEmpty property="prop.typeNO" prepend="AND">
@@ -91,5 +91,5 @@
 		<include refid="SCHOOL.compQueryCond" />
 		ORDER BY GMT_CREATE DESC
 		LIMIT #beginIndex#,#itemsPerPage#
-	</select> -->
+	</select>
 </sqlMap>

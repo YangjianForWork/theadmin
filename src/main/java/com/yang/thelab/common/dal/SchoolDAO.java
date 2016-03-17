@@ -1,6 +1,8 @@
 package com.yang.thelab.common.dal;
 
+import com.yang.thelab.common.Paginator;
 import com.yang.thelab.common.dataobj.SchoolDO;
+import com.yang.thelab.common.requ.SchoolQueryRequ;
 
 /**
  * 
@@ -14,4 +16,6 @@ public interface SchoolDAO {
     int update(SchoolDO obj);
     
     SchoolDO getByKey(String key);
+    
+    Paginator<SchoolDO> compQuery(SchoolQueryRequ requ);
 }
