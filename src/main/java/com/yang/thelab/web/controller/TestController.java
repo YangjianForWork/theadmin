@@ -27,11 +27,6 @@ public class TestController extends BaseController {
     @Autowired
     private SchoolService   schoolService;
 
-    @RequestMapping(value = "/testPage")
-    public String testPage(HttpServletResponse response) {
-        return "testPage";
-    }
-
     @RequestMapping(value = "/api/test", params = { "service=saveEnumItem" })
     public void saveEnumItem(EnumItemModel form, HttpServletResponse response) {
         enumItemService.save(form);

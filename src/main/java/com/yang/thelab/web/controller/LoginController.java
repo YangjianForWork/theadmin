@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yang.thelab.common.BaseController;
+import com.yang.thelab.common.enums.LoginControlEnum;
+import com.yang.thelab.common.utils.CommUtil;
 
 /**
  * 
@@ -16,6 +18,18 @@ import com.yang.thelab.common.BaseController;
  */
 @Controller
 public class LoginController extends BaseController {
+
+    @RequestMapping("/control")
+    public String controllLogin(HttpServletRequest request, HttpServletResponse response) {
+        String uri = (String) request.getAttribute("code");
+        System.out.println(uri);
+        LoginControlEnum item = (LoginControlEnum)CommUtil.getEnumByCode(LoginControlEnum.class,
+            uri);
+        if (item == null) {
+            return "login";
+        }
+        return item.mapStr();
+    }
 
     @RequestMapping("/error.htm")
     public String notFound() {
@@ -26,13 +40,14 @@ public class LoginController extends BaseController {
     public String loginhtm() {
         return "login";
     }
+
     @RequestMapping("/home")
     public String doLogin(String userName, String pwd, HttpServletResponse response,
                           HttpServletRequest request) {
-        if (StringUtils.isBlank(userName)&&StringUtils.isBlank(pwd)) {
+        if (StringUtils.isBlank(userName) && StringUtils.isBlank(pwd)) {
             return "redirect:/login.htm";
         }
-            
+
         return "default";
     }
 

@@ -26,7 +26,7 @@
 		</div>
 		<div class="row-fluid">
 			<div class="col-xs-6 span9">
-				<iframe src="/testPage"></iframe>
+				<iframe src="/enumitem"></iframe>
 			</div>
 			<div class="col-xs-6 span3"></div>
 		</div>

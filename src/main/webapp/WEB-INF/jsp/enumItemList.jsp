@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>枚举项管理</title>
+<title>实验室预约系统</title>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 			<p>
-				<strong>枚举项管理</strong>
+				<strong>属性管理</strong>
 			</p>
 			<div class="tabbable" id="tabs-399042">
 				<ul class="nav nav-tabs">

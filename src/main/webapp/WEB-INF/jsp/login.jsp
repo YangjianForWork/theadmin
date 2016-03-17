@@ -15,7 +15,6 @@
 	href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- 自定义 -->
-<script src="/dist/js/main.js"></script>
 <link href="/dist/css/style.css" rel="stylesheet">
 <title>实验室预约系统</title>
 </head>
