@@ -49,4 +49,9 @@ public class SchoolController extends BaseController {
     public void query(SchoolQueryRequ requ,HttpServletResponse response){
     	toResponse(response,schoolManager.query(requ));
     }
+    
+    @RequestMapping(value="/api/school" , params = {"service=getInsitituteList"})
+    public void getInstituteBySchool(String schoolNO,HttpServletResponse response){
+    	toResponse(response,schoolManager.getShInstituteList(schoolNO));
+    }
 }

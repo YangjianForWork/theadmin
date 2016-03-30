@@ -1,6 +1,5 @@
 package com.yang.thelab.core.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,12 +50,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public List<PersonModel> queryByCustNOList(List<String> custNOList) {
-        List<PersonModel> listModel = new ArrayList<PersonModel>();
-        List<PersonDO> listDO = personDAO.queryByCustNoList(custNOList);
-        for (PersonDO personDO : listDO) {
-            listModel.add(new PersonModel(personDO.get()));
-        }
-        return listModel;
+		return CommUtil.covDOList2ModelList(PersonModel.class,
+				personDAO.queryByCustNoList(custNOList));
     }
 
 }

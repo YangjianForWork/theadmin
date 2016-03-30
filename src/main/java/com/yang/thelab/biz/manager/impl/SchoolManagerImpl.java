@@ -14,6 +14,7 @@ import com.yang.thelab.common.enums.EnumItemType;
 import com.yang.thelab.common.requ.SchoolQueryRequ;
 import com.yang.thelab.core.model.EnumItemModel;
 import com.yang.thelab.core.model.SchoolModel;
+import com.yang.thelab.core.model.ShInstituteModel;
 import com.yang.thelab.core.service.EnumItemService;
 import com.yang.thelab.core.service.SchoolService;
 
@@ -30,6 +31,7 @@ public class SchoolManagerImpl implements SchoolManager {
 	private EnumItemService enumItemService;
 	@Autowired
 	private SchoolDAO schoolDAO;
+	
 
 	public String save(SchoolDTO DTO) {
 		schoolService.save(new SchoolModel(DTO.get()));
@@ -55,6 +57,10 @@ public class SchoolManagerImpl implements SchoolManager {
 		}
 		result.setPdate(data);
 		return result;
+	}
+
+	public List<ShInstituteModel> getShInstituteList(String schoolNO) {
+		return schoolService.getBySchoolNO(schoolNO);
 	}
 
 }

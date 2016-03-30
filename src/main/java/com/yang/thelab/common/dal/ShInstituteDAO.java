@@ -1,5 +1,7 @@
 package com.yang.thelab.common.dal;
 
+import java.util.List;
+
 import com.yang.thelab.common.dataobj.ShInstituteDO;
 
 /**
@@ -14,4 +16,6 @@ public interface ShInstituteDAO {
     int update(ShInstituteDO obj);
     
     ShInstituteDO getByKey(String key);
+    
+    List<ShInstituteDO> getBySchoolNO(String schoolNO);
 }

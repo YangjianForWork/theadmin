@@ -6,6 +6,7 @@ import com.yang.thelab.biz.dto.SchoolDTO;
 import com.yang.thelab.common.Paginator;
 import com.yang.thelab.common.requ.SchoolQueryRequ;
 import com.yang.thelab.core.model.EnumItemModel;
+import com.yang.thelab.core.model.ShInstituteModel;
 
 /**
  * 
@@ -34,4 +35,10 @@ public interface SchoolManager {
      * @return
      */
     Paginator<SchoolDTO> query(SchoolQueryRequ requ);
+    /**
+     * 获取学校下的所有学院
+     * @param schoolNO
+     * @return
+     */
+    List<ShInstituteModel> getShInstituteList(String schoolNO);
 }

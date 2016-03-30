@@ -67,3 +67,35 @@ body {
 	width:100%;
 	padding:12px 40px;
 }
+#panel-8050035{
+	width:inherit;
+	height:auto;
+	margin:5% auto;
+	overflow:none;	
+}
+#panel-8050035 .addon0{
+	font-size:15px;
+	font-weight: bold;
+}
+#panel-8050035 .input0{
+	width:60%;
+	height:auto;
+	margin:2% auto;
+	overflow:none;	
+}
+#panel-8050035 .input1{
+	width:30%;
+	height:auto;
+	margin:2% 20% auto;
+	overflow:none;	
+}
+#panel-8050035 .input2{
+	width:20%;
+	height:auto;
+	margin:2% 20% auto;
+	overflow:none;	
+}
+#panel-8050035 .btn0{
+	width:20%;
+	margin:3% 60% 20%;
+}

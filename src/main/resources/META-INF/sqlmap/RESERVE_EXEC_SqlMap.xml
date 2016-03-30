@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
-<sqlMap namespace="RESERVE_EXEC_EXEC">
-	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.ReserveDO">
+<sqlMap namespace="RESERVE_EXEC">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.ReserveExecDO">
 		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
 		<result column="RESERVE_NO" property="prop.reserveNO" jdbcType="VARCHAR" />
 		<result column="STATUS" property="prop.status" jdbcType="VARCHAR" />
@@ -14,7 +14,7 @@
 		BIZ_NO,RESERVE_NO,STATUS,GMT_CREATE,GMT_MODIFIED
 	</sql>
 
-	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.ReserveDO">
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.ReserveExecDO">
 		INSERT INTO
 		RESERVE_EXEC(
 		<include refid="RESERVE_EXEC.Base_Column_List" />
@@ -35,7 +35,7 @@
 		WHERE BIZ_NO = #value#
 	</select>
 
-	<update id="update" parameterClass="com.yang.thelab.common.dataobj.ReserveDO">
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.ReserveExecDO">
 		UPDATE RESERVE_EXEC SET
 		<isNull property="bizNO">
 			@query

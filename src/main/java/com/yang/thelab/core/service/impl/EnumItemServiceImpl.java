@@ -23,44 +23,40 @@ import com.yang.thelab.core.service.EnumItemService;
  */
 public class EnumItemServiceImpl implements EnumItemService {
 
-    @Autowired
-    private EnumItemDAO enumItemDAO;
+	@Autowired
+	private EnumItemDAO enumItemDAO;
 
-    public void save(EnumItemModel model) {
-        EnumItemDO DO = new EnumItemDO(model.get());
-        try {
-            if (CommUtil.isInsert(model)) {
-                enumItemDAO.insert(DO);
-                model.setBizNO(DO.getBizNO());
-            } else {
-                enumItemDAO.update(DO);
-            }
-        } catch (DuplicateKeyException e) {
-            throw new BizException(CommUtil.getDuplicateKeyItem(e.getMessage()).bizCode());
-        }
-    }
+	public void save(EnumItemModel model) {
+		EnumItemDO DO = new EnumItemDO(model.get());
+		try {
+			if (CommUtil.isInsert(model)) {
+				enumItemDAO.insert(DO);
+				model.setBizNO(DO.getBizNO());
+			} else {
+				enumItemDAO.update(DO);
+			}
+		} catch (DuplicateKeyException e) {
+			throw new BizException(CommUtil.getDuplicateKeyItem(e.getMessage())
+					.bizCode());
+		}
+	}
 
-    public List<EnumItemModel> getListByType(EnumItemType type) {
-        List<EnumItemModel> models = new ArrayList<EnumItemModel>();
-        List<EnumItemDO> enumItemDOs = enumItemDAO.getListByType(type.code());
-        for (EnumItemDO enumItemDO : enumItemDOs) {
-            EnumItemModel model = new EnumItemModel(enumItemDO.get());
-            models.add(model);
-        }
-        return models;
-    }
+	public List<EnumItemModel> getListByType(EnumItemType type) {
+		return CommUtil.covDOList2ModelList(EnumItemModel.class,
+				enumItemDAO.getListByType(type.code()));
+	}
 
-    public List<EnumItemModel> saveItem(String content, EnumItemType type) {
-        if (StringUtils.isBlank(content)) {
-            throw new BizException(BizCode.ENUM_ITEM_CONTENT_BLANK);
-        }
-        EnumItemModel model = new EnumItemModel();
-        model.get().setContent(content);
-        model.get().setType(type);
-        save(model);
-        List<EnumItemModel> list = new ArrayList<EnumItemModel>();
-        list.add(model);
-        return list;
-    }
+	public List<EnumItemModel> saveItem(String content, EnumItemType type) {
+		if (StringUtils.isBlank(content)) {
+			throw new BizException(BizCode.ENUM_ITEM_CONTENT_BLANK);
+		}
+		EnumItemModel model = new EnumItemModel();
+		model.get().setContent(content);
+		model.get().setType(type);
+		save(model);
+		List<EnumItemModel> list = new ArrayList<EnumItemModel>();
+		list.add(model);
+		return list;
+	}
 
 }

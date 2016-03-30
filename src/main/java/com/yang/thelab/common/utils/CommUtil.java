@@ -3,17 +3,21 @@
  * Copyright (c) 2015-2015 All Rights Reserved.
  */
 package com.yang.thelab.common.utils;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.yang.thelab.common.BaseDO;
 import com.yang.thelab.common.BaseModel;
 import com.yang.thelab.common.EnumInterface;
 import com.yang.thelab.common.enums.UniqueEnum;
+import com.yang.thelab.common.exception.BizCode;
+import com.yang.thelab.common.exception.BizException;
 
 
 
@@ -49,6 +53,27 @@ public final class CommUtil {
         return StringUtils.isBlank(model.getBizNO());
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static final <T extends BaseModel> List<T> covDOList2ModelList(Class<T> clazz,
+                                                                          List<? extends BaseDO> doList) {
+        List<T> result = new ArrayList<T>();
+        if(CollectionUtils.isEmpty(doList)){
+            return result;
+        }
+        for (BaseDO DO : doList) {
+                try {
+					T model = clazz.newInstance();
+					model.setProp(DO.get());
+					result.add(model);
+				} catch (InstantiationException e) {
+					throw new BizException(BizCode.SYS_EXCE);
+				} catch (IllegalAccessException e) {
+					throw new BizException(BizCode.SYS_EXCE);
+				}
+           
+        }
+        return result;
+    }
     /**
      * 简单的脱敏字符串
      * 

@@ -1,5 +1,7 @@
 package com.yang.thelab.core.service;
 
+import java.util.List;
+
 import com.yang.thelab.core.model.SchoolModel;
 import com.yang.thelab.core.model.ShInstituteModel;
 import com.yang.thelab.core.model.ShMajorModel;
@@ -40,4 +42,10 @@ public interface SchoolService {
      * @return
      */
     ShMajorModel getMajor(String shMajorNO);
+    /**
+     * 获取学校下的所有学院
+     * @param schoolNO
+     * @return
+     */
+    List<ShInstituteModel> getBySchoolNO(String schoolNO);
 }

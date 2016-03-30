@@ -1,7 +1,7 @@
 $(function() {
 	var reqData = {};
-/*	 ajaxSeq(reqData, '11', true);
-	 ajaxSeq(reqData, '12', true);
+	/*ajaxSeq(reqData, '11', true);
+	ajaxSeq(reqData, '12', true);
 	ajaxSeq(reqData, '21', true);
 	ajaxSeq(reqData, '22', true);*/
 	clearAlertContaint();
@@ -69,6 +69,16 @@ function getParamsBySeq(seq) {
 			filltable: '2'
 		}
 		break;
+	case '32':
+		params = {
+			url : '/api/school',
+			tName : '学院列表',
+			mTable : $('#table-8050032'),
+			getItem : 'getInsitituteList',
+			saveItem : 'save',
+			filltable: '3'
+		}
+		break;
 	}
 	return params;
 }
@@ -93,6 +103,7 @@ function ajaxSeq(reqData, seq, init) {
 			switch(params.filltable){
 			case '1':fillTable1(data);break;
 			case '2':fillTable2(data);break;
+			case '3':fillTable3(data);break;
 			}
 			
 		},
@@ -102,13 +113,16 @@ function ajaxSeq(reqData, seq, init) {
 		}
 	});
 }
-
+function getCaptionStr(tName){
+	var captionStr =  '<caption class="caption-default" data-toggle="tooltip" '
+		+ '  data-placement="bottom"   title="单击显示/隐藏" '
+		+ ' onclick="hideOrShow(this);"><h4>&nbsp;&nbsp;'
+		+ tName
+		+ '</h4></caption>';
+	return captionStr;
+}
 function getmTHead(data, mTable) {
-	var mTHead = '<caption class="caption-default" data-toggle="tooltip" '
-			+ '  data-placement="bottom"   title="单击显示/隐藏" '
-			+ ' onclick="hideOrShow(this);"><h4>&nbsp;&nbsp;'
-			+ data.tName
-			+ '</h4></caption>'
+	var mTHead = getCaptionStr(data.tName)
 			+ '<thead id="'
 			+ myRandomID(3)
 			+ '" ><tr><th>名称</th><th class="table-tr-op">'
@@ -116,6 +130,20 @@ function getmTHead(data, mTable) {
 			+ mTable.get(0).id
 			+ '1'
 			+ '" onclick="addTableRow(this);return false;"  class="btn btn-info btn-sm">'
+			+ ' <span class="glyphicon glyphicon-plus"></span>&nbsp;新增'
+			+ data.tName + ' </a></th></tr></thead><tbody id="' + myRandomID(3)
+			+ '" ></tbody>';
+	return mTHead;
+}
+function getmTHead1(data, mTable) {
+	var mTHead = getCaptionStr(data.tName)
+			+ '<thead id="'
+			+ myRandomID(3)
+			+ '" ><tr><th>名称</th><th>代码</th><th class="table-tr-op">'
+			+ '<a href="#" id="'
+			+ mTable.get(0).id
+			+ '1'
+			+ '" onclick="saveRow(this);return false;"  class="btn btn-info btn-sm">'
 			+ ' <span class="glyphicon glyphicon-plus"></span>&nbsp;新增'
 			+ data.tName + ' </a></th></tr></thead><tbody id="' + myRandomID(3)
 			+ '" ></tbody>';
@@ -134,9 +162,8 @@ function fillTable1(data) {
 // 填充表单body
 function fillTableBody1(mTable, arrs) {
 	for (var i = 0; i < arrs.length; i++) {
-		var obj = arrs[i];
-		var prop = obj.prop;
-		var num = obj.bizNO;
+		var prop = arrs[i].prop;
+		var num = arrs[i].bizNO;
 		var temp = '<tr><td>'
 				+ prop.content
 				+ '</td><td class="table-tr-op"><div class="btn-group btn-group-xs">'
@@ -153,7 +180,7 @@ function fillTable2(data) {
 	var arrs = vdata.pdate;
 	var mTable = data.mTable;
 	if (data.init) {
-		var mTHead = getmTHead(data, mTable);
+		var mTHead = getmTHead1(data, mTable);
 		mTable.append(mTHead);
 	}
 	fillTableBody2(mTable, arrs);
@@ -161,33 +188,71 @@ function fillTable2(data) {
 // 填充表单body2
 function fillTableBody2(mTable, arrs) {
 	for (var i = 0; i < arrs.length; i++) {
-		var obj = arrs[i];
-		var prop = obj.prop;
-		var num = prop.bizNO;
-		var content = prop.name;
+		var prop =  arrs[i].prop;
 		var temp = '<tr><td>'
-				+ content
+				+ prop.name
+				+ '</td><td>'
+				+ prop.code
 				+ '</td><td class="table-tr-op"><div class="btn-group btn-group-xs">'
 				+ '<button type="button" value="'
-				+ num
+				+ prop.bizNO
 				+ '" class="btn btn-info" onclick="clickSTPencilBtn(this.value);" >'
 				+ '<span class="glyphicon glyphicon-pencil">'
 				+ '</span> 修改</button><button type="button" value="'
-				+ num
-				+ '" class="btn btn-info" onclick="clickSTPencilBtn(this.value);" >'
+				+ prop.bizNO
+				+ '" class="btn btn-info" onclick="clickManageInstitute(this.value);" >'
 				+ '<span class="glyphicon glyphicon-th-large"></span> 学院管理</button></div></td></tr>';
 		mTable.append(temp);
 	}
 }
-
+//点击学院管理
+function clickManageInstitute(NO){
+	var reqData = {
+		"service":"",
+		"schoolNO":NO	
+	}
+	ajaxSeq(reqData,"32",true);
+	$('#table-8050031').hide();
+	
+}
+//fillTable2
+function fillTable3(data){
+	console.log(data);
+	var arrs = data.data;
+	var mTable = data.mTable;
+	if (data.init) {
+		var mTHead = getmTHead1(data, mTable);
+		mTable.append(mTHead);
+	}
+	fillTableBody3(mTable, arrs);
+}
+function fillTableBody3(mTable,arrs){
+	for (var i = 0; i < arrs.length; i++) {
+		var prop = arrs[i].prop;
+		var temp = '<tr><td>'
+			+ prop.name
+			+ '</td><td>'
+			+ prop.code
+			+ '</td><td class="table-tr-op"><div class="btn-group btn-group-xs">'
+			+ '<button type="button" value="'
+			+ prop.bizNO
+			+ '" class="btn btn-info" onclick="clickSTPencilBtn(this.value);" >'
+			+ '<span class="glyphicon glyphicon-pencil">'
+			+ '</span> 修改</button><button type="button" value="'
+			+ prop.bizNO
+			+ '" class="btn btn-info" onclick="clickSTPencilBtn(this.value);" >'
+			+ '<span class="glyphicon glyphicon-th-large"></span> 专业管理</button></div></td></tr>';
+		mTable.append(temp);
+	}
+}
 // 显示或隐藏
 function hideOrShow(obj) {
 	while (obj.nextSibling) {
 		var temp = obj.nextSibling;
 		if ($("#" + temp.id).is(':visible') == true) {
-			$('#' + temp.id).hide(400);
+			$('#' + temp.id).hide();
 		} else {
-			$('#' + temp.id).show(400);
+			$('#' + temp.id).show();
 		}
 		obj = obj.nextSibling;
 	}
@@ -228,6 +293,49 @@ function addTableRow(obj) {
 	} else {
 		var msg = "请勿重复操作！";
 		alert_info(msg);
+	}
+}
+//添加，修改
+function saveRow(obj){
+	var tid = obj.id.substring(0, obj.id.length - 1);
+	var mTable = $("#" + tid);
+	switch(tid){
+	case "table-8050031":fillSaveSchool('',tid);break;
+	}
+}
+//新增或修改学校
+function fillSaveSchool(num,tid){
+	var myForm = '<div><span class="input-group-addon addon0">学校信息</span></div>'+
+			'<div class="input-group input0"><span class="input-group-addon" id="shName" >学校名称</span>'+
+	 		'<input type="text" class="form-control"></div><div class="form-group input2">'+
+			'<select class="form-control input" id="shType"><option value="" style="color:gray;" >学校类型</option></select>'+
+			'</div><div class="input-group input1"><span class="input-group-addon" id="shCode" >学校代码</span>'+
+			'<input type="text" class="form-control"></div>'+
+			'<button type="button" class="btn btn-primary btn0" id="btnSubmit">确定</button>';
+	$('#panel-8050035').get(0).innerHTML = myForm;
+	$("#"+tid).hide();
+	if(num != '' ){
+		
+	}else{
+		$.ajax({
+			url : "/api/school",
+			data : {"service":"getSchoolType"},
+			type : 'POST',
+			cache : false,
+			dataType : 'json',
+			success : function(data) {
+				var arrs = data.data;
+				var typeSelect = $('#shType');
+				for (var i = 0; i < arrs.length; i++) {
+					var option = '<option value="'+arrs[i].bizNO+'">'+arrs[i].prop.content+'</option>';
+					typeSelect.append(option);
+				}
+			},
+			error : function(data) {
+				var respData = eval('(' + data.responseText + ')');
+				alert_info(respData.resuDesc);
+			}
+		});
 	}
 }
 // 弹出框

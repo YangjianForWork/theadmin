@@ -1,5 +1,7 @@
 package com.yang.thelab.core.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 
@@ -23,57 +25,64 @@ import com.yang.thelab.core.service.SchoolService;
  */
 public class SchoolServiceImpl implements SchoolService {
 
-    @Autowired
-    private SchoolDAO      schoolDAO;
-    @Autowired
-    private ShInstituteDAO shInstituteDAO;
-    @Autowired
-    private ShMajorDAO     shMajorDAO;
+	@Autowired
+	private SchoolDAO schoolDAO;
+	@Autowired
+	private ShInstituteDAO shInstituteDAO;
+	@Autowired
+	private ShMajorDAO shMajorDAO;
 
-    public void save(SchoolModel model) {
-        SchoolDO DO = new SchoolDO(model.get());
-        try {
-            if (CommUtil.isInsert(model)) {
-                schoolDAO.insert(DO);
-                model.setBizNO(DO.getBizNO());
-            } else {
-                schoolDAO.update(DO);
-            }
-        } catch (DuplicateKeyException e) {
-            throw new BizException(CommUtil.getDuplicateKeyItem(e.getMessage()).bizCode());
-        }
-    }
+	public void save(SchoolModel model) {
+		SchoolDO DO = new SchoolDO(model.get());
+		try {
+			if (CommUtil.isInsert(model)) {
+				schoolDAO.insert(DO);
+				model.setBizNO(DO.getBizNO());
+			} else {
+				schoolDAO.update(DO);
+			}
+		} catch (DuplicateKeyException e) {
+			throw new BizException(CommUtil.getDuplicateKeyItem(e.getMessage())
+					.bizCode());
+		}
+	}
 
-    public SchoolModel get(String bizNO) {
-        return new SchoolModel(schoolDAO.getByKey(bizNO).get());
-    }
+	public SchoolModel get(String bizNO) {
+		return new SchoolModel(schoolDAO.getByKey(bizNO).get());
+	}
 
-    public void saveInstitute(ShInstituteModel instituteModel) {
-        ShInstituteDO instituteDO = new ShInstituteDO(instituteModel.get());
-        if (CommUtil.isInsert(instituteModel)) {
-            shInstituteDAO.insert(instituteDO);
-            instituteModel.setBizNO(instituteDO.getBizNO());
-        } else {
-            shInstituteDAO.update(instituteDO);
-        }
-    }
+	public void saveInstitute(ShInstituteModel instituteModel) {
+		ShInstituteDO instituteDO = new ShInstituteDO(instituteModel.get());
+		if (CommUtil.isInsert(instituteModel)) {
+			shInstituteDAO.insert(instituteDO);
+			instituteModel.setBizNO(instituteDO.getBizNO());
+		} else {
+			shInstituteDAO.update(instituteDO);
+		}
+	}
 
-    public ShInstituteModel getInstitute(String shInstituteNO) {
-        return new ShInstituteModel(shInstituteDAO.getByKey(shInstituteNO).get());
-    }
+	public ShInstituteModel getInstitute(String shInstituteNO) {
+		return new ShInstituteModel(shInstituteDAO.getByKey(shInstituteNO)
+				.get());
+	}
 
-    public void saveMajor(ShMajorModel majorModel) {
-        ShMajorDO majorDO = new ShMajorDO(majorModel.get());
-        if (CommUtil.isInsert(majorModel)) {
-            shMajorDAO.insert(majorDO);
-            majorModel.setBizNO(majorDO.getBizNO());
-        } else {
-            shMajorDAO.update(majorDO);
-        }
-    }
+	public void saveMajor(ShMajorModel majorModel) {
+		ShMajorDO majorDO = new ShMajorDO(majorModel.get());
+		if (CommUtil.isInsert(majorModel)) {
+			shMajorDAO.insert(majorDO);
+			majorModel.setBizNO(majorDO.getBizNO());
+		} else {
+			shMajorDAO.update(majorDO);
+		}
+	}
 
-    public ShMajorModel getMajor(String shMajorNO) {
-        return new ShMajorModel(shMajorDAO.getByKey(shMajorNO).get());
-    }
+	public ShMajorModel getMajor(String shMajorNO) {
+		return new ShMajorModel(shMajorDAO.getByKey(shMajorNO).get());
+	}
+
+	public List<ShInstituteModel> getBySchoolNO(String schoolNO) {
+		return CommUtil.covDOList2ModelList(ShInstituteModel.class,
+				shInstituteDAO.getBySchoolNO(schoolNO));
+	}
 
 }

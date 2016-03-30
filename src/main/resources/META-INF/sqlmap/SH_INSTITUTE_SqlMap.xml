@@ -52,4 +52,13 @@
 		WHERE BIZ_NO = #bizNO#
 	</update>
 
+	<select id="getByCondtion" resultMap="BaseResultMap" parameterClass="java.util.HashMap">
+		SELECT 
+		<include refid="SH_INSTITUTE.Base_Column_List" />
+		FROM SH_INSTITUTE
+		WHERE
+			<isNotEmpty property="schoolNO">
+				SCHOOL_NO = #schoolNO#
+			</isNotEmpty>
+	</select>
 </sqlMap>
