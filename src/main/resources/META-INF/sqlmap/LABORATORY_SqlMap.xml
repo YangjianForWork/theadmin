@@ -4,7 +4,7 @@
 	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.LaboratoryDO">
 		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
 		<result column="NAME" property="prop.name" jdbcType="VARCHAR" />
-		<result column="STATUS" property="prop.status" jdbcType="INTEGER" />
+		<result column="STATUS" property="prop.status" jdbcType="VARCHAR" />
 		<result column="CATEGORY_NO" property="prop.categoryNO" jdbcType="VARCHAR" />
 		<result column="ATTRIBUTE_NO" property="prop.attributeNO" jdbcType="VARCHAR" />
 		<result column="MASTER_NO" property="prop.masterNO" jdbcType="VARCHAR" />

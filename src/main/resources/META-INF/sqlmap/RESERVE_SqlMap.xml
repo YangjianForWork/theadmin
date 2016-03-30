@@ -7,7 +7,7 @@
 		<result column="BOOK_DATE" property="prop.bookDate" jdbcType="TIMESTAMP" />
 		<result column="BEGIN_DATE" property="prop.beginDate" jdbcType="TIMESTAMP" />
 		<result column="FINISH_DATE" property="prop.finishDate" jdbcType="TIMESTAMP" />
-		<result column="STATUS" property="prop.status" jdbcType="INTEGER" />
+		<result column="STATUS" property="prop.status" jdbcType="VARCHAR" />
 		<result column="APPLY_PERS_NO" property="prop.applyPersNO" jdbcType="VARCHAR" />
 		<result column="DEAL_DATE" property="prop.dealDate" jdbcType="TIMESTAMP" />
 		<result column="DEAL_PERS_NO" property="prop.dealPersNO" jdbcType="VARCHAR" />

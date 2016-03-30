@@ -27,6 +27,8 @@
 	
 	<bean id="reserveDAO" class="com.yang.thelab.common.dal.ibatis.IbatisReserveDAO"/>
 	
+	<bean id="reserveExecDAO" class="com.yang.thelab.common.dal.ibatis.IbatisReserveExecDAO" />
+	
 	<bean id="shInstituteDAO" class="com.yang.thelab.common.dal.ibatis.IbatisShInstituteDAO" />
 	
 	<bean id="shMajorDAO" class="com.yang.thelab.common.dal.ibatis.IbatisShMajorDAO" />

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="RESERVE_EXEC_EXEC">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.ReserveDO">
+		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
+		<result column="RESERVE_NO" property="prop.reserveNO" jdbcType="VARCHAR" />
+		<result column="STATUS" property="prop.status" jdbcType="VARCHAR" />
+		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="prop.gmtModified"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,RESERVE_NO,STATUS,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.ReserveDO">
+		INSERT INTO
+		RESERVE_EXEC(
+		<include refid="RESERVE_EXEC.Base_Column_List" />
+		)
+		VALUES (
+		#bizNO#,
+		#prop.reserveNO#,
+		#prop.status#,
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT
+		<include refid="RESERVE_EXEC.Base_Column_List" />
+		FROM RESERVE_EXEC
+		WHERE BIZ_NO = #value#
+	</select>
+
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.ReserveDO">
+		UPDATE RESERVE_EXEC SET
+		<isNull property="bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.status">
+			STATUS = #prop.status#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+
+	<select id="getByCondition" resultMap="BaseResultMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		<include refid="RESERVE_EXEC.Base_Column_List" />
+		FROM RESERVE_EXEC
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="reserveNO" prepend="AND">
+				RESERVE_NO = #reserveNO# 
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+</sqlMap>

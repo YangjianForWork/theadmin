@@ -11,6 +11,7 @@
 	<sqlMap resource="META-INF/sqlmap/LABORATORY_SqlMap.xml"/>
 	<sqlMap resource="META-INF/sqlmap/PERSON_SqlMap.xml" />
 	<sqlMap resource="META-INF/sqlmap/RESERVE_SqlMap.xml"/>
+	<sqlMap resource="META-INF/sqlmap/RESERVE_EXEC_SqlMap.xml"/>
 	<sqlMap resource="META-INF/sqlmap/SCHOOL_SqlMap.xml" />
 	<sqlMap resource="META-INF/sqlmap/SEQ_SqlMap.xml" />
 	<sqlMap resource="META-INF/sqlmap/SH_INSTITUTE_SqlMap.xml" />
