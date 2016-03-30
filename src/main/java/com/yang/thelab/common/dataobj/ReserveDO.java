@@ -3,30 +3,30 @@ package com.yang.thelab.common.dataobj;
 import com.yang.thelab.common.BaseDO;
 import com.yang.thelab.common.enums.LabReseveStatus;
 import com.yang.thelab.common.utils.CommUtil;
-import com.yang.thelab.common.vojo.Reseve;
+import com.yang.thelab.common.vojo.Reserve;
 
 /**
  * 
  * @author YJ.yang
  * @version $Id: ReseveDO.java, v 0.1 2016年3月14日 上午10:52:51 dev Exp $
  */
-public class ReseveDO extends BaseDO<Reseve> {
+public class ReserveDO extends BaseDO<Reserve> {
 
-    public ReseveDO() {
-        this.prop = new Reseve();
+    public ReserveDO() {
+        this.prop = new Reserve();
     }
 
-    public ReseveDO(Reseve prop) {
+    public ReserveDO(Reserve prop) {
         this.prop = prop;
     }
 
     @Override
-    public Reseve getProp() {
+    public Reserve getProp() {
         return this.prop;
     }
 
     @Override
-    public void setProp(Reseve prop) {
+    public void setProp(Reserve prop) {
         this.prop = prop;
     }
     

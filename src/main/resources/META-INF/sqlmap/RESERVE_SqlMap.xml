@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="RESERVE">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.ReserveDO">
+		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
+		<result column="LAB_NO" property="prop.labNO" jdbcType="VARCHAR" />
+		<result column="BOOK_DATE" property="prop.bookDate" jdbcType="TIMESTAMP" />
+		<result column="BEGIN_DATE" property="prop.beginDate" jdbcType="TIMESTAMP" />
+		<result column="FINISH_DATE" property="prop.finishDate" jdbcType="TIMESTAMP" />
+		<result column="STATUS" property="prop.status" jdbcType="INTEGER" />
+		<result column="APPLY_PERS_NO" property="prop.applyPersNO" jdbcType="VARCHAR" />
+		<result column="DEAL_DATE" property="prop.dealDate" jdbcType="TIMESTAMP" />
+		<result column="DEAL_PERS_NO" property="prop.dealPersNO" jdbcType="VARCHAR" />
+		<result column="DEAL_RESON" property="prop.dealReson" jdbcType="VARCHAR" />
+		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="prop.gmtModified"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,LAB_NO,BOOK_DATE,BEGIN_DATE,FINISH_DATE,STATUS,APPLY_PERS_NO,
+		DEAL_DATE,DEAL_PERS_NO,DEAL_RESON,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.ReserveDO">
+		INSERT INTO
+		RESERVE(
+		<include refid="RESERVE.Base_Column_List" />
+		)
+		VALUES (
+		#bizNO#,
+		#prop.labNO#,
+		#prop.bookDate#,
+		#prop.beginDate#,
+		#prop.finishDate#,
+		#prop.status#,
+		#prop.applyPersNO#,
+		#prop.dealDate#,
+		#prop.dealPersNO#,
+		#prop.dealReson#,
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT
+		<include refid="RESERVE.Base_Column_List" />
+		FROM RESERVE
+		WHERE BIZ_NO = #value#
+	</select>
+
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.ReserveDO">
+		UPDATE RESERVE SET
+		<isNull property="bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.status">
+			STATUS = #prop.status#,
+		</isNotNull>
+		<isNotNull property="prop.dealDate">
+			DEAL_DATE = #prop.dealDate#,
+		</isNotNull>
+		<isNotNull property="prop.dealPersNO">
+			DEAL_PERS_NO = #prop.dealPersNO#,
+		</isNotNull>
+		<isNotNull property="prop.dealReson">
+			DEAL_RESON = #prop.dealReson#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+
+	<select id="getByCondition" resultMap="BaseResultMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		<include refid="RESERVE.Base_Column_List" />
+		FROM RESERVE
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="status" prepend="AND">
+				STATUS = #status# 
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<sql id="compQueryCond">
+		FROM RESERVE P
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="status" prepend="AND">
+				STATUS = #status# 
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<select id="compQueryCount" resultClass="java.lang.Long"
+		parameterClass="com.yang.thelab.common.requ.ReserveQueryRequ">
+		SELECT
+		COUNT(BIZ_NO)
+		<include refid="RESERVE.compQueryCond" />
+	</select>
+
+
+	<select id="compQuery" resultMap="BaseResultMap"
+		parameterClass="com.yang.thelab.common.requ.ReserveQueryRequ">
+		SELECT
+		<include refid="RESERVE.Base_Column_List" />
+		<include refid="RESERVE.compQueryCond" />
+		ORDER BY GMT_CREATE DESC
+		LIMIT #beginIndex#,#itemsPerPage#
+	</select>
+</sqlMap>

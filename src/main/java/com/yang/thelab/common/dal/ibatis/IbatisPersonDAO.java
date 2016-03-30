@@ -12,6 +12,7 @@ import com.yang.thelab.common.dal.PersonDAO;
 import com.yang.thelab.common.dataobj.PersonDO;
 import com.yang.thelab.common.enums.SeqServiceKey;
 import com.yang.thelab.common.requ.PersonQueryRequ;
+import com.yang.thelab.common.utils.PaginatUtil;
 
 public class IbatisPersonDAO extends BaseDAO<PersonDO> implements PersonDAO {
 
@@ -37,22 +38,8 @@ public class IbatisPersonDAO extends BaseDAO<PersonDO> implements PersonDAO {
         return (List<PersonDO>) getSqlMapClientTemplate().queryForList( "PERSON.queryByCustNoList", param);
     }
 
-    @SuppressWarnings("unchecked")
-    public Paginator<PersonDO> compQuery(PersonQueryRequ req) {
-        Long count = (Long) getSqlMapClientTemplate().queryForObject("PERSON.compQueryCount",
-            req);
-        if (count.longValue() == 0) {
-            return new Paginator<PersonDO>(req.getItemsPerPage(),0);
-        }
-        Paginator<PersonDO> result = null;
-        result = new Paginator<PersonDO>(req.getItemsPerPage(), count.intValue());
-        result.setPage(req.getPage());
-        req.setItemsPerPage(result.getItemsPerPage());
-        req.setBeginIndex(result.getBeginIndex() - 1);
-        req.setEndIndex(result.getEndIndex());
-        result.setPdate((List<PersonDO>) getSqlMapClientTemplate()
-            .queryForList("PERSON.compQuery", req));
-        return result;
+    public Paginator<PersonDO> compQuery(PersonQueryRequ requ) {
+        return PaginatUtil.execute(getSqlMapClientTemplate(), getSeqServiceKey(), requ);
     }
 
 }

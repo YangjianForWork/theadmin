@@ -19,9 +19,13 @@
 	
 	<bean id="enumItemDAO" class="com.yang.thelab.common.dal.ibatis.IbatisEnumItemDAO" />
 	
+	<bean id="laboratoryDAO" class="com.yang.thelab.common.dal.ibatis.IbatisLaboratoryDAO" />
+	
 	<bean id="personDAO" class="com.yang.thelab.common.dal.ibatis.IbatisPersonDAO" />
 	
 	<bean id="schoolDAO" class="com.yang.thelab.common.dal.ibatis.IbatisSchoolDAO" />
+	
+	<bean id="reserveDAO" class="com.yang.thelab.common.dal.ibatis.IbatisReserveDAO"/>
 	
 	<bean id="shInstituteDAO" class="com.yang.thelab.common.dal.ibatis.IbatisShInstituteDAO" />
 	

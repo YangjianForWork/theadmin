@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2010-2011 The myBatis Team Licensed under the Apache License, 
+	Version 2.0 (the "License"); you may not use this file except in compliance 
+	with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
+<configuration debug="false">
+    <property file="${user.home}/theadmin/conf/server.conf" />
+	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+	<property name="LOG_HOME" value="${user.home}/theadmin/logs" />
+	<!-- 控制台输出 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %X{tracerID} %logger{50} -%msg%n</pattern>
+			<charset>UTF-8</charset> 
+		</encoder>
+	</appender>
+	<!-- 按照每天生成日志文件 -->
+	<appender name="ALL"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/default.log</file>  
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_HOME}/default.log.%d{yyyy-MM-dd}</FileNamePattern>
+			<!--日志文件保留天数 -->
+			<MaxHistory>180</MaxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+		    	<MaxFileSize>2MB</MaxFileSize>
+		    </TimeBasedFileNamingAndTriggeringPolicy>     
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %X{tracerID} %logger{50} -%msg%n</pattern>
+			<charset>UTF-8</charset> 
+		</encoder>
+	</appender>
+	<!-- 按照每天生成日志文件 -->
+	<appender name="ERROR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		 <file>${LOG_HOME}/error.log</file>  
+		 <filter class="ch.qos.logback.classic.filter.ThresholdFilter">   
+	      <level>WARN</level>   
+	    </filter>   
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>${LOG_HOME}/error.log.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<!--日志文件保留天数 -->
+			<MaxHistory>180</MaxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+		    	<MaxFileSize>2MB</MaxFileSize>
+		    </TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %X{tracerID} %logger{50} -%msg%n</pattern>
+			<charset>UTF-8</charset> 
+		</encoder>
+	</appender>
+	
+	<!-- show parameters for hibernate sql 专为 Hibernate 定制 -->
+	<!--myibatis log configure -->
+	
+	<logger name="com.apache.ibatis" level="${thelab.log.sql.level}" />
+	<logger name="java.sql.Connection" level="${thelab.log.sql.level}" />
+	<logger name="java.sql.Statement" level="${thelab.log.sql.level}" />
+	<logger name="java.sql.PreparedStatement" level="${thelab.log.sql.level}" />
+	
+	<!-- 日志输出级别 -->
+	<root level="${thelab.log.root.level}">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="ALL" />
+		<appender-ref ref="ERROR" />
+	</root>
+</configuration>

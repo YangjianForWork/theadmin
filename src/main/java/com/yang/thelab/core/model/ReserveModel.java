@@ -1,20 +1,20 @@
 package com.yang.thelab.core.model;
 
 import com.yang.thelab.common.BaseModel;
-import com.yang.thelab.common.vojo.Reseve;
+import com.yang.thelab.common.vojo.Reserve;
 
 /**
  * 
  * @author YJ.yang
  * @version $Id: ReseveModel.java, v 0.1 2016年3月14日 上午11:08:58 dev Exp $
  */
-public class ReseveModel extends BaseModel<Reseve> {
+public class ReserveModel extends BaseModel<Reserve> {
 
-    public ReseveModel() {
-        this.prop = new Reseve();
+    public ReserveModel() {
+        this.prop = new Reserve();
     }
 
-    public ReseveModel(Reseve prop) {
+    public ReserveModel(Reserve prop) {
         this.prop = prop;
     }
 }

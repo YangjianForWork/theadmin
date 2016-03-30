@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="LABORATORY">
+	<resultMap id="BaseResultMap" class="com.yang.thelab.common.dataobj.LaboratoryDO">
+		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
+		<result column="NAME" property="prop.name" jdbcType="VARCHAR" />
+		<result column="STATUS" property="prop.status" jdbcType="INTEGER" />
+		<result column="CATEGORY_NO" property="prop.categoryNO" jdbcType="VARCHAR" />
+		<result column="ATTRIBUTE_NO" property="prop.attributeNO" jdbcType="VARCHAR" />
+		<result column="MASTER_NO" property="prop.masterNO" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="prop.address" jdbcType="VARCHAR" />
+		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
+		<result column="GMT_MODIFIED" property="prop.gmtModified"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		BIZ_NO,NAME,STATUS,CATEGORY_NO,ATTRIBUTE_NO,MASTER_NO,ADDRESS,GMT_CREATE,GMT_MODIFIED
+	</sql>
+
+	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.LaboratoryDO">
+		INSERT INTO
+		LABORATORY(
+		<include refid="LABORATORY.Base_Column_List" />
+		)
+		VALUES (
+		#bizNO#,
+		#prop.name#,
+		#prop.status#,
+		#prop.categoryNO#,
+		#prop.attributeNO#,
+		#prop.masterNO#,
+		#prop.address#,
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getByKey" resultMap="BaseResultMap" parameterClass="java.lang.String">
+		SELECT
+		<include refid="LABORATORY.Base_Column_List" />
+		FROM LABORATORY
+		WHERE BIZ_NO = #value#
+	</select>
+
+	<update id="update" parameterClass="com.yang.thelab.common.dataobj.LaboratoryDO">
+		UPDATE LABORATORY SET
+		<isNull property="bizNO">
+			@query
+		</isNull>
+		<isNotNull property="prop.name">
+			NAME = #prop.name#,
+		</isNotNull>
+		<isNotNull property="prop.status">
+			STATUS = #prop.status#,
+		</isNotNull>
+		<isNotNull property="prop.masterNO">
+			MASTER_NO = #prop.status#,
+		</isNotNull>
+		<isNotNull property="prop.address">
+			ADDRESS = #prop.address#,
+		</isNotNull>
+		<isNotNull property="prop.categoryNO">
+			CATEGORY_NO = #prop.categoryNO#,
+		</isNotNull>
+		<isNotNull property="prop.attributeNO">
+			ATTRIBUTE_NO = #prop.attributeNO#,
+		</isNotNull>
+		GMT_MODIFIED = NOW()
+		WHERE BIZ_NO = #bizNO#
+	</update>
+
+	<select id="getByCondition" resultMap="BaseResultMap"
+		parameterClass="java.util.HashMap">
+		SELECT
+		<include refid="LABORATORY.Base_Column_List" />
+		FROM LABORATORY
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="name" prepend="AND">
+				NAME LIKE CONCAT('%',#name#,'%') 
+			</isNotEmpty>
+			<isNotEmpty property="status" prepend="AND">
+				STATUS = #status# 
+			</isNotEmpty>
+		</dynamic>
+	</select>
+
+	<sql id="compQueryCond">
+		FROM LABORATORY P
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="status" prepend="AND">
+				STATUS = #status# 
+			</isNotEmpty>
+			<isNotEmpty property="name" prepend="AND">
+				NAME LIKE CONCAT('%',#name#,'%') 
+			</isNotEmpty>
+		</dynamic>
+	</sql>
+
+	<select id="compQueryCount" resultClass="java.lang.Long"
+		parameterClass="com.yang.thelab.common.requ.LaboratoryQueryRequ">
+		SELECT
+		COUNT(BIZ_NO)
+		<include refid="LABORATORY.compQueryCond" />
+	</select>
+
+
+	<select id="compQuery" resultMap="BaseResultMap"
+		parameterClass="com.yang.thelab.common.requ.LaboratoryQueryRequ">
+		SELECT
+		<include refid="LABORATORY.Base_Column_List" />
+		<include refid="LABORATORY.compQueryCond" />
+		ORDER BY GMT_CREATE DESC
+		LIMIT #beginIndex#,#itemsPerPage#
+	</select>
+</sqlMap>

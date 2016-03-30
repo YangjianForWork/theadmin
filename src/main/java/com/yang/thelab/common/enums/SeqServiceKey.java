@@ -12,8 +12,6 @@ import com.yang.thelab.common.EnumInterface;
  * @version $Id: SeqServiceKey.java, v 0.1 2015年11月12日 下午11:15:16 nibo Exp $
  */
 public enum SeqServiceKey implements EnumInterface {
-   
-
     /**用户*/
     CUSTOMER("CUSTOMER", "用户", "CR"),
     /**人*/
@@ -23,15 +21,17 @@ public enum SeqServiceKey implements EnumInterface {
     /**班级*/
     CLASSES("CLASSES","班级","CL"),
     /**学校*/
-    SCHOOL("SCHOOL","","SH"),
+    SCHOOL("SCHOOL","学校","SH"),
     /**实验室*/
-    LABORATORY("LABORATORY","","LB"),
+    LABORATORY("LABORATORY","实验室","LB"),
     /**预约单*/
-    RESERVE("RESERVE","","RS"),
+    RESERVE("RESERVE","预约单","RS"),
+    /**预约执行单*/
+    RESERVE_EXEC("RESERVE_EXEC","预约执行单","RE"),
     /**学院*/
-    SH_INSTITUTE("SH_INSTITUTE","","SI"),
+    SH_INSTITUTE("SH_INSTITUTE","学院","SI"),
     /**专业*/
-    SH_MAJOR("SH_MAJOR","","SJ"),
+    SH_MAJOR("SH_MAJOR","专业","SJ"),
     ;
     private String code;
     private String desc;

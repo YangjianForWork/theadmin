@@ -11,7 +11,7 @@ import com.yang.thelab.common.enums.LabReseveStatus;
  * @author YJ.yang
  * @version $Id: Reseve.java, v 0.1 2016年3月14日 上午10:39:09 dev Exp $
  */
-public class Reseve extends BaseSO {
+public class Reserve extends BaseSO {
 
     /** 实验室编号*/
     private String          labNO;

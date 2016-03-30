@@ -1,6 +1,11 @@
 package com.yang.thelab.common.dal;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.yang.thelab.common.Paginator;
 import com.yang.thelab.common.dataobj.LaboratoryDO;
+import com.yang.thelab.common.requ.LaboratoryQueryRequ;
 
 /**
  * 
@@ -14,4 +19,8 @@ public interface LaboratoryDAO {
     int update(LaboratoryDO obj);
     
     LaboratoryDO getByKey(String key);
+    
+    Paginator<LaboratoryDO> compQuery(LaboratoryQueryRequ requ);
+    
+    List<LaboratoryDO> getByCondtion(HashMap<String, Object> params);
 }
