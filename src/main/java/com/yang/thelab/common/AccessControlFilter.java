@@ -30,7 +30,6 @@ public class AccessControlFilter extends OncePerRequestFilter {
             return;
         }
         String uri = request.getRequestURI();
-        System.out.println(uri);
         LoginControlEnum item =  (LoginControlEnum)CommUtil.getEnumByCode(LoginControlEnum.class, uri);
         if (item != null) {
             request.setAttribute("code", uri);

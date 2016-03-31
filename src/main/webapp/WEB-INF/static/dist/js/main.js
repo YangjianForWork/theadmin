@@ -308,10 +308,10 @@ function fillSaveSchool(num,tid){
 	var myForm = '<div><span class="input-group-addon addon0">学校信息</span></div>'+
 			'<div class="input-group input0"><span class="input-group-addon" id="shName" >学校名称</span>'+
 	 		'<input type="text" class="form-control"></div><div class="form-group input2">'+
-			'<select class="form-control input" id="shType"><option value="" style="color:gray;" >学校类型</option></select>'+
+			'<select class="form-control input" id="shType"><option value="">学校类型</option></select>'+
 			'</div><div class="input-group input1"><span class="input-group-addon" id="shCode" >学校代码</span>'+
 			'<input type="text" class="form-control"></div>'+
-			'<button type="button" class="btn btn-primary btn0" id="btnSubmit">确定</button>';
+			'<button type="button" class="btn btn-info btn0" id="btnSubmit">确定</button>';
 	$('#panel-8050035').get(0).innerHTML = myForm;
 	$("#"+tid).hide();
 	if(num != '' ){

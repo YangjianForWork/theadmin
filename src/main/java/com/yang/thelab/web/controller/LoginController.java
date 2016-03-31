@@ -22,7 +22,6 @@ public class LoginController extends BaseController {
     @RequestMapping("/control")
     public String controllLogin(HttpServletRequest request, HttpServletResponse response) {
         String uri = (String) request.getAttribute("code");
-        System.out.println(uri);
         LoginControlEnum item = (LoginControlEnum)CommUtil.getEnumByCode(LoginControlEnum.class,
             uri);
         if (item == null) {
