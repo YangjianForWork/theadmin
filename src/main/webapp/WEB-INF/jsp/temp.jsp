@@ -38,8 +38,7 @@
 				</table>
 				<table class="table table-hover" id="table-8050034">
 				</table>
-				<div id="panel-8050035">
-				</div>
+				<div id="panel-8050035"></div>
 			</div>
 			<ul class="pagination">
 				<li><a href="#">&laquo;</a></li>

@@ -63,4 +63,8 @@ public class SchoolManagerImpl implements SchoolManager {
 		return schoolService.getBySchoolNO(schoolNO);
 	}
 
+    public SchoolDTO get(String bizNO) {
+        return new SchoolDTO(schoolService.get(bizNO).get());
+    }
+
 }

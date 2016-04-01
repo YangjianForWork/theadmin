@@ -41,4 +41,11 @@ public interface SchoolManager {
      * @return
      */
     List<ShInstituteModel> getShInstituteList(String schoolNO);
+    /**
+     * 根据ID查询
+     * 
+     * @param bizNO
+     * @return
+     */
+    SchoolDTO get(String bizNO);
 }

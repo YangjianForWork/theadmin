@@ -1,9 +1,9 @@
 $(function() {
 	var reqData = {};
-	/*ajaxSeq(reqData, '11', true);
-	ajaxSeq(reqData, '12', true);
-	ajaxSeq(reqData, '21', true);
-	ajaxSeq(reqData, '22', true);*/
+	/*
+	 * ajaxSeq(reqData, '11', true); ajaxSeq(reqData, '12', true);
+	 * ajaxSeq(reqData, '21', true); ajaxSeq(reqData, '22', true);
+	 */
 	clearAlertContaint();
 	ajaxSeq(reqData, '31', true);
 });
@@ -16,7 +16,7 @@ function getParamsBySeq(seq) {
 		mTable : null,
 		getItem : '',
 		saveItem : '',
-		filltable: '1'
+		filltable : '1'
 	}
 	switch (seq) {
 	case '11':
@@ -26,7 +26,7 @@ function getParamsBySeq(seq) {
 			mTable : $('#table-8050011'),
 			getItem : 'getLabCategory',
 			saveItem : 'saveLabCategory',
-			filltable: '1'
+			filltable : '1'
 		}
 		break;
 	case '12':
@@ -36,7 +36,7 @@ function getParamsBySeq(seq) {
 			mTable : $('#table-8050012'),
 			getItem : 'getLabAttribute',
 			saveItem : 'saveLabAttribute',
-			filltable: '1'
+			filltable : '1'
 		}
 		break;
 	case '21':
@@ -46,7 +46,7 @@ function getParamsBySeq(seq) {
 			mTable : $('#table-8050021'),
 			getItem : 'getSchoolType',
 			saveItem : 'saveSchoolType',
-			filltable: '1'
+			filltable : '1'
 		}
 		break;
 	case '22':
@@ -56,7 +56,7 @@ function getParamsBySeq(seq) {
 			mTable : $('#table-8050022'),
 			getItem : 'getSchoolGrade',
 			saveItem : 'saveSchoolGrade',
-			filltable: '1'
+			filltable : '1'
 		}
 		break;
 	case '31':
@@ -66,7 +66,7 @@ function getParamsBySeq(seq) {
 			mTable : $('#table-8050031'),
 			getItem : 'query',
 			saveItem : 'save',
-			filltable: '2'
+			filltable : '2'
 		}
 		break;
 	case '32':
@@ -76,7 +76,7 @@ function getParamsBySeq(seq) {
 			mTable : $('#table-8050032'),
 			getItem : 'getInsitituteList',
 			saveItem : 'save',
-			filltable: '3'
+			filltable : '3'
 		}
 		break;
 	}
@@ -100,12 +100,18 @@ function ajaxSeq(reqData, seq, init) {
 			data['tName'] = params.tName;
 			data['init'] = init;
 			data['mTable'] = params.mTable;
-			switch(params.filltable){
-			case '1':fillTable1(data);break;
-			case '2':fillTable2(data);break;
-			case '3':fillTable3(data);break;
+			switch (params.filltable) {
+			case '1':
+				fillTable1(data);
+				break;
+			case '2':
+				fillTable2(data);
+				break;
+			case '3':
+				fillTable3(data);
+				break;
 			}
-			
+
 		},
 		error : function(data) {
 			var respData = eval('(' + data.responseText + ')');
@@ -113,12 +119,11 @@ function ajaxSeq(reqData, seq, init) {
 		}
 	});
 }
-function getCaptionStr(tName){
-	var captionStr =  '<caption class="caption-default" data-toggle="tooltip" '
-		+ '  data-placement="bottom"   title="单击显示/隐藏" '
-		+ ' onclick="hideOrShow(this);"><h4>&nbsp;&nbsp;'
-		+ tName
-		+ '</h4></caption>';
+function getCaptionStr(tName) {
+	var captionStr = '<caption class="caption-default" data-toggle="tooltip" '
+			+ '  data-placement="bottom"   title="单击显示/隐藏" '
+			+ ' onclick="hideOrShow(this);"><h4>&nbsp;&nbsp;' + tName
+			+ '</h4></caption>';
 	return captionStr;
 }
 function getmTHead(data, mTable) {
@@ -149,7 +154,7 @@ function getmTHead1(data, mTable) {
 			+ '" ></tbody>';
 	return mTHead;
 }
-//初始化表单
+// 初始化表单
 function fillTable1(data) {
 	var arrs = data.data;
 	var mTable = data.mTable;
@@ -188,7 +193,46 @@ function fillTable2(data) {
 // 填充表单body2
 function fillTableBody2(mTable, arrs) {
 	for (var i = 0; i < arrs.length; i++) {
-		var prop =  arrs[i].prop;
+		var prop = arrs[i].prop;
+		var temp = '<tr><td>'
+				+ prop.name
+				+ '</td><td>'
+				+ prop.code
+				+ '</td><td class="table-tr-op"><div class="btn-group btn-group-xs">'
+				+ '<button type="button" value="'
+				+ prop.bizNO
+				+ '" class="btn btn-info" onclick="fillSaveSchool(this.value);" >'
+				+ '<span class="glyphicon glyphicon-pencil">'
+				+ '</span> 修改</button><button type="button" value="'
+				+ prop.bizNO
+				+ '" class="btn btn-info" onclick="clickManageInstitute(this.value);" >'
+				+ '<span class="glyphicon glyphicon-th-large"></span> 学院管理</button></div></td></tr>';
+		mTable.append(temp);
+	}
+}
+// 点击学院管理
+function clickManageInstitute(NO) {
+	var reqData = {
+		"service" : "",
+		"schoolNO" : NO
+	}
+	ajaxSeq(reqData, "32", true);
+	$('#table-8050031').hide();
+
+}
+// fillTable2
+function fillTable3(data) {
+	var arrs = data.data;
+	var mTable = data.mTable;
+	if (data.init) {
+		var mTHead = getmTHead1(data, mTable);
+		mTable.append(mTHead);
+	}
+	fillTableBody3(mTable, arrs);
+}
+function fillTableBody3(mTable, arrs) {
+	for (var i = 0; i < arrs.length; i++) {
+		var prop = arrs[i].prop;
 		var temp = '<tr><td>'
 				+ prop.name
 				+ '</td><td>'
@@ -200,48 +244,8 @@ function fillTableBody2(mTable, arrs) {
 				+ '<span class="glyphicon glyphicon-pencil">'
 				+ '</span> 修改</button><button type="button" value="'
 				+ prop.bizNO
-				+ '" class="btn btn-info" onclick="clickManageInstitute(this.value);" >'
-				+ '<span class="glyphicon glyphicon-th-large"></span> 学院管理</button></div></td></tr>';
-		mTable.append(temp);
-	}
-}
-//点击学院管理
-function clickManageInstitute(NO){
-	var reqData = {
-		"service":"",
-		"schoolNO":NO	
-	}
-	ajaxSeq(reqData,"32",true);
-	$('#table-8050031').hide();
-	
-}
-//fillTable2
-function fillTable3(data){
-	console.log(data);
-	var arrs = data.data;
-	var mTable = data.mTable;
-	if (data.init) {
-		var mTHead = getmTHead1(data, mTable);
-		mTable.append(mTHead);
-	}
-	fillTableBody3(mTable, arrs);
-}
-function fillTableBody3(mTable,arrs){
-	for (var i = 0; i < arrs.length; i++) {
-		var prop = arrs[i].prop;
-		var temp = '<tr><td>'
-			+ prop.name
-			+ '</td><td>'
-			+ prop.code
-			+ '</td><td class="table-tr-op"><div class="btn-group btn-group-xs">'
-			+ '<button type="button" value="'
-			+ prop.bizNO
-			+ '" class="btn btn-info" onclick="clickSTPencilBtn(this.value);" >'
-			+ '<span class="glyphicon glyphicon-pencil">'
-			+ '</span> 修改</button><button type="button" value="'
-			+ prop.bizNO
-			+ '" class="btn btn-info" onclick="clickSTPencilBtn(this.value);" >'
-			+ '<span class="glyphicon glyphicon-th-large"></span> 专业管理</button></div></td></tr>';
+				+ '" class="btn btn-info" onclick="clickSTPencilBtn(this.value);" >'
+				+ '<span class="glyphicon glyphicon-th-large"></span> 专业管理</button></div></td></tr>';
 		mTable.append(temp);
 	}
 }
@@ -295,41 +299,56 @@ function addTableRow(obj) {
 		alert_info(msg);
 	}
 }
-//添加，修改
-function saveRow(obj){
+// 添加，修改
+function saveRow(obj) {
 	var tid = obj.id.substring(0, obj.id.length - 1);
 	var mTable = $("#" + tid);
-	switch(tid){
-	case "table-8050031":fillSaveSchool('',tid);break;
+	switch (tid) {
+	case "table-8050031":
+		fillSaveSchool('');
+		break;
 	}
 }
-//新增或修改学校
-function fillSaveSchool(num,tid){
-	var myForm = '<div><span class="input-group-addon addon0">学校信息</span></div>'+
-			'<div class="input-group input0"><span class="input-group-addon" id="shName" >学校名称</span>'+
-	 		'<input type="text" class="form-control"></div><div class="form-group input2">'+
-			'<select class="form-control input" id="shType"><option value="">学校类型</option></select>'+
-			'</div><div class="input-group input1"><span class="input-group-addon" id="shCode" >学校代码</span>'+
-			'<input type="text" class="form-control"></div>'+
-			'<button type="button" class="btn btn-info btn0" id="btnSubmit">确定</button>';
+//激活确认按钮
+function ableSaveSchoolBtn() {
+	alert('able');
+	$("#saveSchoolBtn").attr("disabled", "false");
+}
+// 新增或修改学校
+function fillSaveSchool(num) {
+	var myForm = '<div><span class="input-group-addon addon0">学校信息</span></div>'
+			+ '<div class="input-group input0"><span class="input-group-addon">学校名称</span>'
+			+ '<input type="text" class="form-control" id="shName" onchange="ableSaveSchoolBtn();" >'
+			+ '</div><div class="form-group input2">'
+			+ '<select class="form-control input" id="shType" onchange="ableSaveSchoolBtn();" >'
+			+ '<option value="">学校类型</option></select>'
+			+ '</div><div class="input-group input2"><span class="input-group-addon"  >学校代码</span>'
+			+ '<input type="text" class="form-control" id="shCode" onchange="ableSaveSchoolBtn();" ></div>'
+			+ '<button type="button" class="btn btn-info btn0" id="saveSchoolBtn" '
+			+ ' onclick="saveSchool();">确定</button>';
 	$('#panel-8050035').get(0).innerHTML = myForm;
-	$("#"+tid).hide();
-	if(num != '' ){
-		
-	}else{
+	$("#table-8050031").hide();
+	schoolTypeSelect();
+	$("#saveSchoolBtn").attr("disabled", "true");
+	if (num != '') {
 		$.ajax({
 			url : "/api/school",
-			data : {"service":"getSchoolType"},
+			data : {
+				"service" : "getByNO",
+				"bizNO" : num
+			},
 			type : 'POST',
 			cache : false,
 			dataType : 'json',
 			success : function(data) {
-				var arrs = data.data;
-				var typeSelect = $('#shType');
-				for (var i = 0; i < arrs.length; i++) {
-					var option = '<option value="'+arrs[i].bizNO+'">'+arrs[i].prop.content+'</option>';
-					typeSelect.append(option);
-				}
+				var prop = data.data.prop;
+				$('#shName').attr("value", prop.name);
+				$('#shCode').attr("value", prop.code);
+				$.each($("#shType option"), function(i, n) {
+					if ($(n).val() == prop.typeNO) {
+						$(n).attr("selected", true);
+					}
+				});
 			},
 			error : function(data) {
 				var respData = eval('(' + data.responseText + ')');
@@ -337,6 +356,37 @@ function fillSaveSchool(num,tid){
 			}
 		});
 	}
+}
+function saveSchool() {
+	var name = $('#shName').attr("value");
+	var code = $('#shCode').attr("value");
+	var typeNO = $("#shType").find("option:selected").val();
+	console.log('name:' + name + '-code:' + code + '-type:' + typeNO);
+}
+// 学校类型下拉框
+function schoolTypeSelect() {
+	$.ajax({
+		url : "/api/school",
+		data : {
+			"service" : "getSchoolType"
+		},
+		type : 'POST',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			var arrs = data.data;
+			var typeSelect = $('#shType');
+			for (var i = 0; i < arrs.length; i++) {
+				var option = '<option value="' + arrs[i].bizNO + '">'
+						+ arrs[i].prop.content + '</option>';
+				typeSelect.append(option);
+			}
+		},
+		error : function(data) {
+			var respData = eval('(' + data.responseText + ')');
+			alert_info(respData.resuDesc);
+		}
+	});
 }
 // 弹出框
 function alert_info(msg) {
@@ -365,11 +415,10 @@ function clickOKBtn(tableID) {
 	var tr = $('#propContent').get(0).parentNode.parentNode;
 	removeById(tr.id);
 }
-//点击修改
-function clickEditBtn(){
-	
-}
+// 点击修改
+function clickEditBtn() {
 
+}
 
 // =====待用=====
 function hoverCaption(obj) {

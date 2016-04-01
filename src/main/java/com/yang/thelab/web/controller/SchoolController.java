@@ -54,4 +54,9 @@ public class SchoolController extends BaseController {
     public void getInstituteBySchool(String schoolNO,HttpServletResponse response){
     	toResponse(response,schoolManager.getShInstituteList(schoolNO));
     }
+    
+    @RequestMapping(value="/api/school",params = {"service=getByNO"})
+    public void getByBizNO(String bizNO,HttpServletResponse response){
+        toResponse(response,schoolManager.get(bizNO));
+    }
 }
