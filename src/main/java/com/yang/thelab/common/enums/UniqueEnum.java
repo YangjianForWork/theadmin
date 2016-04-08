@@ -28,6 +28,8 @@ public enum UniqueEnum implements EnumInterface {
     UQ_EI_CONT_TYPE("uq_ei_cont_type","枚举内容同一类型唯一冲突",BizCode.ENUM_ITEM_CONTENT_EXSIT),
     /** 学校名称唯一性约束*/
     UQ_SH_NAME("uq_sh_name","学校名称唯一性约束",BizCode.SCHOOL_NAME_EXSIT),
+    /** 学校代码唯一性约束*/
+    UQ_SH_CODE("uq_sh_code","学校代码唯一性约束",BizCode.SCHOOL_CODE_EXSIT),
     ;
 
     private String                 code;

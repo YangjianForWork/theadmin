@@ -89,7 +89,7 @@
 		SELECT
 		<include refid="SCHOOL.Base_Column_List" />
 		<include refid="SCHOOL.compQueryCond" />
-		ORDER BY GMT_CREATE DESC
+		ORDER BY CODE DESC
 		LIMIT #beginIndex#,#itemsPerPage#
 	</select>
 </sqlMap>

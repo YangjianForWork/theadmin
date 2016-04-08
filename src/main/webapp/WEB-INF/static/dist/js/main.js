@@ -184,6 +184,8 @@ function fillTable2(data) {
 	var vdata = data.data;
 	var arrs = vdata.pdate;
 	var mTable = data.mTable;
+	mTable.get(0).innerHTML = '';
+	mTable.show();
 	if (data.init) {
 		var mTHead = getmTHead1(data, mTable);
 		mTable.append(mTHead);
@@ -309,27 +311,26 @@ function saveRow(obj) {
 		break;
 	}
 }
-//激活确认按钮
+// 激活确认按钮
 function ableSaveSchoolBtn() {
-	alert('able');
-	$("#saveSchoolBtn").attr("disabled", "false");
+	$("#saveSchoolBtn").removeClass("disable").removeAttr('disabled');
 }
 // 新增或修改学校
 function fillSaveSchool(num) {
 	var myForm = '<div><span class="input-group-addon addon0">学校信息</span></div>'
+			+ '<input type="hidden" class="form-control" id="shNO">'
 			+ '<div class="input-group input0"><span class="input-group-addon">学校名称</span>'
-			+ '<input type="text" class="form-control" id="shName" onchange="ableSaveSchoolBtn();" >'
+			+ '<input type="text" class="form-control" id="shName" >'
 			+ '</div><div class="form-group input2">'
-			+ '<select class="form-control input" id="shType" onchange="ableSaveSchoolBtn();" >'
+			+ '<select class="form-control input" id="shType">'
 			+ '<option value="">学校类型</option></select>'
 			+ '</div><div class="input-group input2"><span class="input-group-addon"  >学校代码</span>'
-			+ '<input type="text" class="form-control" id="shCode" onchange="ableSaveSchoolBtn();" ></div>'
+			+ '<input type="text" class="form-control" id="shCode"  ></div>'
 			+ '<button type="button" class="btn btn-info btn0" id="saveSchoolBtn" '
 			+ ' onclick="saveSchool();">确定</button>';
 	$('#panel-8050035').get(0).innerHTML = myForm;
 	$("#table-8050031").hide();
 	schoolTypeSelect();
-	$("#saveSchoolBtn").attr("disabled", "true");
 	if (num != '') {
 		$.ajax({
 			url : "/api/school",
@@ -344,6 +345,7 @@ function fillSaveSchool(num) {
 				var prop = data.data.prop;
 				$('#shName').attr("value", prop.name);
 				$('#shCode').attr("value", prop.code);
+				$('#shNO').attr("value",prop.bizNO);
 				$.each($("#shType option"), function(i, n) {
 					if ($(n).val() == prop.typeNO) {
 						$(n).attr("selected", true);
@@ -358,10 +360,32 @@ function fillSaveSchool(num) {
 	}
 }
 function saveSchool() {
-	var name = $('#shName').attr("value");
-	var code = $('#shCode').attr("value");
+	var name = $('#shName').get(0).value;
+	var code = $('#shCode').get(0).value;
+	var bizNO = $('#shNO').get(0).value;
 	var typeNO = $("#shType").find("option:selected").val();
-	console.log('name:' + name + '-code:' + code + '-type:' + typeNO);
+	$.ajax({
+		url : "/api/school",
+		data : {
+			"service" : "save",
+			"prop.name" : name,
+			"prop.typeNO" : typeNO,
+			"prop.code" : code,
+			"prop.bizNO":bizNO
+		},
+		type : 'POST',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			$('#panel-8050035').get(0).innerHTML = '';
+			var reqData = {};
+			ajaxSeq(reqData, '31', true);
+		},
+		error : function(data) {
+			var respData = eval('(' + data.responseText + ')');
+			alert_info(respData.resuDesc);
+		}
+	});
 }
 // 学校类型下拉框
 function schoolTypeSelect() {

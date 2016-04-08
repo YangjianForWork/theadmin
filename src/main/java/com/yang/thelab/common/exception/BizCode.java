@@ -39,7 +39,14 @@ public enum BizCode implements EnumInterface {
     //====学校====
     /**此学校已经存在*/
     SCHOOL_NAME_EXSIT("SCHOOL_NAME_EXSIT","学校已经存在了!"),
-    
+    /**学校名称不能为空*/
+    SCHOOL_NAME_BLANK("SCHOOL_NAME_BLANK","忘记输入学校名称了！"),
+    /**学校类型不能为空*/
+    SCHOOL_TYPE_BLANK("SCHOOL_TYPE_BLANK","忘记输入学校类型了！"),
+    /**学校代码不能为空*/
+    SCHOOL_CODE_BLANK("SCHOOL_CODE_BLANK","忘记输入学校代码了！"),
+    /**学校代码已经存在了*/
+    SCHOOL_CODE_EXSIT("SCHOOL_CODE_EXSIT","学校代码已经存在了！"),
 	//---------
 	
 	// =======注册登录=======
