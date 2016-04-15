@@ -38,7 +38,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object obj) throws Exception {
         String requestURI = request.getRequestURI();
-        LOG.info( "请求地址(" + request.getRequestURI() + ")，请求参数(" + JSON.toJSONString(request.getParameterMap()) + ")");
+        LOG.info("请求Host:["+request.getRemoteHost()+"],请求地址(" + request.getRequestURI() + ")，请求参数(" + JSON.toJSONString(request.getParameterMap()) + ")");
         if (skipLogin) {
             return true;
         }
