@@ -10,15 +10,15 @@ import com.yang.thelab.common.EnumInterface;
  */
 public enum LabReseveStatus implements EnumInterface {
     /**初始化*/
-    INIT("",""),
+    INIT("INIT","初始化"),
     /**等待审核*/
-    WAIT_ADUIT("",""),
+    WAIT_ADUIT("WAIT_ADUIT","等待审核"),
     /**同意*/
-    AGREE("",""),
+    AGREE("AGREE","同意"),
     /**拒绝*/
-    REFUSE("",""),
+    REFUSE("REFUSE","拒绝"),
     /**结束*/
-    FINISH("",""),
+    FINISH("FINISH","结束"),
     ;
 
     private String code;

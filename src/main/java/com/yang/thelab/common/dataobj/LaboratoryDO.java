@@ -1,7 +1,7 @@
 package com.yang.thelab.common.dataobj;
 
 import com.yang.thelab.common.BaseDO;
-import com.yang.thelab.common.enums.LabStatusEnum;
+import com.yang.thelab.common.enums.LabStatus;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.common.vojo.Laboratory;
 
@@ -36,6 +36,6 @@ public class LaboratoryDO extends BaseDO<Laboratory> {
     }
     
     public void setStatus(String status){
-        this.prop.setStatus((LabStatusEnum) CommUtil.getEnumByCode(LabStatusEnum.class, status));
+        this.prop.setStatus((LabStatus) CommUtil.getEnumByCode(LabStatus.class, status));
     }
 }

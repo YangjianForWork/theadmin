@@ -1,7 +1,7 @@
 package com.yang.thelab.common.vojo;
 
 import com.yang.thelab.common.BaseSO;
-import com.yang.thelab.common.enums.LabStatusEnum;
+import com.yang.thelab.common.enums.LabStatus;
 
 /**
  * 实验室
@@ -12,7 +12,7 @@ public class Laboratory extends BaseSO {
     /**名称*/
     private String        name;
     /**状态*/
-    private LabStatusEnum status;
+    private LabStatus status;
     /**类别*/
     private String        categoryNO;
     /**特性*/
@@ -30,11 +30,11 @@ public class Laboratory extends BaseSO {
         this.name = name;
     }
 
-    public LabStatusEnum getStatus() {
+    public LabStatus getStatus() {
         return status;
     }
 
-    public void setStatus(LabStatusEnum status) {
+    public void setStatus(LabStatus status) {
         this.status = status;
     }
     
