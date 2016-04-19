@@ -71,9 +71,37 @@ body {
 .labCard:hover{
 	
 }
+.selectLabRow{
+	width:inherit;
+	height:150px;
+	background-color:#e1e1e1;
+}
+.selectLabRow-td-a{
+	width:28%px;
+	background-color: #e0e0e0;
+	height:inherit;
+}
+.selectLabRow-td-b{
+	width:12%;
+	height:inherit;
+	background-color: #808080;
+	text-align: center;
+}
+.selectLabRow-td-c{
+	width:50%;
+	height:inherit;
+	background-color: #ffffff;
+	text-align: center;
+	font-size:16px;
+	color: #000040;
+}
+.selectLabRow-td-b-btn{
+	width:65%;
+	height:40px;	
+	margin-top: 20px;
+}
 .myrowfluid{
 	background-color:#006D88;
-	
 }
 .myspan12{
 	height:10%;

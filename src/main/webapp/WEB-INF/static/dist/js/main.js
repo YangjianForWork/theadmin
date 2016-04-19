@@ -445,12 +445,33 @@ function clickEditBtn() {
 }
 // ***** 预约界面 *****
 $(function() {
-	
+
 });
 
 function selectLab(obj) {
-	$("#"+obj.id).hide();
-	$('#labStation').hide();
+	$("#" + obj.id).hide();
+	// $('#labStation').hide();
+	$('#selectLabStation').get(0).innerHTML = '<caption><h4>&nbsp;[&nbsp;预约单&nbsp;]</h4></caption><tbody></tbody>';
+	var tr = '<tr class="selectLabRow" ><td class="selectLabRow-td-c"><div class="input-group">'
+			+ '<span class="input-group-addon">开始时间</span>'
+			+ '<input type="text" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss"></div><div class="input-group">'
+			+ '<span class="input-group-addon">结束时间</span>'
+			+ '<input type="text" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss"></div></td>'
+			+ '<td class="selectLabRow-td-a" >'
+			+ $("#" + obj.id).get(0).innerHTML
+			+ '</td><td class="selectLabRow-td-b" >'
+			+ '<button type="button"'
+			+ ' class="btn btn-default selectLabRow-td-b-btn" '
+			+ ' onclick="cancelReserve('
+			+ obj.id
+			+ ');" >取&nbsp;消</button>'
+			+ '<button type="button" class="btn btn-primary selectLabRow-td-b-btn">确&nbsp;认</button></td></tr>';
+	$('#selectLabStation').append(tr);
+}
+function cancelReserve(obj) {
+	$("#" + obj.id).show();
+	// $('#labStation').show();
+	$('#selectLabStation').get(0).innerHTML = '';
 }
 // ***** 预约界面 *****
 // =====待用=====

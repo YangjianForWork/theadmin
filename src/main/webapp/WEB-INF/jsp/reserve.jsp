@@ -18,6 +18,8 @@
 <script src="/dist/js/dist.js"></script>
 <script src="/dist/js/main.js"></script>
 <link href="/dist/css/style.css" rel="stylesheet">
+<script src="/dist/js/bootstrap-datetimepicker.js"></script>
+<script src="/dist/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <title>实验室预约系统</title>
 </head>
 <body>
@@ -46,7 +48,9 @@
 					<div class="jumbotron">
 						<div class="col-xs-6 labCard" id="t1" onclick="selectLab(this);">
 							<table class="table">
-								<caption style="text-align:center;" ><span class="label"></span>实验室</caption>
+								<caption style="text-align: center;">
+									<span class="label"></span>实验室
+								</caption>
 								<tbody>
 									<tr>
 										<td><span class="label label-default">类别特性</span></td>
@@ -66,11 +70,24 @@
 						<div class="col-xs-6 labCard">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
 						</div>
+						<div class="col-xs-6 labCard">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						</div>
+						<div class="col-xs-6 labCard">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						</div>
+						<div class="col-xs-6 labCard">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						</div>
+						<div class="col-xs-6 labCard">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="span3">
-				
+				<table class="table" id="selectLabStation">
+				</table>
 			</div>
 		</div>
 	</div>
