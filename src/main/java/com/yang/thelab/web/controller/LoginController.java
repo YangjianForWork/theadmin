@@ -50,4 +50,9 @@ public class LoginController extends BaseController {
         return "default";
     }
 
+    @RequestMapping("/api/logout")
+    public String logout(){
+        //TODO 清空session
+        return "login";
+    }
 }

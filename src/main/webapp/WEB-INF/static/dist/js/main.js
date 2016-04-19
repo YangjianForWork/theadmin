@@ -345,7 +345,7 @@ function fillSaveSchool(num) {
 				var prop = data.data.prop;
 				$('#shName').attr("value", prop.name);
 				$('#shCode').attr("value", prop.code);
-				$('#shNO').attr("value",prop.bizNO);
+				$('#shNO').attr("value", prop.bizNO);
 				$.each($("#shType option"), function(i, n) {
 					if ($(n).val() == prop.typeNO) {
 						$(n).attr("selected", true);
@@ -371,7 +371,7 @@ function saveSchool() {
 			"prop.name" : name,
 			"prop.typeNO" : typeNO,
 			"prop.code" : code,
-			"prop.bizNO":bizNO
+			"prop.bizNO" : bizNO
 		},
 		type : 'POST',
 		cache : false,
@@ -443,7 +443,16 @@ function clickOKBtn(tableID) {
 function clickEditBtn() {
 
 }
+// ***** 预约界面 *****
+$(function() {
+	
+});
 
+function selectLab(obj) {
+	$("#"+obj.id).hide();
+	$('#labStation').hide();
+}
+// ***** 预约界面 *****
 // =====待用=====
 function hoverCaption(obj) {
 

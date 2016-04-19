@@ -31,18 +31,47 @@
 						data-toggle="dropdown" class="dropdown-toggle">我的<strong
 							class="caret"></strong></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">个人中心</a></li>
-							<li><a href="#">更多</a></li>
+							<li><a href="#">操作</a></li>
+							<li><a href="#">设置栏目</a></li>
+							<li><a href="#">更多设置</a></li>
 							<li class="divider"></li>
-							<li><a href="/api/logout">退出</a></li>
+							<li><a href="#">分割线</a></li>
 						</ul></li>
 				</ul>
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span9" id="main_frame">
+			<div class="span9">
+				<div class="container" id="labStation">
+					<div class="jumbotron">
+						<div class="col-xs-6 labCard" id="t1" onclick="selectLab(this);">
+							<table class="table">
+								<caption style="text-align:center;" ><span class="label"></span>实验室</caption>
+								<tbody>
+									<tr>
+										<td><span class="label label-default">类别特性</span></td>
+										<td colspan="2"></td>
+									</tr>
+									<tr>
+										<td><span class="label label-default">状态</span></td>
+										<td colspan="2"></td>
+									</tr>
+									<tr>
+										<td><span class="label label-default">负责人</span></td>
+										<td colspan="2"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-xs-6 labCard">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="span3"></div>
+			<div class="span3">
+				
+			</div>
 		</div>
 	</div>
 </body>

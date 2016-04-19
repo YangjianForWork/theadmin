@@ -84,10 +84,10 @@ public class PersonManagerImpl implements PersonManager {
     }
 
     private PersonDTO getDTO(Person person) {
-        PersonDTO personDTO = new PersonDTO(person);
+        PersonDTO personDTO = new PersonDTO(CommUtil.hideBaseFeild(person));
         Customer customer = customerService.get(person.getCustNO()).get();
-        customer.setPassword("");
-        personDTO.setCustomer(customer);
+        customer.setPassword(null);
+        personDTO.setCustomer(CommUtil.hideBaseFeild(customer));
         return personDTO;
     }
 

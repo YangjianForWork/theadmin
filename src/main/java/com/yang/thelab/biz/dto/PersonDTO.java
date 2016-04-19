@@ -33,7 +33,7 @@ public class PersonDTO extends BaseDTO<Person> {
     }
 
     public String getRole() {
-        return this.prop.getRole().code();
+        return this.prop.getRole().desc();
     }
 
     public void setRole(String code) {
@@ -41,7 +41,7 @@ public class PersonDTO extends BaseDTO<Person> {
     }
 
     public String getSex() {
-        return this.prop.getSex().code();
+        return this.prop.getSex().desc();
     }
 
     public void setSex(String code) {

@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.yang.thelab.biz.manager.LaboratoryManager;
 import com.yang.thelab.common.BaseController;
 import com.yang.thelab.common.enums.EnumItemType;
+import com.yang.thelab.common.requ.LaboratoryQueryRequ;
 import com.yang.thelab.core.service.EnumItemService;
 
 /**
@@ -21,6 +23,8 @@ public class LaboratoryController extends BaseController {
 
     @Autowired
     private EnumItemService enumItemService;
+    @Autowired
+    private LaboratoryManager laboratoryManager;
 
     @RequestMapping(value = "/api/lab", params = { "service=getLabCategory" })
     public void getLabCategoryList(HttpServletResponse response) {
@@ -42,4 +46,8 @@ public class LaboratoryController extends BaseController {
         toResponse(response, enumItemService.saveItem(content, EnumItemType.LAB_ATTRIBUTE));
     }
 
+    @RequestMapping(value = "/api/lab",params = {"service=queryLab"})
+    public void queryLab(LaboratoryQueryRequ requ,HttpServletResponse response){
+        toResponse(response,laboratoryManager.query(requ));
+    }
 }

@@ -23,6 +23,8 @@ public enum LoginControlEnum implements EnumInterface {
     LOGIN_3("/login.htm", "登录页面", "login"),
     /**temp*/
     TEMP_PAGE("/temp","temp","temp"),
+    /**reserve*/
+    RESERVE("/reserve","reserve","reserve"),
     ;
 
     private String code;

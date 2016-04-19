@@ -58,6 +58,19 @@ body {
 	height:100%;
 	overflow:none;
 }
+/*实验室展示卡*/
+.labCard{
+	width:27%;
+	height:150px;
+	margin:1% 1%;
+	border:0px solid;
+	border-radius:18px;
+	padding:10px 20px;
+	background-color: #ffffff;
+}
+.labCard:hover{
+	
+}
 .myrowfluid{
 	background-color:#006D88;
 	

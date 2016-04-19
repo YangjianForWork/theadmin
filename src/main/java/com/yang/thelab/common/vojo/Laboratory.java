@@ -10,17 +10,17 @@ import com.yang.thelab.common.enums.LabStatus;
  */
 public class Laboratory extends BaseSO {
     /**名称*/
-    private String        name;
+    private String    name;
     /**状态*/
     private LabStatus status;
     /**类别*/
-    private String        categoryNO;
+    private String    categoryNO;
     /**特性*/
-    private String        attributeNO;
+    private String    attributeNO;
     /**负责人*/
-    private String        masterNO;
+    private String    masterNO;
     /**地址*/
-    private String        address;
+    private String    address;
 
     public String getName() {
         return name;
@@ -37,7 +37,7 @@ public class Laboratory extends BaseSO {
     public void setStatus(LabStatus status) {
         this.status = status;
     }
-    
+
     public String getAttributeNO() {
         return attributeNO;
     }
