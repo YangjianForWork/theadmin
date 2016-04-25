@@ -14,16 +14,31 @@
 <link
 	href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css"
 	rel="stylesheet">
+<!-- 引入Timepicker -->
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="/dist/js/jquery.timepicker.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/dist/css/jquery.timepicker.css" />
+<script type="text/javascript"
+	src="/dist/jquery-timepicker/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/dist/jquery-timepicker/bootstrap-datepicker.css" />
+<script type="text/javascript" src="/dist/jquery-timepicker/site.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/dist/jquery-timepicker/site.css" />
 <!-- 自定义 -->
-<script src="/dist/js/dist.js"></script>
 <script src="/dist/js/main.js"></script>
 <link href="/dist/css/style.css" rel="stylesheet">
-<script src="/dist/js/bootstrap-datetimepicker.js"></script>
-<script src="/dist/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <title>实验室预约系统</title>
 </head>
 <body>
 	<div class="container-fluid">
+		<div id="alertCont">
+				<div id="myAlert" class="alert alert-warning">
+					<a href="#" class="close" data-dismiss="alert">&times;</a> 系统异常
+				</div>
+		</div>
 		<div class="row-fluid myrowfluid">
 			<div class="span12 myspan12">
 				<ul class="nav nav-pills">
@@ -45,43 +60,7 @@
 		<div class="row-fluid">
 			<div class="span9">
 				<div class="container" id="labStation">
-					<div class="jumbotron">
-						<div class="col-xs-6 labCard" id="t1" onclick="selectLab(this);">
-							<table class="table">
-								<caption style="text-align: center;">
-									<span class="label"></span>实验室
-								</caption>
-								<tbody>
-									<tr>
-										<td><span class="label label-default">类别特性</span></td>
-										<td colspan="2"></td>
-									</tr>
-									<tr>
-										<td><span class="label label-default">状态</span></td>
-										<td colspan="2"></td>
-									</tr>
-									<tr>
-										<td><span class="label label-default">负责人</span></td>
-										<td colspan="2"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="col-xs-6 labCard">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-						</div>
-						<div class="col-xs-6 labCard">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-						</div>
-						<div class="col-xs-6 labCard">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-						</div>
-						<div class="col-xs-6 labCard">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-						</div>
-						<div class="col-xs-6 labCard">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-						</div>
+					<div class="jumbotron" id="labStationCon">
 					</div>
 				</div>
 			</div>

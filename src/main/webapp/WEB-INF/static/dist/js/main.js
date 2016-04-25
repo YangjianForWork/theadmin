@@ -184,6 +184,8 @@ function fillTable2(data) {
 	var vdata = data.data;
 	var arrs = vdata.pdate;
 	var mTable = data.mTable;
+	if (mTable.get(0) == null)
+		return;
 	mTable.get(0).innerHTML = '';
 	mTable.show();
 	if (data.init) {
@@ -443,20 +445,70 @@ function clickOKBtn(tableID) {
 function clickEditBtn() {
 
 }
-// ***** 预约界面 *****
 $(function() {
-
+	initLab();
 });
+// ***** 预约界面 *****
+function initLab() {
+	var reqData = {
+		'service' : 'queryLab',
+		'page' : 1,
+		'itemsPerPage' : 9
+	}
+	$.ajax({
+		url : '/api/lab',
+		data : reqData,
+		type : 'POST',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			addLabDiv(data);
+		},
+		error : function(data) {
+			var respData = eval('(' + data.responseText + ')');
+			alert_info(respData.resuDesc);
+		}
+	});
+}
+function addLabDiv(data) {
+	if ($('#labStationCon').get(0) == null) {
+		return;
+	}
+	$('#labStationCon').get(0).innerHTML = '';
+	var arrs = data.data.pdate;
+	for (var i = 0; i < arrs.length; i++) {
+		console.log(arrs[i]);
+		var attribute = arrs[i].attribute;
+		var category = arrs[i].category;
+		var prop = arrs[i].prop;
+		var master = arrs[i].master;
+		console.log(prop);
+		console.log(master);
+		var labDiv = '<div class="col-xs-6 labCard" id="'+prop.bizNO+'" onclick="selectLab(this);">'
+				+ '<table class="table"><caption style="text-align: center;">'
+				+ '<span class="label"></span>实验室</caption><tbody>'
+				+ '<tr><td><span class="label label-default">类别特性</span></td>'
+				+ '<td colspan="2">'+attribute.content+' '+category.content+'</td></tr>'
+				+ '<tr><td><span class="label label-default">状态</span></td>'
+				+ '<td colspan="2">'+arrs[i].statuDesc+'</td></tr>'
+				+ '<tr><td><span class="label label-default">负责人</span></td>'
+				+ '<td colspan="2">'+master.customer.nickname+'</td></tr></tbody></table></div>';
+		$('#labStationCon').append(labDiv);
+	}
 
+}
 function selectLab(obj) {
 	$("#" + obj.id).hide();
 	// $('#labStation').hide();
 	$('#selectLabStation').get(0).innerHTML = '<caption><h4>&nbsp;[&nbsp;预约单&nbsp;]</h4></caption><tbody></tbody>';
-	var tr = '<tr class="selectLabRow" ><td class="selectLabRow-td-c"><div class="input-group">'
+	var tr = '<tr class="selectLabRow" ><td class="selectLabRow-td-c"><h5>预约时间</h5><div class="input-group selectLabRow-td-c-input myDatepair ">'
 			+ '<span class="input-group-addon">开始时间</span>'
-			+ '<input type="text" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss"></div><div class="input-group">'
+			+ '<input type="text" class="form-control date start" placeholder="YYYY-MM-dd">'
+			+ '<input type="text" class="form-control time start" placeholder="HH:mm:ss"></div>'
+			+ '<div class="input-group selectLabRow-td-c-input myDatepair ">'
 			+ '<span class="input-group-addon">结束时间</span>'
-			+ '<input type="text" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss"></div></td>'
+			+ '<input type="text" class="form-control date end" placeholder="YYYY-MM-dd">'
+			+ '<input type="text" class="form-control time end" placeholder="HH:mm:ss"></div></td>'
 			+ '<td class="selectLabRow-td-a" >'
 			+ $("#" + obj.id).get(0).innerHTML
 			+ '</td><td class="selectLabRow-td-b" >'
@@ -465,7 +517,9 @@ function selectLab(obj) {
 			+ ' onclick="cancelReserve('
 			+ obj.id
 			+ ');" >取&nbsp;消</button>'
-			+ '<button type="button" class="btn btn-primary selectLabRow-td-b-btn">确&nbsp;认</button></td></tr>';
+			+ '<button type="button" class="btn btn-primary selectLabRow-td-b-btn">确&nbsp;认</button></td></tr>'
+			+ '<script> $(".myDatepair .time").timepicker({"showDuration": true,"timeFormat": "H:i:s"});'
+			+ '$(".myDatepair .date").datepicker({"format": "yyyy-m-d","autoclose": true});</script> ';
 	$('#selectLabStation').append(tr);
 }
 function cancelReserve(obj) {
@@ -473,6 +527,18 @@ function cancelReserve(obj) {
 	// $('#labStation').show();
 	$('#selectLabStation').get(0).innerHTML = '';
 }
+$(function() {
+	$('#datepairExample .time').timepicker({
+		'showDuration' : true,
+		'timeFormat' : 'g:ia'
+	});
+
+	$('#datepairExample .date').datepicker({
+		'format' : 'yyyy-m-d',
+		'autoclose' : true
+	});
+});
+
 // ***** 预约界面 *****
 // =====待用=====
 function hoverCaption(obj) {
