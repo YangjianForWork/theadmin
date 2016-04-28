@@ -482,24 +482,39 @@ function addLabDiv(data) {
 		var category = arrs[i].category;
 		var prop = arrs[i].prop;
 		var master = arrs[i].master;
-		console.log(prop);
-		console.log(master);
-		var labDiv = '<div class="col-xs-6 labCard" id="'+prop.bizNO+'" onclick="selectLab(this);">'
+		var class_status = 'labCard-status-'+prop.status;
+		// console.log(prop);
+		var labDiv = '<div class="col-xs-6 labCard" id="'
+				+ prop.bizNO
+				+ '" onclick="selectLab(this);">'
 				+ '<table class="table"><caption style="text-align: center;">'
 				+ '<span class="label"></span>实验室</caption><tbody>'
 				+ '<tr><td><span class="label label-default">类别特性</span></td>'
-				+ '<td colspan="2">'+attribute.content+' '+category.content+'</td></tr>'
-				+ '<tr><td><span class="label label-default">状态</span></td>'
-				+ '<td colspan="2">'+arrs[i].statuDesc+'</td></tr>'
+				+ '<td colspan="2">'
+				+ category.content
+				+ ' '
+				+ attribute.content
+				+ '</td></tr>'
+				+ '<tr><td><span class="label label-default">状&nbsp;&nbsp;态</span></td>'
+				+ '<td colspan="2" class="' + class_status + '" >'
+				+ arrs[i].statuDesc + '</td></tr>'
 				+ '<tr><td><span class="label label-default">负责人</span></td>'
-				+ '<td colspan="2">'+master.customer.nickname+'</td></tr></tbody></table></div>';
+				+ '<td colspan="2">' + master.customer.nickname
+				+ '&nbsp;老师</td></tr></tbody></table></div>';
 		$('#labStationCon').append(labDiv);
 	}
 
 }
 function selectLab(obj) {
+	var selectLabStation = $('#selectLabStation').get(0);
+	var ele = selectLabStation.childNodes;
+	if(ele.length&&ele.length > 0){
+		alert_info("您已选择一个实验室，请勿重复操作");
+		return;
+	}
 	$("#" + obj.id).hide();
 	// $('#labStation').hide();
+	console.log($("#" + obj.id).get(0));
 	$('#selectLabStation').get(0).innerHTML = '<caption><h4>&nbsp;[&nbsp;预约单&nbsp;]</h4></caption><tbody></tbody>';
 	var tr = '<tr class="selectLabRow" ><td class="selectLabRow-td-c"><h5>预约时间</h5><div class="input-group selectLabRow-td-c-input myDatepair ">'
 			+ '<span class="input-group-addon">开始时间</span>'
@@ -515,7 +530,7 @@ function selectLab(obj) {
 			+ '<button type="button"'
 			+ ' class="btn btn-default selectLabRow-td-b-btn" '
 			+ ' onclick="cancelReserve('
-			+ obj.id
+			+ obj
 			+ ');" >取&nbsp;消</button>'
 			+ '<button type="button" class="btn btn-primary selectLabRow-td-b-btn">确&nbsp;认</button></td></tr>'
 			+ '<script> $(".myDatepair .time").timepicker({"showDuration": true,"timeFormat": "H:i:s"});'
@@ -523,6 +538,7 @@ function selectLab(obj) {
 	$('#selectLabStation').append(tr);
 }
 function cancelReserve(obj) {
+	console.log(obj);
 	$("#" + obj.id).show();
 	// $('#labStation').show();
 	$('#selectLabStation').get(0).innerHTML = '';

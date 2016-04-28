@@ -67,11 +67,24 @@ body {
 	border: 0px solid;
 	border-radius: 18px;
 	padding: 10px 20px;
-	background-color: #ffffff;
+	background-color: #fafafa;
 }
 
 .labCard:hover {
-	
+	border: 1px solid;
+	background-color: #ffffff;
+}
+.labCard:active{
+	background-color: #3a87ad;
+}
+.labCard-status-NORMAL{
+	color:#5f8f3f;
+}
+.labCard-status-RESERVE{
+	color:blue;
+}
+.labCard-status-IN_USE{
+	color:red;
 }
 
 .selectLabRow {

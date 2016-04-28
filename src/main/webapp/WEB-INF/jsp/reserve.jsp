@@ -65,8 +65,7 @@
 				</div>
 			</div>
 			<div class="span3">
-				<table class="table" id="selectLabStation">
-				</table>
+				<table class="table" id="selectLabStation"></table>
 			</div>
 		</div>
 	</div>
