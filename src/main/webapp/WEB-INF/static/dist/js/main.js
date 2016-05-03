@@ -449,6 +449,7 @@ $(function() {
 	initLab();
 });
 // ***** 预约界面 *****
+var labStatusResult = true;
 function initLab() {
 	var reqData = {
 		'service' : 'queryLab',
@@ -476,72 +477,124 @@ function addLabDiv(data) {
 	}
 	$('#labStationCon').get(0).innerHTML = '';
 	var arrs = data.data.pdate;
-	for (var i = 0; i < arrs.length; i++) {
-		console.log(arrs[i]);
-		var attribute = arrs[i].attribute;
-		var category = arrs[i].category;
+	for (var i = arrs.length - 1; i >= 0; i--) {
+		// console.log(arrs[i]);
 		var prop = arrs[i].prop;
-		var master = arrs[i].master;
-		var class_status = 'labCard-status-'+prop.status;
 		// console.log(prop);
-		var labDiv = '<div class="col-xs-6 labCard" id="'
-				+ prop.bizNO
-				+ '" onclick="selectLab(this);">'
-				+ '<table class="table"><caption style="text-align: center;">'
-				+ '<span class="label"></span>实验室</caption><tbody>'
-				+ '<tr><td><span class="label label-default">类别特性</span></td>'
-				+ '<td colspan="2">'
-				+ category.content
-				+ ' '
-				+ attribute.content
-				+ '</td></tr>'
-				+ '<tr><td><span class="label label-default">状&nbsp;&nbsp;态</span></td>'
-				+ '<td colspan="2" class="' + class_status + '" >'
-				+ arrs[i].statuDesc + '</td></tr>'
-				+ '<tr><td><span class="label label-default">负责人</span></td>'
-				+ '<td colspan="2">' + master.customer.nickname
-				+ '&nbsp;老师</td></tr></tbody></table></div>';
+		var labDiv = '<div class="col-xs-6 labCard" id="' + prop.bizNO
+				+ '" onclick="selectLab(this);">' + getLabCardTable(arrs[i])
+				+ '</div>';
 		$('#labStationCon').append(labDiv);
 	}
-
+}
+function getLabCardTable(obj) {
+	var attribute = obj.attribute;
+	var category = obj.category;
+	var prop = obj.prop;
+	var master = obj.master;
+	var class_status = 'labCard-status-' + prop.status;
+	var tableStr = '<table class="table"><caption style="text-align: center;">'
+			+ '<span class="label"></span>'
+			+ prop.name
+			+ '</caption><tbody>'
+			+ '<tr><td><span class="label label-default">类别特性</span></td>'
+			+ '<td colspan="2">'
+			+ category.content
+			+ ' '
+			+ attribute.content
+			+ '</td></tr>'
+			+ '<tr><td><span class="label label-default">状&nbsp;&nbsp;态</span></td>'
+			+ '<td colspan="2" class="' + class_status + '" >' + obj.statuDesc
+			+ '</td></tr>'
+			+ '<tr><td><span class="label label-default">负责人</span></td>'
+			+ '<td colspan="2">' + master.customer.nickname
+			+ '</td></tr></tbody></table>';
+	return tableStr;
 }
 function selectLab(obj) {
 	var selectLabStation = $('#selectLabStation').get(0);
 	var ele = selectLabStation.childNodes;
-	if(ele.length&&ele.length > 0){
+	if (ele.length && ele.length > 0) {
 		alert_info("您已选择一个实验室，请勿重复操作");
 		return;
 	}
-	$("#" + obj.id).hide();
-	// $('#labStation').hide();
-	console.log($("#" + obj.id).get(0));
-	$('#selectLabStation').get(0).innerHTML = '<caption><h4>&nbsp;[&nbsp;预约单&nbsp;]</h4></caption><tbody></tbody>';
-	var tr = '<tr class="selectLabRow" ><td class="selectLabRow-td-c"><h5>预约时间</h5><div class="input-group selectLabRow-td-c-input myDatepair ">'
-			+ '<span class="input-group-addon">开始时间</span>'
-			+ '<input type="text" class="form-control date start" placeholder="YYYY-MM-dd">'
-			+ '<input type="text" class="form-control time start" placeholder="HH:mm:ss"></div>'
-			+ '<div class="input-group selectLabRow-td-c-input myDatepair ">'
-			+ '<span class="input-group-addon">结束时间</span>'
-			+ '<input type="text" class="form-control date end" placeholder="YYYY-MM-dd">'
-			+ '<input type="text" class="form-control time end" placeholder="HH:mm:ss"></div></td>'
-			+ '<td class="selectLabRow-td-a" >'
-			+ $("#" + obj.id).get(0).innerHTML
-			+ '</td><td class="selectLabRow-td-b" >'
-			+ '<button type="button"'
-			+ ' class="btn btn-default selectLabRow-td-b-btn" '
-			+ ' onclick="cancelReserve('
-			+ obj
-			+ ');" >取&nbsp;消</button>'
-			+ '<button type="button" class="btn btn-primary selectLabRow-td-b-btn">确&nbsp;认</button></td></tr>'
-			+ '<script> $(".myDatepair .time").timepicker({"showDuration": true,"timeFormat": "H:i:s"});'
-			+ '$(".myDatepair .date").datepicker({"format": "yyyy-m-d","autoclose": true});</script> ';
-	$('#selectLabStation').append(tr);
+	updateStatus(obj.id, 2);
+	if (labStatusResult) {
+		$("#" + obj.id).hide();
+		// console.log($("#" + obj.id).get(0));
+		var labData = null;
+		var reqData = {
+			'service' : 'getLab',
+			'bizNO' : obj.id,
+		}
+		$.ajax({
+			url : '/api/lab',
+			data : reqData,
+			type : 'POST',
+			cache : false,
+			dataType : 'json',
+			async : false,
+			success : function(data) {
+				labData = data;
+			},
+			error : function(data) {
+				var respData = eval('(' + data.responseText + ')');
+				alert_info(respData.resuDesc);
+			}
+		});
+		$('#selectLabStation').get(0).innerHTML = '<caption><h4>&nbsp;[&nbsp;预约单&nbsp;]</h4></caption><tbody></tbody>';
+		var tr = '<tr class="selectLabRow" ><td class="selectLabRow-td-c"><h5>预约时间</h5><div class="input-group selectLabRow-td-c-input myDatepair ">'
+				+ '<span class="input-group-addon">开始时间</span>'
+				+ '<input type="text" class="form-control date start" id="dateStart" placeholder="YYYY-MM-dd">'
+				+ '<input type="text" class="form-control time start" id="timeStart" placeholder="HH:mm:ss"></div>'
+				+ '<div class="input-group selectLabRow-td-c-input myDatepair ">'
+				+ '<span class="input-group-addon">结束时间</span>'
+				+ '<input type="text" class="form-control date end" id="dateEnd" placeholder="YYYY-MM-dd">'
+				+ '<input type="text" class="form-control time end" id="timeEnd" placeholder="HH:mm:ss"></div></td>'
+				+ '<td class="selectLabRow-td-a" >'
+				+ getLabCardTable(labData.data)
+				+ '</td><td>'
+				+ getLabDetail(labData.data)
+				+ '</td><td class="selectLabRow-td-b" >'
+				+ '<button type="button"'
+				+ ' class="btn btn-default selectLabRow-td-b-btn" id="'
+				+ obj.id
+				+ '" onclick="cancelReserve(this);" >取&nbsp;消</button>'
+				+ '<button type="button" class="btn btn-primary selectLabRow-td-b-btn" id="'
+				+ obj.id
+				+ '" onclick="confirmReserve(this);">确&nbsp;认</button></td></tr>'
+				+ '<script> $(".myDatepair .time").timepicker({"showDuration": true,"timeFormat": "H:i:s"});'
+				+ '$(".myDatepair .date").datepicker({"format": "yyyy-m-d","autoclose": true});</script> ';
+		$('#selectLabStation').append(tr);
+	}
+}
+function getLabDetail(obj) {
+	var tableStr = '<table class="table"><caption><span>&nbsp;</span></caption><tbody>'
+			+ '<tr><td><span class="label label-default">位置</span></td>'
+			+ '<td colspan="2">'
+			+ obj.prop.address
+			+ '</td></tr>'
+			+ '<tr><td><span class="label label-default">负责人职务</span></td>'
+			+ '<td colspan="2">'
+			+ obj.master.role
+			+ '</td></tr>'
+			+ '<tr><td><span class="label label-default">负责人联系方式</span></td>'
+			+ '<td colspan="2">'
+			+ obj.master.customer.mobile
+			+ '</td></tr></tbody></table>';
+
+	return tableStr;
 }
 function cancelReserve(obj) {
-	console.log(obj);
-	$("#" + obj.id).show();
-	// $('#labStation').show();
-	$('#selectLabStation').get(0).innerHTML = '';
+	// console.log(obj);
+	updateStatus(obj.id, 1);
+	if (labStatusResult) {
+		$("#" + obj.id).show();
+		$('#selectLabStation').get(0).innerHTML = '';
+	}
+}
+function confirmReserve(obj) {
+	console.log(obj.id);
 }
 $(function() {
 	$('#datepairExample .time').timepicker({
@@ -554,6 +607,42 @@ $(function() {
 		'autoclose' : true
 	});
 });
+function updateStatus(id, key) {
+	var result = true;
+	var status = '';
+	switch (key) {
+	case 1:
+		status = 'NORMAL';
+		break;
+	case 2:
+		status = 'RESERVE';
+		break;
+	case 3:
+		status = 'IN_USE';
+		break;
+	}
+	var reqData = {
+		'service' : 'updateLabStatus',
+		'bizNO' : id,
+		'status' : status
+	}
+	$.ajax({
+		url : '/api/lab',
+		data : reqData,
+		type : 'POST',
+		cache : false,
+		dataType : 'json',
+		async : false,
+		success : function(data) {
+			labStatusResult = true;
+		},
+		error : function(data) {
+			var respData = eval('(' + data.responseText + ')');
+			alert_info(respData.resuDesc);
+			labStatusResult = false;
+		}
+	});
+}
 
 // ***** 预约界面 *****
 // =====待用=====

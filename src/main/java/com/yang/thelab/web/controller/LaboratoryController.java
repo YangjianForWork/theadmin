@@ -50,4 +50,15 @@ public class LaboratoryController extends BaseController {
     public void queryLab(LaboratoryQueryRequ requ,HttpServletResponse response){
         toResponse(response,laboratoryManager.query(requ));
     }
+    
+    @RequestMapping(value= "/api/lab",params = {"service=updateLabStatus"})
+    public void updateLabStatus(String bizNO,String status,HttpServletResponse response){
+        laboratoryManager.updateStatus(status, bizNO);
+        toResponse(response);
+    }
+    
+    @RequestMapping(value ="/api/lab",params = {"service=getLab"})
+    public void getLab(String bizNO,HttpServletResponse response){
+        toResponse(response,laboratoryManager.get(bizNO));
+    }
 }

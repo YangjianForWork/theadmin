@@ -23,4 +23,6 @@
 
 	<bean id="schoolService" class="com.yang.thelab.core.service.impl.SchoolServiceImpl" />	
 	
+	<bean id="laboratoryService" class="com.yang.thelab.core.service.impl.LaboratoryServiceImpl" />	
+	
 </beans>

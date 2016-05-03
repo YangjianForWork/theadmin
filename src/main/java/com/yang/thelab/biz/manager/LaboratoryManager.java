@@ -17,4 +17,10 @@ public interface LaboratoryManager {
      * @return
      */
     Paginator<LaboratoryDTO> query(LaboratoryQueryRequ requ);
+    
+    void save(LaboratoryDTO DTO);
+    
+    void updateStatus(String status,String bizNO);
+    
+    LaboratoryDTO get(String bizNO);
 }

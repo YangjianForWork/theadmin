@@ -15,6 +15,8 @@ public enum BizCode implements EnumInterface {
 	PARAM_CHECK("PARAM_CHECK", "参数校验异常", "参数校验异常"),
 	/** 唯一性主键冲突*/
 	DUPLICATE_KEY("DUPLICATE_KEY","唯一性主键冲突","唯一性主键冲突"),
+	/** 状态校验异常*/
+	STATUS_CHECK("STATUS_CHECK","状态校验异常","状态校验异常"),
 	
 	//===用户======
 	/**该用户昵称已经存在*/

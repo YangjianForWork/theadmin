@@ -55,7 +55,7 @@
 			STATUS = #prop.status#,
 		</isNotNull>
 		<isNotNull property="prop.masterNO">
-			MASTER_NO = #prop.status#,
+			MASTER_NO = #prop.masterNO#,
 		</isNotNull>
 		<isNotNull property="prop.address">
 			ADDRESS = #prop.address#,
