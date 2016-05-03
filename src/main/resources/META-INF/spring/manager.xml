@@ -22,4 +22,7 @@
 	<bean id="laboratoryManager"
 		class="com.yang.thelab.biz.manager.impl.LaboratoryManagerImpl" />
 		
+	<bean id="reserveManager"
+		class="com.yang.thelab.biz.manager.impl.ReserveManagerImpl" />
+		
 </beans>

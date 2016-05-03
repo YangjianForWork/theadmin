@@ -1,5 +1,8 @@
 package com.yang.thelab.common.dal.ibatis;
 
+import java.util.HashMap;
+import java.util.List;
+
 import com.yang.thelab.common.BaseDAO;
 import com.yang.thelab.common.dal.ReserveExecDAO;
 import com.yang.thelab.common.dataobj.ReserveExecDO;
@@ -15,6 +18,11 @@ public class IbatisReserveExecDAO extends BaseDAO<ReserveExecDO> implements Rese
     @Override
     protected SeqServiceKey getSeqServiceKey() {
         return SeqServiceKey.RESERVE_EXEC;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<ReserveExecDO> getByCond(HashMap<String, Object> params) {
+        return getSqlMapClientTemplate().queryForList("RESERVE_EXEC",params);
     }
 
 }

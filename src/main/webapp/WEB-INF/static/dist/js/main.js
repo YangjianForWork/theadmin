@@ -595,6 +595,15 @@ function cancelReserve(obj) {
 }
 function confirmReserve(obj) {
 	console.log(obj.id);
+	var dateStart = $('#dateStart').get(0).value;
+	var timeStart = $('#timeStart').get(0).value;
+	var dateEnd = $('#dateEnd').get(0).value;
+	var timeEnd = $('#timeEnd').get(0).value;
+	if(dateStart == ''||dateStart == ''||dateStart == ''||dateStart == ''){
+		alert_info("时间字段不能为空");
+	}
+	var startD = dateStart + ' ' + timeStart;
+	var endD = dateEnd + ' ' + timeEnd;
 }
 $(function() {
 	$('#datepairExample .time').timepicker({

@@ -1,5 +1,8 @@
 package com.yang.thelab.common.dal;
 
+import java.util.HashMap;
+import java.util.List;
+
 import com.yang.thelab.common.dataobj.ReserveExecDO;
 
 /**
@@ -15,4 +18,5 @@ public interface ReserveExecDAO {
     
     ReserveExecDO getByKey(String key);
     
+    List<ReserveExecDO> getByCond(HashMap<String, Object> params);
 }

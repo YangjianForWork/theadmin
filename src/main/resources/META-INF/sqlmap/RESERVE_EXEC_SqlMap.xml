@@ -5,13 +5,14 @@
 		<result column="BIZ_NO" property="bizNO" jdbcType="VARCHAR" />
 		<result column="RESERVE_NO" property="prop.reserveNO" jdbcType="VARCHAR" />
 		<result column="STATUS" property="prop.status" jdbcType="VARCHAR" />
+		<result column="DEAL_PERS_NO" property="prop.dealPersNO" jdbcType="VARCHAR" />
 		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
 		<result column="GMT_MODIFIED" property="prop.gmtModified"
 			jdbcType="TIMESTAMP" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		BIZ_NO,RESERVE_NO,STATUS,GMT_CREATE,GMT_MODIFIED
+		BIZ_NO,RESERVE_NO,STATUS,DEAL_PERS_NO,GMT_CREATE,GMT_MODIFIED
 	</sql>
 
 	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.ReserveExecDO">
@@ -23,6 +24,7 @@
 		#bizNO#,
 		#prop.reserveNO#,
 		#prop.status#,
+		#prop.dealPersNO#
 		now(),
 		now()
 		)
@@ -55,6 +57,9 @@
 		<dynamic prepend="WHERE">
 			<isNotEmpty property="reserveNO" prepend="AND">
 				RESERVE_NO = #reserveNO# 
+			</isNotEmpty>
+			<isNotEmpty property="dealPersNO" prepend="AND" >
+				DEAL_PERS_NO = #dealPersNO#
 			</isNotEmpty>
 		</dynamic>
 	</select>

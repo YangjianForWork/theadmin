@@ -25,4 +25,8 @@
 	
 	<bean id="laboratoryService" class="com.yang.thelab.core.service.impl.LaboratoryServiceImpl" />	
 	
+	<bean id="reserveService" class="com.yang.thelab.core.service.impl.ReserveServiceImpl" />	
+	
+	<bean id="reserveExecService" class="com.yang.thelab.core.service.impl.ReserveExecServiceImpl" />	
+	
 </beans>
