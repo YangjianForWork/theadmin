@@ -34,5 +34,10 @@
 		<br>
 		<input type="submit" value="submit" /> 
 	</form>
+	【测试数组】
+	<form action="/api/test?service=testArray" method="post" >
+		输入<input name="NOListStr"><input type="submit" value="submit" /> 
+	</form>
+	
 </body>
 </html>

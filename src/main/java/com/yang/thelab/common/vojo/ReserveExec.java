@@ -14,6 +14,8 @@ public class ReserveExec extends BaseSO {
 
     private LabReserveExecStatus status;
 
+    private String               dealPersNO;
+
     public String getReserveNO() {
         return reserveNO;
     }
@@ -29,5 +31,14 @@ public class ReserveExec extends BaseSO {
     public void setStatus(LabReserveExecStatus status) {
         this.status = status;
     }
+
+    public String getDealPersNO() {
+        return dealPersNO;
+    }
+
+    public void setDealPersNO(String dealPersNO) {
+        this.dealPersNO = dealPersNO;
+    }
+
     
 }
