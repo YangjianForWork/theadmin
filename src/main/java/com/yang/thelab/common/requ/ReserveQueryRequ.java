@@ -10,7 +10,11 @@ import com.yang.thelab.common.PageRequ;
 public class ReserveQueryRequ extends PageRequ {
     /**预订单状态*/
     private String status;
-
+    /**用户*/
+    private String customerNO;
+    /**处理者*/
+    private String dealPersNO;
+    
     public String getStatus() {
         return status;
     }
@@ -19,4 +23,21 @@ public class ReserveQueryRequ extends PageRequ {
         this.status = status;
     }
 
+    public String getCustomerNO() {
+        return customerNO;
+    }
+
+    public void setCustomerNO(String customerNO) {
+        this.customerNO = customerNO;
+    }
+
+    public String getDealPersNO() {
+        return dealPersNO;
+    }
+
+    public void setDealPersNO(String dealPersNO) {
+        this.dealPersNO = dealPersNO;
+    }
+
+    
 }
