@@ -4,6 +4,7 @@ import com.yang.thelab.common.PageRequ;
 import com.yang.thelab.common.enums.RoleEnum;
 import com.yang.thelab.common.enums.SexEnum;
 import com.yang.thelab.common.utils.CommUtil;
+import com.yang.thelab.common.vojo.Customer;
 import com.yang.thelab.common.vojo.Person;
 
 /**
@@ -13,7 +14,9 @@ import com.yang.thelab.common.vojo.Person;
  */
 public class PersonQueryRequ extends PageRequ {
 
-    private Person prop;
+    private Person   prop;
+
+    private Customer customer;
 
     public PersonQueryRequ() {
         this.prop = new Person();
@@ -29,6 +32,14 @@ public class PersonQueryRequ extends PageRequ {
 
     public void setProp(Person prop) {
         this.prop = prop;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getRole() {

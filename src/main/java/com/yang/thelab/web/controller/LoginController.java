@@ -4,12 +4,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.yang.thelab.biz.dto.PersonDTO;
+import com.yang.thelab.biz.manager.PersonManager;
 import com.yang.thelab.common.BaseController;
 import com.yang.thelab.common.enums.LoginControlEnum;
+import com.yang.thelab.common.exception.BizCode;
+import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.utils.CommUtil;
+import com.yang.thelab.common.utils.SecurityUtil;
+import com.yang.thelab.common.vojo.Customer;
 
 /**
  * 
@@ -19,13 +26,16 @@ import com.yang.thelab.common.utils.CommUtil;
 @Controller
 public class LoginController extends BaseController {
 
+    @Autowired
+    private PersonManager personManager;
+
     @RequestMapping("/control")
     public String controllLogin(HttpServletRequest request, HttpServletResponse response) {
         String uri = (String) request.getAttribute("code");
-        LoginControlEnum item = (LoginControlEnum)CommUtil.getEnumByCode(LoginControlEnum.class,
+        LoginControlEnum item = (LoginControlEnum) CommUtil.getEnumByCode(LoginControlEnum.class,
             uri);
         if (item == null) {
-            return "login";
+            return "redirect:/login.htm";
         }
         return item.mapStr();
     }
@@ -40,19 +50,42 @@ public class LoginController extends BaseController {
         return "login";
     }
 
+    @RequestMapping("/api/dologin")
+    public void doLogin(String userName, String pwd, HttpServletResponse response,
+                        HttpServletRequest request) {
+        if (StringUtils.isBlank(userName) || StringUtils.isBlank(pwd)) {
+            throw new BizException(BizCode.LOGIN_INFO_BLANK);
+        }
+        PersonDTO personDTO = personManager.checkLogin(userName, pwd);
+        request.getSession().setAttribute("user", personDTO);
+        toResponse(response, personDTO.getCustomer().getNickname());
+    }
+
     @RequestMapping("/home")
-    public String doLogin(String userName, String pwd, HttpServletResponse response,
-                          HttpServletRequest request) {
-        if (StringUtils.isBlank(userName) && StringUtils.isBlank(pwd)) {
+    public String login(String userName, String pwd, HttpServletRequest request) {
+        if (StringUtils.isBlank(userName) || StringUtils.isBlank(pwd)) {
             return "redirect:/login.htm";
         }
+        PersonDTO user = (PersonDTO) request.getSession().getAttribute("user");
+        Customer customer = user.getCustomer();
+        return validLogin(userName, pwd, customer);
+    }
 
-        return "default";
+    private String validLogin(String userName, String pwd, Customer customer) {
+        if (!customer.getPassword().equals(SecurityUtil.getHash(pwd))) {
+            return "redirect:/";
+        }
+        String mobile = SecurityUtil.decrypt(customer.getMobile(), personManager.getSecurityKey());
+        if (mobile.equals(userName) || customer.getNickname().equals(userName)
+            || customer.getExtNO().equals(userName)) {
+            return "default";
+        }
+        return "redirect:/";
     }
 
     @RequestMapping("/api/logout")
-    public String logout(){
-        //TODO 清空session
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("user");
         return "login";
     }
 }

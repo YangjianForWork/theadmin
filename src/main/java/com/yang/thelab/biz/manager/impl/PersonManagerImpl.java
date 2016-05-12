@@ -19,6 +19,7 @@ import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.requ.PersonQueryRequ;
 import com.yang.thelab.common.utils.CommUtil;
+import com.yang.thelab.common.utils.SecurityUtil;
 import com.yang.thelab.common.vojo.Customer;
 import com.yang.thelab.common.vojo.Person;
 import com.yang.thelab.core.model.CustomerModel;
@@ -42,8 +43,10 @@ public class PersonManagerImpl implements PersonManager {
     @Autowired
     private TransactionTemplate transactionTemplate;
 
+    private String              securitykey = "NWdJt2CE+Qfo/0hS+/+aMw==";
+
     public String save(PersonDTO perDTO) {
-        final PersonDTO personDTO  = perDTO;
+        final PersonDTO personDTO = perDTO;
         //将保存操作放入事务，保证操作的一致性
         transactionTemplate.execute(new TransactionCallbackWithoutResult() {
             protected void doInTransactionWithoutResult(TransactionStatus arg0) {
@@ -91,4 +94,26 @@ public class PersonManagerImpl implements PersonManager {
         return personDTO;
     }
 
+    public PersonDTO checkLogin(String userName, String pwd) {
+        PersonDTO DTO = new PersonDTO();
+        CustomerModel customerModel = customerService.checkLogin(userName, pwd);
+        /*加密手机号*/
+        customerModel.get()
+            .setMobile(SecurityUtil.encrypt(customerModel.get().getMobile(), getSecurityKey()));
+        DTO.setCustomer(CommUtil.hideBaseFeild(customerModel.get()));
+        PersonModel personModel = personService.getByCustNO(customerModel.getBizNO());
+        if (null == personModel || StringUtils.isBlank(personModel.getBizNO())) {
+            throw new BizException(BizCode.PERSON_NOT_FOUND);
+        }
+        /*除去省份在号码*/
+        personModel.get().setIdCardNO(null);
+        personModel.get().setBirthDate(null);
+        DTO.set(CommUtil.hideBaseFeild(personModel.get()));
+        
+        return DTO;
+    }
+
+    public String getSecurityKey() {
+        return securitykey;
+    }
 }

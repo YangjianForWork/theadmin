@@ -14,6 +14,19 @@
 <link
 	href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css"
 	rel="stylesheet">
+<!-- 引入Timepicker -->
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="/dist/js/jquery.timepicker.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/dist/css/jquery.timepicker.css" />
+<script type="text/javascript"
+	src="/dist/jquery-timepicker/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/dist/jquery-timepicker/bootstrap-datepicker.css" />
+<script type="text/javascript" src="/dist/jquery-timepicker/site.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/dist/jquery-timepicker/site.css" />
 <!-- 自定义 -->
 <script src="/dist/js/dist.js"></script>
 <script src="/dist/js/main.js"></script>
@@ -26,13 +39,13 @@
 			<div class="span12 myspan12">
 				<ul class="nav nav-pills">
 					<li class="active"><a href="#">首页</a></li>
-					<li class="disabled"><a href="#">信息</a></li>
+					<!--  <li class="disabled"><a href="#">信息</a></li>-->
 					<li class="dropdown pull-right"><a href="#"
 						data-toggle="dropdown" class="dropdown-toggle">我的<strong
 							class="caret"></strong></a>
 						<ul class="dropdown-menu">
 							<li><a href="#">个人中心</a></li>
-							<li><a href="#">更多</a></li>
+							<li><a href="#">我的预约单</a></li>
 							<li class="divider"></li>
 							<li><a href="/api/logout">退出</a></li>
 						</ul></li>
@@ -40,9 +53,8 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span9" id="main_frame">
-			</div>
-			<div class="span3"></div>
+			<div class="span9" id="main_frame"></div>
+			<div class="span3" id="main_frame2"></div>
 		</div>
 	</div>
 </body>

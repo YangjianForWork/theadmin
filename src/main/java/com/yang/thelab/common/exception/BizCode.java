@@ -31,6 +31,10 @@ public enum BizCode implements EnumInterface {
     PERSON_NOT_FOUND("PERSON_NOT_FOUND","查无此人！"),
     /** 身份证号码已被使用*/
     PERSON_ID_CARD_NO_EXSIT("PERSON_ID_CARD_NO_EXSIT","这个真的是你自己的身份证么！"),
+    /** 用户名或密码错误*/
+    CUST_LOGIN_FAIL("CUST_LOGIN_FAIL","用户名或密码错误"),
+    /** 登录信息不能为空*/
+    LOGIN_INFO_BLANK("LOGIN_INFO_BLANK","登录信息不能为空"),
 	
     //====枚举项===
 	/**该项内容已经存在*/
@@ -60,8 +64,6 @@ public enum BizCode implements EnumInterface {
 	LOGIN_DATA_EXCE("LOGIN_DATA_EXCE", "token失效", "token失效"),
 	/** 找不到用户 */
 	MOBILE_NOT_REF_DEPA("MOBILE_NOT_REF_DEPA", "用户不存在", "用户不存在"),
-	/** 密码错误 */
-	PASSWORD_FAIL("PASSWORD_FAIL", "密码错误", "密码错误"),
 	/** 密码格式有误 */
 	PASSWORD_WRONG_FROMAT("PASSWORD_WRONG_FROMAT", "密码格式有误", "密码格式有误"),
 	/** 无权限 */

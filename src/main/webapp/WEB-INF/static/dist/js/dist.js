@@ -1,5 +1,5 @@
 $(function(){
-	loadEnumItemPage();
+	//loadEnumItemPage();
 });
 
 function loadEnumItemPage(){

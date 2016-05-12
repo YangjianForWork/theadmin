@@ -16,4 +16,8 @@ public interface PersonManager {
     Paginator<PersonDTO> query(PersonQueryRequ requ);
     
     PersonDTO get(String bizNO);
+    
+    PersonDTO checkLogin(String userName,String pwd);
+    
+    String getSecurityKey();
 }

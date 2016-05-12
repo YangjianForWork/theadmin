@@ -5,7 +5,7 @@ $(function() {
 	 * ajaxSeq(reqData, '21', true); ajaxSeq(reqData, '22', true);
 	 */
 	clearAlertContaint();
-	ajaxSeq(reqData, '31', true);
+	//ajaxSeq(reqData, '31', true);
 });
 
 // 根据自定义序列号选择URL

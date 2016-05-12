@@ -31,5 +31,8 @@ public interface CustomerService {
      * @return
      */
     List<CustomerModel> getByKeyList(List<String> custNOList);
+    
+    
+    CustomerModel checkLogin(String userName,String pwd);
 }
 

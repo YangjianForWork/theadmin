@@ -67,7 +67,8 @@
 				MOBILE = #mobile#
 			</isNotEmpty>
 			<isNotEmpty property="nickName" prepend="AND">
-				NICKNAME = #nickName#
+				NICKNAME =
+				#nickName#
 			</isNotEmpty>
 			<isNotEmpty property="extNO" prepend="AND">
 				EXT_NO = #extNO#
@@ -85,5 +86,5 @@
 			#bizNOList[]#
 		</iterate>
 	</select>
-	
+
 </sqlMap>

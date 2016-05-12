@@ -89,6 +89,12 @@
 			<isNotEmpty property="status" prepend="AND">
 				STATUS = #status# 
 			</isNotEmpty>
+			<isNotEmpty property="applyPersNO" prepend="AND" >
+				APPLY_PERS_NO = #applyPersNO#
+			</isNotEmpty>
+			<isNotEmpty property="dealPersNO" prepend="AND" >
+				DEAL_PERS_NO = #dealPersNO#
+			</isNotEmpty>
 		</dynamic>
 	</sql>
 

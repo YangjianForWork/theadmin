@@ -19,4 +19,6 @@ public interface CustomerDAO {
     
     List<CustomerDO> getByKeyList(List<String> bizNOList);
     
+    CustomerDO getByCond(String extNO, String mobile ,String nikename);
+    
 }

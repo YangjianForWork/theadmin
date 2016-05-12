@@ -16,26 +16,34 @@
 	rel="stylesheet">
 <!-- 自定义 -->
 <link href="/dist/css/style.css" rel="stylesheet">
+<script src="/dist/js/login.js"></script>
 <title>实验室预约系统</title>
 </head>
 <body>
+	<div id="alertCont">
+		<div id="myAlert" class="alert alert-warning">
+			<a href="#" class="close" data-dismiss="alert">&times;</a> 系统异常
+		</div>
+	</div>
 	<div id="loginPanel" class="panel panel-primary">
 		<div class="panel-body pBody">
-			<form action="/home" class="bs-example bs-example-form"
-				role="form" method="post">
+			<form action="/home" id="secondLogin" class="bs-example bs-example-form" role="form"
+				method="post">
 				<div class="input-group">
 					<span class="input-group-addon span_light_cyan"></span><input
-						type="text" class="form-control" name="userName" placeholder="用户名">
+						type="text" id="userName" class="form-control" name="userName"
+						placeholder="学号/工号/手机号">
 				</div>
 				<br />
 				<div class="input-group">
 					<span class="input-group-addon span_light_cyan"></span><input
-						type="password" class="form-control" name="pwd"
+						type="password" id="pwd" class="form-control" name="pwd"
 						placeholder="密   码">
 				</div>
 				<br />
 				<div align="center">
-					<input type="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;录"
+					<input type="button" id="loginBtn"
+						value="登&nbsp;&nbsp;&nbsp;&nbsp;录"
 						class="btn btn-info btn-sm loginBtn" />
 				</div>
 				<br />
