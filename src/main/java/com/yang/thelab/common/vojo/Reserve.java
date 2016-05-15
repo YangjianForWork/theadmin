@@ -3,7 +3,7 @@ package com.yang.thelab.common.vojo;
 import java.util.Date;
 
 import com.yang.thelab.common.BaseSO;
-import com.yang.thelab.common.enums.LabReseveStatus;
+import com.yang.thelab.common.enums.LabReserveStatus;
 
 /**
  * 预订单
@@ -12,25 +12,24 @@ import com.yang.thelab.common.enums.LabReseveStatus;
  * @version $Id: Reseve.java, v 0.1 2016年3月14日 上午10:39:09 dev Exp $
  */
 public class Reserve extends BaseSO {
-
     /** 实验室编号*/
-    private String          labNO;
+    private String           labNO;
     /** 预订时间*/
-    private Date            bookDate;
+    private Date             bookDate;
     /** 开始时间*/
-    private Date            beginDate;
+    private Date             beginDate;
     /** 结束时间*/
-    private Date            finishDate;
+    private Date             finishDate;
     /** 预订单状态*/
-    private LabReseveStatus status;
+    private LabReserveStatus status;
     /** 申请人*/
-    private String          applyPersNO;
+    private String           applyPersNO;
     /** 处理时间*/
-    private Date            dealDate;
+    private Date             dealDate;
     /** 处理人*/
-    private String          dealPersNO;
+    private String           dealPersNO;
     /** 处理原因*/
-    private String          dealReson;
+    private String           dealReson;
 
     public String getLabNO() {
         return labNO;
@@ -64,11 +63,11 @@ public class Reserve extends BaseSO {
         this.finishDate = finishDate;
     }
 
-    public LabReseveStatus getStatus() {
+    public LabReserveStatus getStatus() {
         return status;
     }
 
-    public void setStatus(LabReseveStatus status) {
+    public void setStatus(LabReserveStatus status) {
         this.status = status;
     }
 
@@ -104,5 +103,4 @@ public class Reserve extends BaseSO {
         this.dealReson = dealReson;
     }
 
-    
 }

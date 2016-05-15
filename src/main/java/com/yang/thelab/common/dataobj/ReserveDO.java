@@ -1,7 +1,7 @@
 package com.yang.thelab.common.dataobj;
 
 import com.yang.thelab.common.BaseDO;
-import com.yang.thelab.common.enums.LabReseveStatus;
+import com.yang.thelab.common.enums.LabReserveStatus;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.common.vojo.Reserve;
 
@@ -35,6 +35,6 @@ public class ReserveDO extends BaseDO<Reserve> {
     }
     
     public void setStatus(String status){
-        this.prop.setStatus((LabReseveStatus) CommUtil.getEnumByCode(LabReseveStatus.class, status));
+        this.prop.setStatus((LabReserveStatus) CommUtil.getEnumByCode(LabReserveStatus.class, status));
     }
 }

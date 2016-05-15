@@ -53,8 +53,17 @@ public enum BizCode implements EnumInterface {
     SCHOOL_CODE_BLANK("SCHOOL_CODE_BLANK","忘记输入学校代码了！"),
     /**学校代码已经存在了*/
     SCHOOL_CODE_EXSIT("SCHOOL_CODE_EXSIT","学校代码已经存在了！"),
-	//---------
-	
+    // =======预约单=======
+    /**预约时间有误*/
+    RESERVE_DATE_FAULT("RESERVE_DATE_FAULT","预约时间有误"),
+    /**时间顺序有误*/
+    DATE_SEQ_WRONG("DATE_SEQ_WRONG","开始时间不能比结束时间晚"),
+    /**预约时间的已经过了*/
+    DATE_HAD_PASS("DATE_HAD_PASS","预约时间的已经过了"),
+    /**你有一个预约单还未完成，请不要重复预约*/
+    RESERVE_REPEAT("RESERVE_REPEAT","你有一个预约单还未完成，请不要重复预约"),
+    //---------
+    
 	// =======注册登录=======
 	/** 未登录 */
 	NOT_LOGIN("NOT_LOGIN", "未登录", "未登录"),
@@ -85,8 +94,6 @@ public enum BizCode implements EnumInterface {
 	/** 该用户不是工程师 */
 	NOT_AS_ENGINEER("NOT_A_ENGINEER", "该用户还未认证为工程师", "该用户还未认证为工程师"),
 
-
-	
 
 
 

@@ -35,17 +35,44 @@
 </head>
 <body>
 	<div class="container-fluid">
+		<div id="alertCont">
+			<div id="myAlert" class="alert alert-warning">
+				<a href="#" class="close" data-dismiss="alert">&times;</a> 系统异常
+			</div>
+		</div>
+		<!-- 按钮触发模态框 -->
+		<button class="btn btn-primary btn-lg" id="modelActiveBtn" data-toggle="modal"
+			data-target="#myModal"></button>
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h4 class="modal-title" id="myModalLabel">提示</h4>
+					</div>
+					<div class="modal-body" id="myModelBody"></div>
+					<div class="modal-footer" id="myModelFooter">
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
 		<div class="row-fluid myrowfluid">
 			<div class="span12 myspan12">
 				<ul class="nav nav-pills">
-					<li class="active"><a href="#">首页</a></li>
+					<li class="active"><a href="/home">首页</a></li>
 					<!--  <li class="disabled"><a href="#">信息</a></li>-->
 					<li class="dropdown pull-right"><a href="#"
-						data-toggle="dropdown" class="dropdown-toggle">我的<strong
-							class="caret"></strong></a>
+						data-toggle="dropdown" class="dropdown-toggle"
+						style="color: gray;">我的<strong class="caret"></strong></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">个人中心</a></li>
-							<li><a href="#">我的预约单</a></li>
+							<li><a href="/home">首页</a></li>
+							<li><a href="#" onclick="queryReserve();">预约记录</a></li>
 							<li class="divider"></li>
 							<li><a href="/api/logout">退出</a></li>
 						</ul></li>
@@ -53,8 +80,15 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span9" id="main_frame"></div>
-			<div class="span3" id="main_frame2"></div>
+			<div class="span9" id="main_frame">
+				<div class="container" id="labStation">
+					<div class="jumbotron" id="labStationCon"></div>
+				</div>
+			</div>
+			<div class="span3" id="main_frame2">
+				<table class="table" id="selectLabStation"></table>
+				<table class="table" id="reserveList"></table>
+			</div>
 		</div>
 	</div>
 </body>

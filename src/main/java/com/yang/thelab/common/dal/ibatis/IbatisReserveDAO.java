@@ -29,7 +29,7 @@ public class IbatisReserveDAO extends BaseDAO<ReserveDO> implements ReserveDAO {
 
     @SuppressWarnings("unchecked")
     public List<ReserveDO> getByCondtion(HashMap<String, Object> params) {
-        return getSqlMapClientTemplate().queryForList("RESERVE.getByCondtion",params);
+        return getSqlMapClientTemplate().queryForList("RESERVE.getByCondition",params);
     }
 
     

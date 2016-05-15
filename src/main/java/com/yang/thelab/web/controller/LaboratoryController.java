@@ -1,5 +1,6 @@
 package com.yang.thelab.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,8 @@ public class LaboratoryController extends BaseController {
     }
 
     @RequestMapping(value = "/api/lab", params = { "service=updateLabStatus" })
-    public void updateLabStatus(String bizNO, String status, HttpServletResponse response) {
+    public void updateLabStatus(String bizNO, String status, HttpServletRequest request,
+                                HttpServletResponse response) {
         laboratoryManager.updateStatus(status, bizNO);
         toResponse(response);
     }

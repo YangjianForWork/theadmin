@@ -1,5 +1,7 @@
 package com.yang.thelab.core.service;
 
+import java.util.List;
+
 import com.yang.thelab.core.model.ReserveModel;
 
 /**
@@ -12,4 +14,8 @@ public interface ReserveService {
     void save(ReserveModel model);
     
     ReserveModel get(String bizNO);
+    
+    ReserveModel getApplyIngReserve(String applyPersNO);
+    
+    List<ReserveModel> getInUseLabResList();
 }

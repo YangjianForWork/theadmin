@@ -24,7 +24,7 @@
 		#bizNO#,
 		#prop.reserveNO#,
 		#prop.status#,
-		#prop.dealPersNO#
+		#prop.dealPersNO#,
 		now(),
 		now()
 		)

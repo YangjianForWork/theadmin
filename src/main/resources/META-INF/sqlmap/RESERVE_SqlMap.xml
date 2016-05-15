@@ -77,8 +77,14 @@
 		<include refid="RESERVE.Base_Column_List" />
 		FROM RESERVE
 		<dynamic prepend="WHERE">
-			<isNotEmpty property="status" prepend="AND">
-				STATUS = #status# 
+			<isNotEmpty property="statusList" prepend="AND">
+				STATUS IN
+				<iterate open="(" close=")" conjunction="," property="statusList">
+					#statusList[]#
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="applyPersNO" prepend="AND">
+				APPLY_PERS_NO = #applyPersNO#
 			</isNotEmpty>
 		</dynamic>
 	</select>

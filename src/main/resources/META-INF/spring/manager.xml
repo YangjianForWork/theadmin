@@ -13,16 +13,14 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd "
 	default-autowire="byName">
 
-	<bean id="personManager"
-		class="com.yang.thelab.biz.manager.impl.PersonManagerImpl" />
-	
-	<bean id="schoolManager"
-		class="com.yang.thelab.biz.manager.impl.SchoolManagerImpl" />
+	<bean id="personManager" class="com.yang.thelab.biz.manager.impl.PersonManagerImpl" />
 
-	<bean id="laboratoryManager"
-		class="com.yang.thelab.biz.manager.impl.LaboratoryManagerImpl" />
-		
-	<bean id="reserveManager"
-		class="com.yang.thelab.biz.manager.impl.ReserveManagerImpl" />
-		
+	<bean id="schoolManager" class="com.yang.thelab.biz.manager.impl.SchoolManagerImpl" />
+
+	<bean id="laboratoryManager" class="com.yang.thelab.biz.manager.impl.LaboratoryManagerImpl" />
+
+	<bean id="reserveManager" class="com.yang.thelab.biz.manager.impl.ReserveManagerImpl">
+		<property name="startSchduler" value="${thelab.auto}" />
+	</bean>
+
 </beans>

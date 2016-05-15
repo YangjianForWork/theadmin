@@ -74,7 +74,7 @@ public class LaboratoryManagerImpl implements LaboratoryManager {
 
     public void save(LaboratoryDTO DTO) {
         LaboratoryModel model = new LaboratoryModel(DTO.get());
-        //        boolean isInsert = CommUtil.isInsert(model);
+        //boolean isInsert = CommUtil.isInsert(model);
         laboratoryService.save(model);
     }
 

@@ -14,7 +14,9 @@ public class ReserveQueryRequ extends PageRequ {
     private String applyPersNO;
     /**处理者*/
     private String dealPersNO;
-    
+    /**请求角色等级*/
+    private int    roleLevel;
+
     public String getStatus() {
         return status;
     }
@@ -39,5 +41,12 @@ public class ReserveQueryRequ extends PageRequ {
         this.dealPersNO = dealPersNO;
     }
 
-    
+    public int getRoleLevel() {
+        return roleLevel;
+    }
+
+    public void setRoleLevel(int roleLevel) {
+        this.roleLevel = roleLevel;
+    }
+
 }

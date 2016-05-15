@@ -5,7 +5,7 @@ $(function() {
 	 * ajaxSeq(reqData, '21', true); ajaxSeq(reqData, '22', true);
 	 */
 	clearAlertContaint();
-	//ajaxSeq(reqData, '31', true);
+	// ajaxSeq(reqData, '31', true);
 });
 
 // 根据自定义序列号选择URL
@@ -153,6 +153,21 @@ function getmTHead1(data, mTable) {
 			+ data.tName + ' </a></th></tr></thead><tbody id="' + myRandomID(3)
 			+ '" ></tbody>';
 	return mTHead;
+}
+// 转化时间
+function dateFormatType(millsTime) {
+	var date = new Date(millsTime);
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	month = month > 9 ? month : ('0' + month);
+	var day = date.getDate() > 9 ? date.getDate() : ('0' + date.getDate());
+	var hour = date.getHours() > 9 ? date.getHours() : ('0' + date.getHours());
+	var minute = date.getMinutes() > 9 ? date.getMinutes() : ('0' + date
+			.getMinutes());
+	var second = date.getSeconds() > 9 ? date.getSeconds() : ('0' + date
+			.getSeconds());
+	return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':'
+			+ second;
 }
 // 初始化表单
 function fillTable1(data) {
@@ -420,7 +435,13 @@ function alert_info(msg) {
 	var myAlert = '<div id="myAlert" class="alert alert-info"> ' + msg
 			+ '</div>';
 	$('#alertCont').get(0).innerHTML = myAlert;
-	setTimeout("clearAlertContaint()", 1250);
+	setTimeout("clearAlertContaint()", 1550);
+}
+// 模态框
+function myModelForm(bodyStr, footerStr) {
+	$('#myModelBody').get(0).innerHTML = bodyStr;
+	$('#myModelFooter').get(0).innerHTML = footerStr;
+	$('#modelActiveBtn').click();
 }
 // 清楚alertContain
 function clearAlertContaint() {
@@ -447,10 +468,12 @@ function clickEditBtn() {
 }
 $(function() {
 	initLab();
+	$('#modelActiveBtn').hide();
 });
 // ***** 预约界面 *****
 var labStatusResult = true;
 function initLab() {
+	$('#reserveList').hide();
 	var reqData = {
 		'service' : 'queryLab',
 		'page' : 1,
@@ -507,7 +530,7 @@ function getLabCardTable(obj) {
 			+ '<td colspan="2" class="' + class_status + '" >' + obj.statuDesc
 			+ '</td></tr>'
 			+ '<tr><td><span class="label label-default">负责人</span></td>'
-			+ '<td colspan="2">' + master.customer.nickname
+			+ '<td colspan="2">' + master.prop.name
 			+ '</td></tr></tbody></table>';
 	return tableStr;
 }
@@ -581,8 +604,8 @@ function getLabDetail(obj) {
 			+ '<tr><td><span class="label label-default">负责人联系方式</span></td>'
 			+ '<td colspan="2">'
 			+ obj.master.customer.mobile
-			+ '</td></tr></tbody></table>';
-
+			+ '<input type="hidden" id="dealPersNO" value="'
+			+ obj.master.prop.bizNO + '" ></td></tr></tbody></table>';
 	return tableStr;
 }
 function cancelReserve(obj) {
@@ -594,16 +617,49 @@ function cancelReserve(obj) {
 	}
 }
 function confirmReserve(obj) {
-	console.log(obj.id);
+	// console.log(obj.id);
+	// console.log($("#" + obj.id).get(0));
+	var result = false;
 	var dateStart = $('#dateStart').get(0).value;
 	var timeStart = $('#timeStart').get(0).value;
 	var dateEnd = $('#dateEnd').get(0).value;
 	var timeEnd = $('#timeEnd').get(0).value;
-	if(dateStart == ''||dateStart == ''||dateStart == ''||dateStart == ''){
+	if (dateStart == '' || dateStart == '' || dateStart == ''
+			|| dateStart == '') {
 		alert_info("时间字段不能为空");
 	}
 	var startD = dateStart + ' ' + timeStart;
 	var endD = dateEnd + ' ' + timeEnd;
+	var labNO = obj.id;
+	var dealPersNO = $('#dealPersNO').get(0).value;
+	var reqData = {
+		"service" : "submitReserve",
+		"startDateStr" : startD,
+		"endDateStr" : endD,
+		"prop.dealPersNO" : dealPersNO,
+		"prop.labNO" : labNO
+	}
+	$.ajax({
+		url : '/api/reserve',
+		data : reqData,
+		type : 'POST',
+		cache : false,
+		dataType : 'json',
+		async : false,
+		success : function(data) {
+			result = true;
+		},
+		error : function(data) {
+			var respData = eval('(' + data.responseText + ')');
+			alert_info(respData.resuDesc);
+			result = false;
+		}
+	});
+	if (result) {
+		alert_info("预约成功！");
+		initLab();
+		$('#selectLabStation').get(0).innerHTML = '';
+	}
 }
 $(function() {
 	$('#datepairExample .time').timepicker({
@@ -617,7 +673,6 @@ $(function() {
 	});
 });
 function updateStatus(id, key) {
-	var result = true;
 	var status = '';
 	switch (key) {
 	case 1:
@@ -652,7 +707,138 @@ function updateStatus(id, key) {
 		}
 	});
 }
+function queryReserve() {
+	if ($('#reserveList').get(0) == null) {
+		return;
+	}
+	$('#reserveList').get(0).innerHTML = '';
+	var reqData = {
+		'service' : 'query',
+		'page' : 1,
+		'itemsPerPage' : 40
+	}
+	$.ajax({
+		url : '/api/reserve',
+		data : reqData,
+		type : 'POST',
+		cache : false,
+		dataType : 'json',
+		success : function(data) {
+			initReserveListTable(data);
+		},
+		error : function(data) {
+			var respData = eval('(' + data.responseText + ')');
+			alert_info(respData.resuDesc);
+		}
+	});
 
+}
+function initReserveListTable(data) {
+	$('#labStation').hide();
+	var theadStr = '<thead><tr><td>预约单号</td><td>提交预约时间</td>'
+			+ '<td>预约者</td><td>状态</td><td>实验室</td>'
+			+ '<td>处理者</td><td>处理信息</td><td>预约开始时间</td>'
+			+ '<td>预约结束时间</td><td>处理</td></tr></thead>';
+	$('#reserveList').append(theadStr);
+	$('#reserveList').append('<tbody></tbody>');
+	var arrs = data.data.pdate;
+	for (var i = 0; i < arrs.length; i++) {
+		// console.log(arrs[i]);
+		var roleLevel = arrs[i].roleLevel;
+		var prop = arrs[i].prop;
+		var applyPer = arrs[i].applyPer;
+		var dealPer = arrs[i].dealPer;
+		var lab = arrs[i].lab;
+		var btnStr = '';
+		if (roleLevel > 2) {
+			btnStr = '<button type="button" class="btn btn-primary"'
+					+ ' onclick="hideReserveList();">返&nbsp;回</button>';
+		}
+		if (roleLevel <= 2) {
+			if (prop.status == 'WAIT_ADUIT') {
+				btnStr = '<button type="button" class="btn btn-primary" id="a'
+						+ prop.bizNO
+						+ '" onclick="agreeRes(this);" >同意</button>&nbsp;'
+						+ '<button type="button" class="btn btn-primary" id="r'
+						+ prop.bizNO
+						+ '" onclick="refuseResModel(this);" >拒绝</button>';
+			}
+			if (prop.status != 'WAIT_ADUIT') {
+				btnStr = '<button type="button" class="btn btn-primary"'
+						+ ' onclick="hideReserveList();">返&nbsp;回</button>';
+			}
+		}
+		var trStr = '<tr><td>' + prop.bizNO + '</td><td>'
+				+ dateFormatType(prop.bookDate) + '</td><td>'
+				+ applyPer.prop.name + '</td><td>' + arrs[i].statusDesc
+				+ '</td><td>' + lab.prop.name + '</td><td>' + dealPer.prop.name
+				+ '</td><td>' + prop.dealReson + '</td><td>'
+				+ dateFormatType(prop.beginDate) + '</td><td>'
+				+ dateFormatType(prop.finishDate) + '</td><td>' + btnStr
+				+ '</td></tr>';
+		$('#reserveList').append(trStr);
+	}
+	$('#reserveList').show();
+}
+function hideReserveList() {
+	$('#labStation').show();
+	$('#reserveList').hide();
+}
+// --按钮结果
+var resultStr = '';
+function agreeRes(btn) {
+	resultStr = "AGREE";
+	adultReserve(btn.id);
+}
+function refuseRes(btn) {
+	resultStr = "REFUSE";
+	adultReserve(btn.id);
+}
+function refuseResModel(btn) {
+	var bodyStr = '请填写原因：<input id="dealReson" />';
+	var footerStr = '<button type="button" class="btn btn-default" '
+			+ ' data-dismiss="modal">关闭</button>&nbsp;'
+			+ '<button type="button" id="' + btn.id
+			+ '" class="btn btn-primary" data-dismiss="modal" '
+			+ ' onclick="refuseRes(this);" >确认</button>';
+	myModelForm(bodyStr, footerStr);
+}
+function adultReserve(id) {
+	var id = id.substring(1, id.length).trim();
+	var reson = '';
+	if ($('#dealReson') != null && $('#dealReson').get(0) != null) {
+		reson = $('#dealReson').get(0).value;
+	}
+	reson = reson.trim();
+	if (resultStr == 'REFUSE' && reson == '') {
+		alert_info("原因未填写");
+	}
+	if (resultStr == 'AGREE') {
+		reson = "符合情况";
+	}
+	var reqData = {
+		"service" : "adultReserve",
+		"prop.bizNO" : id,
+		"adultStr" : resultStr,
+		"prop.dealReson" : reson
+	}
+	$.ajax({
+		url : '/api/reserve',
+		data : reqData,
+		type : 'POST',
+		cache : false,
+		dataType : 'json',
+		async : false,
+		success : function(data) {
+			alert_info("处理成功");
+			queryReserve();
+		},
+		error : function(data) {
+			var respData = eval('(' + data.responseText + ')');
+			alert_info(respData.resuDesc);
+		}
+	});
+}
 // ***** 预约界面 *****
 // =====待用=====
 function hoverCaption(obj) {
