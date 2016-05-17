@@ -8,16 +8,20 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.yang.thelab.biz.dto.LabSiteDTO;
 import com.yang.thelab.biz.dto.LaboratoryDTO;
 import com.yang.thelab.biz.manager.LaboratoryManager;
 import com.yang.thelab.biz.manager.PersonManager;
 import com.yang.thelab.common.Paginator;
 import com.yang.thelab.common.dal.EnumItemDAO;
+import com.yang.thelab.common.dal.LabSiteDAO;
 import com.yang.thelab.common.dal.LaboratoryDAO;
+import com.yang.thelab.common.dataobj.LabSiteDO;
 import com.yang.thelab.common.dataobj.LaboratoryDO;
 import com.yang.thelab.common.enums.LabStatus;
 import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
+import com.yang.thelab.common.requ.LabSiteQueryRequ;
 import com.yang.thelab.common.requ.LaboratoryQueryRequ;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.core.model.LaboratoryModel;
@@ -32,6 +36,8 @@ public class LaboratoryManagerImpl implements LaboratoryManager {
 
     @Autowired
     private LaboratoryDAO                          laboratoryDAO;
+    @Autowired
+    private LabSiteDAO                             labSiteDAO;
     @Autowired
     private PersonManager                          personManager;
     @Autowired
@@ -120,8 +126,8 @@ public class LaboratoryManagerImpl implements LaboratoryManager {
         setDTO(DTO);
         return DTO;
     }
-    
-    private void setDTO(LaboratoryDTO DTO){
+
+    private void setDTO(LaboratoryDTO DTO) {
         if (StringUtils.isNotBlank(DTO.get().getMasterNO())) {
             DTO.setMaster(personManager.get(DTO.get().getMasterNO()));
         }
@@ -130,6 +136,20 @@ public class LaboratoryManagerImpl implements LaboratoryManager {
             CommUtil.hideBaseFeild(enumItemDAO.getByKey(DTO.get().getCategoryNO()).get()));
         DTO.setAttribute(
             CommUtil.hideBaseFeild(enumItemDAO.getByKey(DTO.get().getAttributeNO()).get()));
-        
+
+    }
+
+    public Paginator<LabSiteDTO> query(LabSiteQueryRequ requ) {
+        Paginator<LabSiteDO> data = labSiteDAO.compQuery(requ);
+        Paginator<LabSiteDTO> result = new Paginator<LabSiteDTO>(data.getItemsPerPage(),
+            data.getItems());
+        result.setPage(data.getPage());
+        List<LabSiteDTO> listDTO = new ArrayList<LabSiteDTO>();
+        for (LabSiteDO DO : data.getPdate()) {
+            LabSiteDTO DTO = new LabSiteDTO(CommUtil.hideBaseFeild(DO.get()));
+            listDTO.add(DTO);
+        }
+        result.setPdate(listDTO);
+        return result;
     }
 }

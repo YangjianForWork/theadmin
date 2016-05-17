@@ -1,7 +1,9 @@
 package com.yang.thelab.biz.manager;
 
+import com.yang.thelab.biz.dto.LabSiteDTO;
 import com.yang.thelab.biz.dto.LaboratoryDTO;
 import com.yang.thelab.common.Paginator;
+import com.yang.thelab.common.requ.LabSiteQueryRequ;
 import com.yang.thelab.common.requ.LaboratoryQueryRequ;
 
 /**
@@ -23,4 +25,6 @@ public interface LaboratoryManager {
     void updateStatus(String status,String bizNO);
     
     LaboratoryDTO get(String bizNO);
+    
+    Paginator<LabSiteDTO> query(LabSiteQueryRequ requ);
 }

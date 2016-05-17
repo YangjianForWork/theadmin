@@ -15,8 +15,6 @@ import com.yang.thelab.common.enums.LoginControlEnum;
 import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.utils.CommUtil;
-import com.yang.thelab.common.utils.SecurityUtil;
-import com.yang.thelab.common.vojo.Customer;
 
 /**
  * 

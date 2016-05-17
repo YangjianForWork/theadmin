@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.yang.thelab.biz.manager.LaboratoryManager;
 import com.yang.thelab.common.BaseController;
 import com.yang.thelab.common.enums.EnumItemType;
+import com.yang.thelab.common.requ.LabSiteQueryRequ;
 import com.yang.thelab.common.requ.LaboratoryQueryRequ;
 import com.yang.thelab.core.service.EnumItemService;
 
@@ -62,5 +63,10 @@ public class LaboratoryController extends BaseController {
     @RequestMapping(value = "/api/lab", params = { "service=getLab" })
     public void getLab(String bizNO, HttpServletResponse response) {
         toResponse(response, laboratoryManager.get(bizNO));
+    }
+
+    @RequestMapping(value = "/api/lab", params = { "service=getLabSiteList" })
+    public void getLabSiteList(LabSiteQueryRequ requ, HttpServletResponse response) {
+        toResponse(response, laboratoryManager.query(requ));
     }
 }

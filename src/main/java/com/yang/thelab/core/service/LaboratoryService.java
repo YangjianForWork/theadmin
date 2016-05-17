@@ -1,5 +1,8 @@
 package com.yang.thelab.core.service;
 
+import java.util.List;
+
+import com.yang.thelab.core.model.LabSiteModel;
 import com.yang.thelab.core.model.LaboratoryModel;
 
 /**
@@ -12,4 +15,7 @@ public interface LaboratoryService {
     void save(LaboratoryModel model);
     
     LaboratoryModel get(String bizNO);
+    
+    void saveLabSiteList(List<LabSiteModel> siteList);
+    
 }
