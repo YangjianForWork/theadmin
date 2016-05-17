@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -27,6 +28,7 @@ import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.requ.ReserveQueryRequ;
 import com.yang.thelab.common.utils.CommUtil;
+import com.yang.thelab.core.model.LaboratoryModel;
 import com.yang.thelab.core.model.ReserveExecModel;
 import com.yang.thelab.core.model.ReserveModel;
 import com.yang.thelab.core.service.LaboratoryService;
@@ -105,6 +107,7 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
             //逻辑这里要加一个通知流程，所以暂时先将设为下一个状态
             model.get().setStatus(LabReserveStatus.WAIT_ADUIT);
             model.get().setBookDate(new Date());
+            model.get().setDealReson("-");
             checkTheReserve(model);
         }
         reserveService.save(model);
@@ -123,80 +126,48 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
     }
 
     private void checkTheReserve(ReserveModel model) {
-        //判断同一个实验室的预约时间的冲突记录
-        ReserveQueryRequ requ = new ReserveQueryRequ();
-        requ.setLabNO(model.get().getLabNO());
-        requ.setStatusList(LabReserveStatus.ING_STATUS);
-        Paginator<ReserveDO> compQuery = reserveDAO.compQuery(requ);
         DateFormat dFormat = new SimpleDateFormat(DateFormatEnum.SIMPLE.code());
-        List<ReserveDO> pdate = compQuery.getPdate();
         Date date1 = new Date();
         Date date2 = new Date();
         boolean doEx = false;
-        for (ReserveDO DO : pdate) {
-            Date beginDate = model.get().getBeginDate();
-            Date finishDate = model.get().getFinishDate();
-            if (beginDate.equals(DO.get().getBeginDate())) {
-                if (finishDate.before(DO.get().getFinishDate())) {
-                    date1 = beginDate;
-                    date2 = finishDate;
-                    doEx = true;
-                    break;
-                }
-                if (finishDate.after(DO.get().getFinishDate())) {
-                    date1 = beginDate;
-                    date2 = DO.get().getFinishDate();
-                    doEx = true;
-                    break;
-                }
-            }
-            if (beginDate.after(DO.get().getBeginDate())
-                && beginDate.before(DO.get().getFinishDate())) {
-                date1 = beginDate;
-                date2 = DO.get().getFinishDate();
-                doEx = true;
-                break;
-            }
-            if (finishDate.after(DO.get().getBeginDate())
-                && finishDate.before(DO.get().getFinishDate())) {
-                date1 = DO.get().getBeginDate();
-                date2 = finishDate;
-                doEx = true;
-                break;
-            }
-        }
-        if (doEx) {
-            throw new BizException(BizCode.RESERVE_DATE_FAULT,
-                "该实验室的" + dFormat.format(date1) + " 到 " + dFormat.format(date2) + "已经被预约了");
+        //判断一个实验室的容量
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("labNO", model.get().getLabNO());
+        params.put("statusList", LabReserveStatus.ING_STATUS);
+        Long labResCount = reserveService.getLabResCount(params);
+        LaboratoryModel laboratoryModel = laboratoryService.get(model.get().getLabNO());
+        if ((labResCount + "").equals(laboratoryModel.get().getContent())) {
+            throw new BizException(BizCode.PARAM_CHECK, "实验室容量已经满额了");
         }
         //判断同一个人预约单的实验室时间冲突
-        requ = new ReserveQueryRequ();
+        ReserveQueryRequ requ = new ReserveQueryRequ();
         requ.setApplyPersNO(model.get().getApplyPersNO());
         requ.setStatusList(LabReserveStatus.ING_STATUS);
-        compQuery = reserveDAO.compQuery(requ);
-        pdate = compQuery.getPdate();
+        Paginator<ReserveDO> compQuery = reserveDAO.compQuery(requ);
+        List<ReserveDO> pdate = compQuery.getPdate();
+        String labName = "";
         for (ReserveDO DO : pdate) {
+            LaboratoryModel labModel = laboratoryService.get(DO.get().getLabNO());
             Date beginDate = model.get().getBeginDate();
             Date finishDate = model.get().getFinishDate();
+            labName = labModel.get().getName();
             if (beginDate.equals(DO.get().getBeginDate())) {
-                if (finishDate.before(DO.get().getFinishDate())) {
-                    date1 = beginDate;
-                    date2 = finishDate;
-                    doEx = true;
-                    break;
-                }
+                date1 = beginDate;
+                date2 = finishDate;
+                doEx = true;
                 if (finishDate.after(DO.get().getFinishDate())) {
-                    date1 = beginDate;
                     date2 = DO.get().getFinishDate();
-                    doEx = true;
-                    break;
                 }
+                break;
             }
             if (beginDate.after(DO.get().getBeginDate())
                 && beginDate.before(DO.get().getFinishDate())) {
                 date1 = beginDate;
-                date2 = DO.get().getFinishDate();
+                date2 = finishDate;
                 doEx = true;
+                if (finishDate.after(DO.get().getFinishDate())) {
+                    date2 = DO.get().getFinishDate();
+                }
                 break;
             }
             if (finishDate.after(DO.get().getBeginDate())
@@ -204,12 +175,16 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
                 date1 = DO.get().getBeginDate();
                 date2 = finishDate;
                 doEx = true;
+                if (beginDate.after(DO.get().getBeginDate())) {
+                    date1 = beginDate;
+                }
                 break;
             }
         }
         if (doEx) {
             throw new BizException(BizCode.RESERVE_DATE_FAULT,
-                "该时间段" + dFormat.format(date1) + " 到 " + dFormat.format(date2) + "你已经预约了");
+                "[" + dFormat.format(date1) + "]-[" + dFormat.format(date2) + "]内你已预约了<" + labName
+                                                               + ">");
         }
     }
 
@@ -218,7 +193,7 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
     }
 
     public void schduler() {
-        if (startSchduler) {
+        if (!startSchduler) {
             return;
         }
         Thread autoFinishReserve = new Thread(new Runnable() {

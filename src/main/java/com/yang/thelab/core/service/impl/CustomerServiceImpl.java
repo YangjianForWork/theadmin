@@ -61,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (null == customerDO) {
             customerDO = customerDAO.getByCond(null, null, userName);
         }
-        if (null == customerDO || StringUtils.isBlank(customerDO.getBizNO())) {
+        if (null == customerDO) {
             throw new BizException(BizCode.CUST_NOT_FOUND);
         }
         if (!customerDO.get().getPassword().equals(SecurityUtil.getHash(pwd))) {

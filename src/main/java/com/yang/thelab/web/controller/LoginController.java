@@ -35,6 +35,11 @@ public class LoginController extends BaseController {
         if (item == null) {
             return "redirect:/login.htm";
         }
+        if (request.getSession().getAttribute("user") != null) {
+            if (item.mapStr().equals("login")) {
+                return "default";
+            }
+        }
         return item.mapStr();
     }
 
@@ -60,15 +65,15 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("/home")
-    public String login( HttpServletRequest request) {
+    public String login(HttpServletRequest request) {
         PersonDTO user = (PersonDTO) request.getSession().getAttribute("user");
         if (null == user) {
-        	return "redirect:/login.htm";
-		}
+            return "redirect:/login.htm";
+        }
         return "default";
     }
 
-/*    private String validLogin(String userName, String pwd, Customer customer) {
+    /*    private String validLogin(String userName, String pwd, Customer customer) {
         if (!customer.getPassword().equals(SecurityUtil.getHash(pwd))) {
             return "redirect:/";
         }

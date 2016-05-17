@@ -152,6 +152,10 @@
 				LAB_NO =
 				#labNO#
 			</isNotEmpty>
+			<isNotNull property="currTime" prepend="AND">
+				(BEGIN_DATE &lt; NOW())
+				AND (FINISH_DATE &gt; NOW())
+			</isNotNull>
 		</dynamic>
 	</select>
 </sqlMap>

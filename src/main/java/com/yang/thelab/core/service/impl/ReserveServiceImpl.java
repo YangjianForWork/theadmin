@@ -54,6 +54,7 @@ public class ReserveServiceImpl implements ReserveService {
         HashMap<String, Object> params = new HashMap<String, Object>();
         List<String> statusList = new ArrayList<String>();
         statusList.add(LabReserveStatus.AGREE.code());
+        params.put("statusList", statusList);
         return CommUtil.covDOList2ModelList(ReserveModel.class, reserveDAO.getByCondtion(params));
     }
 

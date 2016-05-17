@@ -41,8 +41,8 @@
 			</div>
 		</div>
 		<!-- 按钮触发模态框 -->
-		<button class="btn btn-primary btn-lg" id="modelActiveBtn" data-toggle="modal"
-			data-target="#myModal"></button>
+		<button class="btn btn-primary btn-lg" id="modelActiveBtn"
+			data-toggle="modal" data-target="#myModal"></button>
 		<!-- 模态框（Modal） -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
@@ -54,8 +54,7 @@
 						<h4 class="modal-title" id="myModalLabel">提示</h4>
 					</div>
 					<div class="modal-body" id="myModelBody"></div>
-					<div class="modal-footer" id="myModelFooter">
-					</div>
+					<div class="modal-footer" id="myModelFooter"></div>
 				</div>
 				<!-- /.modal-content -->
 			</div>

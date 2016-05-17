@@ -22,7 +22,7 @@ public class IbatisCustomerDAO extends BaseDAO<CustomerDO> implements CustomerDA
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("extNO", extNO);
         map.put("mobile", mobile);
-        map.put("nikename", nikename);
+        map.put("nickName", nikename);
         return (CustomerDO) getSqlMapClientTemplate().queryForObject("CUSTOMER.getByCondition",map);
     }
 }

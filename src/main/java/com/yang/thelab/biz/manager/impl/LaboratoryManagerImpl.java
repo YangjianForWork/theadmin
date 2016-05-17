@@ -86,7 +86,10 @@ public class LaboratoryManagerImpl implements LaboratoryManager {
     private Long getLabReserveCount(String labNO) {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("labNO", labNO);
-        params.put("statusList", LabReserveStatus.ING_STATUS);
+        List<String> statusList = new ArrayList<String>();
+        statusList.add(LabReserveStatus.AGREE.code());
+        params.put("statusList", statusList);
+        params.put("currTime", System.currentTimeMillis());
         return reserveService.getLabResCount(params);
     }
 
