@@ -33,6 +33,8 @@
 	
 	<bean id="shMajorDAO" class="com.yang.thelab.common.dal.ibatis.IbatisShMajorDAO" />
 	
+	<bean id="labSiteDAO" class="com.yang.thelab.common.dal.ibatis.IbatisLabSiteDAO"></bean>
+	
 	<bean id="sequenceGenerate" class="com.yang.thelab.common.SequenceGenerate">
 		<property name="executor">
 			<bean

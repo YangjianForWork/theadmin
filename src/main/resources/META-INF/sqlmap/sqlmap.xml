@@ -16,5 +16,5 @@
 	<sqlMap resource="META-INF/sqlmap/SEQ_SqlMap.xml" />
 	<sqlMap resource="META-INF/sqlmap/SH_INSTITUTE_SqlMap.xml" />
 	<sqlMap resource="META-INF/sqlmap/SH_MAJOR_SqlMap.xml" />
-	
+	<sqlMap resource="META-INF/sqlmap/LAB_SITE_SqlMap.xml" />
 </sqlMapConfig>
