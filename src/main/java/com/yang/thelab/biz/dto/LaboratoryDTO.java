@@ -9,6 +9,11 @@ import com.yang.thelab.common.vojo.Laboratory;
  * @author YJ.yang
  * @version $Id: LaboratoryDTO.java, v 0.1 2016年4月19日 下午12:57:45 dev Exp $
  */
+/**
+ * 
+ * @author YJ.yang
+ * @version $Id: LaboratoryDTO.java, v 0.1 2016年5月17日 下午3:05:55 dev Exp $
+ */
 public class LaboratoryDTO extends BaseDTO<Laboratory> {
     /**负责人*/
     private PersonDTO master;
@@ -18,6 +23,8 @@ public class LaboratoryDTO extends BaseDTO<Laboratory> {
     private EnumItem  category;
     /**特性*/
     private EnumItem  attribute;
+    /**当前预约数量*/
+    private Long      currResCount;
 
     public LaboratoryDTO() {
         this.prop = new Laboratory();
@@ -58,6 +65,14 @@ public class LaboratoryDTO extends BaseDTO<Laboratory> {
     public void setAttribute(EnumItem attribute) {
         this.attribute = attribute;
     }
-    
+
+    public Long getCurrResCount() {
+        return currResCount;
+    }
+
+    public void setCurrResCount(Long currResCount) {
+        this.currResCount = currResCount;
+    }
+
     
 }

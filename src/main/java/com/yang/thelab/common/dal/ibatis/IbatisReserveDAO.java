@@ -29,8 +29,15 @@ public class IbatisReserveDAO extends BaseDAO<ReserveDO> implements ReserveDAO {
 
     @SuppressWarnings("unchecked")
     public List<ReserveDO> getByCondtion(HashMap<String, Object> params) {
-        return getSqlMapClientTemplate().queryForList("RESERVE.getByCondition",params);
+        return getSqlMapClientTemplate().queryForList("RESERVE.getByCondition", params);
     }
 
-    
+    public Long getCount(ReserveQueryRequ requ) {
+        return (Long) getSqlMapClientTemplate().queryForObject("RESERVE.compQueryCount", requ);
+    }
+
+    public Long getLabResCount(HashMap<String, Object> params) {
+        return (Long) getSqlMapClientTemplate().queryForObject("RESERVE.getLabResCount", params);
+    }
+
 }

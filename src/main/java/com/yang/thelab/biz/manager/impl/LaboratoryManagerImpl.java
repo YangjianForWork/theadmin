@@ -18,6 +18,7 @@ import com.yang.thelab.common.dal.LabSiteDAO;
 import com.yang.thelab.common.dal.LaboratoryDAO;
 import com.yang.thelab.common.dataobj.LabSiteDO;
 import com.yang.thelab.common.dataobj.LaboratoryDO;
+import com.yang.thelab.common.enums.LabReserveStatus;
 import com.yang.thelab.common.enums.LabStatus;
 import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
@@ -26,6 +27,7 @@ import com.yang.thelab.common.requ.LaboratoryQueryRequ;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.core.model.LaboratoryModel;
 import com.yang.thelab.core.service.LaboratoryService;
+import com.yang.thelab.core.service.ReserveService;
 
 /**
  * 
@@ -44,6 +46,8 @@ public class LaboratoryManagerImpl implements LaboratoryManager {
     private EnumItemDAO                            enumItemDAO;
     @Autowired
     private LaboratoryService                      laboratoryService;
+    @Autowired
+    private ReserveService                         reserveService;
 
     private static Map<LabStatus, List<LabStatus>> REF_STATUS_CHANGE = new HashMap<LabStatus, List<LabStatus>>();
 
@@ -71,11 +75,19 @@ public class LaboratoryManagerImpl implements LaboratoryManager {
         List<LaboratoryDTO> listDTO = new ArrayList<LaboratoryDTO>();
         for (LaboratoryDO DO : data.getPdate()) {
             LaboratoryDTO DTO = new LaboratoryDTO(DO.get());
+            DTO.setCurrResCount(getLabReserveCount(DO.getBizNO()));
             setDTO(DTO);
             listDTO.add(DTO);
         }
         result.setPdate(listDTO);
         return result;
+    }
+
+    private Long getLabReserveCount(String labNO) {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("labNO", labNO);
+        params.put("statusList", LabReserveStatus.ING_STATUS);
+        return reserveService.getLabResCount(params);
     }
 
     public void save(LaboratoryDTO DTO) {
@@ -123,6 +135,7 @@ public class LaboratoryManagerImpl implements LaboratoryManager {
             throw new BizException();
         }
         LaboratoryDTO DTO = new LaboratoryDTO(DO.get());
+        DTO.setCurrResCount(getLabReserveCount(DO.getBizNO()));
         setDTO(DTO);
         return DTO;
     }

@@ -84,6 +84,7 @@
 				<div class="container" id="labStation">
 					<div class="jumbotron" id="labStationCon"></div>
 				</div>
+				<table class="table" id="labSiteStation"></table>
 			</div>
 			<div class="span3" id="main_frame2">
 				<table class="table" id="selectLabStation"></table>

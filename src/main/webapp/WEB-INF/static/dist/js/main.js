@@ -501,9 +501,7 @@ function addLabDiv(data) {
 	$('#labStationCon').get(0).innerHTML = '';
 	var arrs = data.data.pdate;
 	for (var i = arrs.length - 1; i >= 0; i--) {
-		// console.log(arrs[i]);
 		var prop = arrs[i].prop;
-		// console.log(prop);
 		var labDiv = '<div class="col-xs-6 labCard" id="' + prop.bizNO
 				+ '" onclick="selectLab(this);">' + getLabCardTable(arrs[i])
 				+ '</div>';
@@ -515,7 +513,7 @@ function getLabCardTable(obj) {
 	var category = obj.category;
 	var prop = obj.prop;
 	var master = obj.master;
-	var class_status = 'labCard-status-' + prop.status;
+	//var class_status = 'labCard-status-' + prop.status;
 	var tableStr = '<table class="table"><caption style="text-align: center;">'
 			+ '<span class="label"></span>'
 			+ prop.name
@@ -526,22 +524,23 @@ function getLabCardTable(obj) {
 			+ ' '
 			+ attribute.content
 			+ '</td></tr>'
-			+ '<tr><td><span class="label label-default">状&nbsp;&nbsp;态</span></td>'
-			+ '<td colspan="2" class="' + class_status + '" >' + obj.statuDesc
-			+ '</td></tr>'
+			+ '<tr><td><span class="label label-default"> 当前/最多 预约人数</span></td>'
+			+ '<td colspan="2" >' + obj.currResCount
+			+ '/'+prop.content+' (人)</td></tr>'
 			+ '<tr><td><span class="label label-default">负责人</span></td>'
 			+ '<td colspan="2">' + master.prop.name
 			+ '</td></tr></tbody></table>';
 	return tableStr;
 }
 function selectLab(obj) {
+	$('#labStation').hide();
 	var selectLabStation = $('#selectLabStation').get(0);
-	var ele = selectLabStation.childNodes;
+	/*var ele = selectLabStation.childNodes;
 	if (ele.length && ele.length > 0) {
 		alert_info("您已选择一个实验室，请勿重复操作");
 		return;
 	}
-	updateStatus(obj.id, 2);
+	updateStatus(obj.id, 2);*/
 	if (labStatusResult) {
 		$("#" + obj.id).hide();
 		// console.log($("#" + obj.id).get(0));
@@ -609,8 +608,9 @@ function getLabDetail(obj) {
 	return tableStr;
 }
 function cancelReserve(obj) {
+	$('#labStation').show();
 	// console.log(obj);
-	updateStatus(obj.id, 1);
+	//updateStatus(obj.id, 1);
 	if (labStatusResult) {
 		$("#" + obj.id).show();
 		$('#selectLabStation').get(0).innerHTML = '';
@@ -659,6 +659,7 @@ function confirmReserve(obj) {
 		alert_info("预约成功！");
 		initLab();
 		$('#selectLabStation').get(0).innerHTML = '';
+		$('#labStation').show();
 	}
 }
 $(function() {
@@ -838,6 +839,44 @@ function adultReserve(id) {
 			alert_info(respData.resuDesc);
 		}
 	});
+}
+function wakeLabSiteList(id) {
+	var reqData = {
+		"service" : "getLabSiteList",
+		"labNO" : id
+	}
+	$.ajax({
+		url : '/api/lab',
+		data : reqData,
+		type : 'POST',
+		cache : false,
+		dataType : 'json',
+		async : false,
+		success : function(data) {
+			initLabSiteStation(data);
+		},
+		error : function(data) {
+			var respData = eval('(' + data.responseText + ')');
+			alert_info(respData.resuDesc);
+		}
+	});
+}
+function initLabSiteStation(data) {
+	$('#labStation').hide();
+	$('#labSiteStation').get(0).innerHTML = '';
+	var theadStr = '<thead><tr><td>实验室</td><td>座位号</td>'
+			+ '<td>状态</td><td>实验者</td><td>处理</td></tr></thead>';
+	$('#labSiteStation').append(theadStr);
+	$('#labSiteStation').append('<tbody></tbody>');
+	var arrs = data.data.pdate;
+	for (var i = 0; i < arrs.length; i++) {
+		var prop = arrs[i].prop;
+		var tr = '<tr><td>' + prop.labNO + '</td><td>' + prop.siteNO + '</td>'
+				+ '<td>' + prop.status + '</td><td>' + prop.currPers
+				+ '</td><td>处理</td></tr>';
+		$('#labSiteStation').append(tr);
+	}
+	$('#labSiteStation').show();
 }
 // ***** 预约界面 *****
 // =====待用=====

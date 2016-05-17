@@ -21,6 +21,8 @@ public class Laboratory extends BaseSO {
     private String    masterNO;
     /**地址*/
     private String    address;
+    /**容量*/
+    private String    content;
 
     public String getName() {
         return name;
@@ -70,4 +72,13 @@ public class Laboratory extends BaseSO {
         this.address = address;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    
 }

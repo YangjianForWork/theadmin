@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.yang.thelab.common.dal.ReserveDAO;
 import com.yang.thelab.common.dataobj.ReserveDO;
 import com.yang.thelab.common.enums.LabReserveStatus;
+import com.yang.thelab.common.requ.ReserveQueryRequ;
 import com.yang.thelab.common.utils.CommUtil;
 import com.yang.thelab.core.model.ReserveModel;
 import com.yang.thelab.core.service.ReserveService;
@@ -55,5 +56,14 @@ public class ReserveServiceImpl implements ReserveService {
         statusList.add(LabReserveStatus.AGREE.code());
         return CommUtil.covDOList2ModelList(ReserveModel.class, reserveDAO.getByCondtion(params));
     }
+
+    public Long getCount(ReserveQueryRequ requ) {
+        return reserveDAO.getCount(requ);
+    }
+
+    public Long getLabResCount(HashMap<String, Object> params) {
+        return reserveDAO.getLabResCount(params);
+    }
+    
 
 }

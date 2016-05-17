@@ -39,8 +39,8 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
 	            result.setResuDesc(desc);
 	            LOG.error(log);
 	        } else if (ex instanceof BizException) {
-	            BizException bzException = (BizException) ex;
-	            result.setResuDesc(bzException.getCode().desc());
+	            //BizException bzException = (BizException) ex;
+	            result.setResuDesc(ex.getMessage());
 	            result.setResuCode(((BizException) ex).getCode().code());
 	            LOG.error(log,ex);
 	        } else if (ex instanceof Exception) {

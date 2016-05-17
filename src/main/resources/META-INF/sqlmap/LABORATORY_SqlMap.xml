@@ -9,13 +9,14 @@
 		<result column="ATTRIBUTE_NO" property="prop.attributeNO" jdbcType="VARCHAR" />
 		<result column="MASTER_NO" property="prop.masterNO" jdbcType="VARCHAR" />
 		<result column="ADDRESS" property="prop.address" jdbcType="VARCHAR" />
+		<result column="CONTENT" property="prop.content" jdbcType="VARCHAR" />
 		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
 		<result column="GMT_MODIFIED" property="prop.gmtModified"
 			jdbcType="TIMESTAMP" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		BIZ_NO,NAME,STATUS,CATEGORY_NO,ATTRIBUTE_NO,MASTER_NO,ADDRESS,GMT_CREATE,GMT_MODIFIED
+		BIZ_NO,NAME,STATUS,CATEGORY_NO,ATTRIBUTE_NO,MASTER_NO,ADDRESS,CONTENT,GMT_CREATE,GMT_MODIFIED
 	</sql>
 
 	<insert id="insert" parameterClass="com.yang.thelab.common.dataobj.LaboratoryDO">
@@ -31,6 +32,7 @@
 		#prop.attributeNO#,
 		#prop.masterNO#,
 		#prop.address#,
+		#prop.content#
 		now(),
 		now()
 		)
@@ -65,6 +67,9 @@
 		</isNotNull>
 		<isNotNull property="prop.attributeNO">
 			ATTRIBUTE_NO = #prop.attributeNO#,
+		</isNotNull>
+		<isNotNull property="prop.content">
+			CONTENT = #prop.content#,
 		</isNotNull>
 		GMT_MODIFIED = NOW()
 		WHERE BIZ_NO = #bizNO#

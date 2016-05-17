@@ -23,4 +23,8 @@ public interface ReserveDAO {
     Paginator<ReserveDO> compQuery(ReserveQueryRequ requ);
     
     List<ReserveDO> getByCondtion(HashMap<String, Object> params);
+    
+    Long getCount(ReserveQueryRequ requ);
+    
+    Long getLabResCount(HashMap<String, Object> params);
 }

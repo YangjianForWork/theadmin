@@ -1,5 +1,7 @@
 package com.yang.thelab.common.requ;
 
+import java.util.List;
+
 import com.yang.thelab.common.PageRequ;
 
 /**
@@ -9,13 +11,17 @@ import com.yang.thelab.common.PageRequ;
  */
 public class ReserveQueryRequ extends PageRequ {
     /**预订单状态*/
-    private String status;
+    private String       status;
     /**申请者*/
-    private String applyPersNO;
+    private String       applyPersNO;
     /**处理者*/
-    private String dealPersNO;
+    private String       dealPersNO;
     /**请求角色等级*/
-    private int    roleLevel;
+    private int          roleLevel;
+    /**实验室编号*/
+    private String       labNO;
+    /**预约单状态列表*/
+    private List<String> statusList;
 
     public String getStatus() {
         return status;
@@ -47,6 +53,22 @@ public class ReserveQueryRequ extends PageRequ {
 
     public void setRoleLevel(int roleLevel) {
         this.roleLevel = roleLevel;
+    }
+
+    public String getLabNO() {
+        return labNO;
+    }
+
+    public void setLabNO(String labNO) {
+        this.labNO = labNO;
+    }
+
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
     }
 
 }

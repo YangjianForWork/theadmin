@@ -13,12 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import com.yang.thelab.biz.dto.ReserveDTO;
-import com.yang.thelab.biz.manager.LaboratoryManager;
 import com.yang.thelab.biz.manager.PersonManager;
 import com.yang.thelab.biz.manager.ReserveManager;
 import com.yang.thelab.common.Paginator;
@@ -27,7 +23,6 @@ import com.yang.thelab.common.dataobj.ReserveDO;
 import com.yang.thelab.common.enums.DateFormatEnum;
 import com.yang.thelab.common.enums.LabReserveExecStatus;
 import com.yang.thelab.common.enums.LabReserveStatus;
-import com.yang.thelab.common.enums.LabStatus;
 import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.requ.ReserveQueryRequ;
@@ -57,10 +52,6 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
     private PersonManager       personManager;
     @Autowired
     private LaboratoryService   laboratoryService;
-    @Autowired
-    private LaboratoryManager   laboratoryManager;
-    @Autowired
-    private TransactionTemplate transactionTemplate;
     /**轮询*/
     private boolean             startSchduler;
 
@@ -95,26 +86,26 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
             DateFormat format = new SimpleDateFormat(DateFormatEnum.SIMPLE.code());
             try {
                 Date date = format.parse(DTO.getStartDateStr());
-                DTO.get().setBeginDate(date);
+                model.get().setBeginDate(date);
                 date = format.parse(DTO.getEndDateStr());
-                DTO.get().setFinishDate(date);
+                model.get().setFinishDate(date);
             } catch (ParseException e) {
                 throw new BizException(BizCode.RESERVE_DATE_FAULT);
             }
-            if (DTO.get().getBeginDate().before(new Date())) {
+            if (model.get().getBeginDate().equals(model.get().getFinishDate())) {
+                throw new BizException(BizCode.RESERVE_DATE_IS_SHORT);
+            }
+            if (model.get().getBeginDate().before(new Date())) {
                 throw new BizException(BizCode.DATE_HAD_PASS);
             }
-            if (DTO.get().getBeginDate().after(DTO.get().getFinishDate())) {
+            if (model.get().getBeginDate().after(model.get().getFinishDate())) {
                 throw new BizException(BizCode.DATE_SEQ_WRONG);
-            }
-            ReserveModel reserve = reserveService.getApplyIngReserve(DTO.get().getApplyPersNO());
-            if (null != reserve) {
-                throw new BizException(BizCode.RESERVE_REPEAT);
             }
             //model.get().setStatus(LabReseveStatus.INIT);
             //逻辑这里要加一个通知流程，所以暂时先将设为下一个状态
             model.get().setStatus(LabReserveStatus.WAIT_ADUIT);
             model.get().setBookDate(new Date());
+            checkTheReserve(model);
         }
         reserveService.save(model);
         if (StringUtils.isNoneBlank(model.getBizNO())) {
@@ -131,12 +122,103 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
         }
     }
 
+    private void checkTheReserve(ReserveModel model) {
+        //判断同一个实验室的预约时间的冲突记录
+        ReserveQueryRequ requ = new ReserveQueryRequ();
+        requ.setLabNO(model.get().getLabNO());
+        requ.setStatusList(LabReserveStatus.ING_STATUS);
+        Paginator<ReserveDO> compQuery = reserveDAO.compQuery(requ);
+        DateFormat dFormat = new SimpleDateFormat(DateFormatEnum.SIMPLE.code());
+        List<ReserveDO> pdate = compQuery.getPdate();
+        Date date1 = new Date();
+        Date date2 = new Date();
+        boolean doEx = false;
+        for (ReserveDO DO : pdate) {
+            Date beginDate = model.get().getBeginDate();
+            Date finishDate = model.get().getFinishDate();
+            if (beginDate.equals(DO.get().getBeginDate())) {
+                if (finishDate.before(DO.get().getFinishDate())) {
+                    date1 = beginDate;
+                    date2 = finishDate;
+                    doEx = true;
+                    break;
+                }
+                if (finishDate.after(DO.get().getFinishDate())) {
+                    date1 = beginDate;
+                    date2 = DO.get().getFinishDate();
+                    doEx = true;
+                    break;
+                }
+            }
+            if (beginDate.after(DO.get().getBeginDate())
+                && beginDate.before(DO.get().getFinishDate())) {
+                date1 = beginDate;
+                date2 = DO.get().getFinishDate();
+                doEx = true;
+                break;
+            }
+            if (finishDate.after(DO.get().getBeginDate())
+                && finishDate.before(DO.get().getFinishDate())) {
+                date1 = DO.get().getBeginDate();
+                date2 = finishDate;
+                doEx = true;
+                break;
+            }
+        }
+        if (doEx) {
+            throw new BizException(BizCode.RESERVE_DATE_FAULT,
+                "该实验室的" + dFormat.format(date1) + " 到 " + dFormat.format(date2) + "已经被预约了");
+        }
+        //判断同一个人预约单的实验室时间冲突
+        requ = new ReserveQueryRequ();
+        requ.setApplyPersNO(model.get().getApplyPersNO());
+        requ.setStatusList(LabReserveStatus.ING_STATUS);
+        compQuery = reserveDAO.compQuery(requ);
+        pdate = compQuery.getPdate();
+        for (ReserveDO DO : pdate) {
+            Date beginDate = model.get().getBeginDate();
+            Date finishDate = model.get().getFinishDate();
+            if (beginDate.equals(DO.get().getBeginDate())) {
+                if (finishDate.before(DO.get().getFinishDate())) {
+                    date1 = beginDate;
+                    date2 = finishDate;
+                    doEx = true;
+                    break;
+                }
+                if (finishDate.after(DO.get().getFinishDate())) {
+                    date1 = beginDate;
+                    date2 = DO.get().getFinishDate();
+                    doEx = true;
+                    break;
+                }
+            }
+            if (beginDate.after(DO.get().getBeginDate())
+                && beginDate.before(DO.get().getFinishDate())) {
+                date1 = beginDate;
+                date2 = DO.get().getFinishDate();
+                doEx = true;
+                break;
+            }
+            if (finishDate.after(DO.get().getBeginDate())
+                && finishDate.before(DO.get().getFinishDate())) {
+                date1 = DO.get().getBeginDate();
+                date2 = finishDate;
+                doEx = true;
+                break;
+            }
+        }
+        if (doEx) {
+            throw new BizException(BizCode.RESERVE_DATE_FAULT,
+                "该时间段" + dFormat.format(date1) + " 到 " + dFormat.format(date2) + "你已经预约了");
+        }
+    }
+
     public void setStartSchduler(boolean startSchduler) {
         this.startSchduler = startSchduler;
     }
 
     public void schduler() {
-        if (!startSchduler) {
+        if (startSchduler) {
             return;
         }
         Thread autoFinishReserve = new Thread(new Runnable() {
@@ -150,6 +232,7 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
                         try {
                             Thread.sleep(60 * 1000);
                         } catch (InterruptedException e) {
+                            LOG.error(e.getMessage());
                         }
                     }
                 }
@@ -171,14 +254,7 @@ public class ReserveManagerImpl implements ReserveManager, InitializingBean {
                 continue;
             }
             reserveModel.get().setStatus(LabReserveStatus.FINISH);
-            final ReserveModel reModel = new ReserveModel(reserveModel.get());
-            transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-                @Override
-                protected void doInTransactionWithoutResult(TransactionStatus status) {
-                    reserveService.save(reModel);
-                    laboratoryManager.updateStatus(LabStatus.NORMAL.code(), reModel.getBizNO());
-                }
-            });
+            reserveService.save(reserveModel);
         }
     }
 

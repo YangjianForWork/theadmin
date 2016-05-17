@@ -62,6 +62,10 @@ public enum BizCode implements EnumInterface {
     DATE_HAD_PASS("DATE_HAD_PASS","预约时间的已经过了"),
     /**你有一个预约单还未完成，请不要重复预约*/
     RESERVE_REPEAT("RESERVE_REPEAT","你有一个预约单还未完成，请不要重复预约"),
+    /***预约时间过短*/
+    RESERVE_DATE_IS_SHORT("RESERVE_DATE_IS_SHORT","预约时间过短"),
+    /**你有段时间已经被预约*/
+    RESERVE_PIECE_HAD_EXIST("RESERVE_PIECE_HAD_EXIST","你有段时间已经被预约"),
     //---------
     
 	// =======注册登录=======

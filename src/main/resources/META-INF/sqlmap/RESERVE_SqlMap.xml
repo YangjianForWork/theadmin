@@ -6,11 +6,14 @@
 		<result column="LAB_NO" property="prop.labNO" jdbcType="VARCHAR" />
 		<result column="BOOK_DATE" property="prop.bookDate" jdbcType="TIMESTAMP" />
 		<result column="BEGIN_DATE" property="prop.beginDate" jdbcType="TIMESTAMP" />
-		<result column="FINISH_DATE" property="prop.finishDate" jdbcType="TIMESTAMP" />
+		<result column="FINISH_DATE" property="prop.finishDate"
+			jdbcType="TIMESTAMP" />
 		<result column="STATUS" property="prop.status" jdbcType="VARCHAR" />
-		<result column="APPLY_PERS_NO" property="prop.applyPersNO" jdbcType="VARCHAR" />
+		<result column="APPLY_PERS_NO" property="prop.applyPersNO"
+			jdbcType="VARCHAR" />
 		<result column="DEAL_DATE" property="prop.dealDate" jdbcType="TIMESTAMP" />
-		<result column="DEAL_PERS_NO" property="prop.dealPersNO" jdbcType="VARCHAR" />
+		<result column="DEAL_PERS_NO" property="prop.dealPersNO"
+			jdbcType="VARCHAR" />
 		<result column="DEAL_RESON" property="prop.dealReson" jdbcType="VARCHAR" />
 		<result column="GMT_CREATE" property="prop.gmtCreate" jdbcType="TIMESTAMP" />
 		<result column="GMT_MODIFIED" property="prop.gmtModified"
@@ -84,7 +87,8 @@
 				</iterate>
 			</isNotEmpty>
 			<isNotEmpty property="applyPersNO" prepend="AND">
-				APPLY_PERS_NO = #applyPersNO#
+				APPLY_PERS_NO =
+				#applyPersNO#
 			</isNotEmpty>
 		</dynamic>
 	</select>
@@ -93,13 +97,25 @@
 		FROM RESERVE P
 		<dynamic prepend="WHERE">
 			<isNotEmpty property="status" prepend="AND">
-				STATUS = #status# 
+				STATUS = #status#
 			</isNotEmpty>
-			<isNotEmpty property="applyPersNO" prepend="AND" >
-				APPLY_PERS_NO = #applyPersNO#
+			<isNotEmpty property="applyPersNO" prepend="AND">
+				APPLY_PERS_NO =
+				#applyPersNO#
 			</isNotEmpty>
-			<isNotEmpty property="dealPersNO" prepend="AND" >
-				DEAL_PERS_NO = #dealPersNO#
+			<isNotEmpty property="dealPersNO" prepend="AND">
+				DEAL_PERS_NO =
+				#dealPersNO#
+			</isNotEmpty>
+			<isNotEmpty property="labNO" prepend="AND">
+				LAB_NO =
+				#labNO#
+			</isNotEmpty>
+			<isNotEmpty property="statusList" prepend="AND">
+				STATUS IN
+				<iterate open="(" close=")" conjunction="," property="statusList">
+					#statusList[]#
+				</iterate>
 			</isNotEmpty>
 		</dynamic>
 	</sql>
@@ -119,5 +135,23 @@
 		<include refid="RESERVE.compQueryCond" />
 		ORDER BY GMT_CREATE DESC
 		LIMIT #beginIndex#,#itemsPerPage#
+	</select>
+
+	<select id="getLabResCount" resultClass="java.lang.Long"
+		parameterClass="java.util.HashMap">
+		SELECT COUNT(DISTINCT APPLY_PERS_NO)
+		FROM RESERVE
+		<dynamic prepend="WHERE">
+			<isNotEmpty property="statusList" prepend="AND">
+				STATUS IN
+				<iterate open="(" close=")" conjunction="," property="statusList">
+					#statusList[]#
+				</iterate>
+			</isNotEmpty>
+			<isNotEmpty property="labNO" prepend="AND">
+				LAB_NO =
+				#labNO#
+			</isNotEmpty>
+		</dynamic>
 	</select>
 </sqlMap>

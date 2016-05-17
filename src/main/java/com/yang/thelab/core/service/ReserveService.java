@@ -1,7 +1,9 @@
 package com.yang.thelab.core.service;
 
+import java.util.HashMap;
 import java.util.List;
 
+import com.yang.thelab.common.requ.ReserveQueryRequ;
 import com.yang.thelab.core.model.ReserveModel;
 
 /**
@@ -18,4 +20,8 @@ public interface ReserveService {
     ReserveModel getApplyIngReserve(String applyPersNO);
     
     List<ReserveModel> getInUseLabResList();
+    
+    Long getCount(ReserveQueryRequ params);
+    
+    Long getLabResCount(HashMap<String, Object> params);
 }

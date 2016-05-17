@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yang.thelab.biz.dto.PersonDTO;
 import com.yang.thelab.biz.dto.ReserveDTO;
-import com.yang.thelab.biz.manager.LaboratoryManager;
 import com.yang.thelab.biz.manager.ReserveManager;
 import com.yang.thelab.common.BaseController;
 import com.yang.thelab.common.enums.LabReserveStatus;
-import com.yang.thelab.common.enums.LabStatus;
 import com.yang.thelab.common.exception.BizCode;
 import com.yang.thelab.common.exception.BizException;
 import com.yang.thelab.common.requ.ReserveQueryRequ;
@@ -30,9 +28,7 @@ public class ReserveController extends BaseController {
 
     @Autowired
     private ReserveManager      reserveManager;
-    @Autowired
-    private LaboratoryManager laboratoryManager;
-
+    
     private final static String ADULT = "AGREE";
 
     @RequestMapping(value = "/api/reserve", params = { "service=submitReserve" })
@@ -54,20 +50,16 @@ public class ReserveController extends BaseController {
         if (null == personDTO) {
             throw new BizException(BizCode.LOGIN_DATA_EXCE);
         }
-        String status = "";
         if (personDTO.get().getRole().level() > 2) {
             throw new BizException(BizCode.MISS_PERMISSION);
         }
         if (DTO.getAdultStr().equals(ADULT)) {
             DTO.get().setStatus(LabReserveStatus.AGREE);
-            status = LabStatus.IN_USE.code();
         } else {
             DTO.get().setStatus(LabReserveStatus.REFUSE);
-            status = LabStatus.NORMAL.code();
         }
         DTO.get().setDealDate(new Date());
         reserveManager.save(DTO);
-        laboratoryManager.updateStatus(status, DTO.get().getLabNO());
         toResponse(response, DTO.get().getBizNO());
     }
 
