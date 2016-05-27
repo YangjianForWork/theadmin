@@ -8,7 +8,7 @@ import org.springframework.core.convert.converter.Converter;
 /**
  * 
  * @author YJ.yang
- * @version $Id: DateFormatter.java, v 0.1 2015年12月27日 上午10:50:58 dev Exp $
+ * @version $Id: DateConverter.java, v 0.1 2015年12月27日 上午10:50:58 dev Exp $
  */
 public class DateConverter implements Converter<String,Date> {
 
