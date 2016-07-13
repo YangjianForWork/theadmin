@@ -122,4 +122,5 @@ public final class CommUtil {
         prop.setGmtCreate(null);
         return prop;
     }
+ 
 }
